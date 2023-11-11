@@ -19,8 +19,8 @@ import Confetti from "react-confetti";
 
 function FormBuilder({ form }: { form: Form }) {  
   console.log("🚀 ~ file: FormBuilder.tsx:34 ~ FormBuilder ~ form:", form)
-  const { setElements, setSelectedElement } = useDesigner();
   console.log("hello world");
+  const { setElements, setSelectedElement } = useDesigner();
   const [isReady, setIsReady] = useState(false);
   
   const mouseSensor = useSensor(MouseSensor, {
