@@ -32,7 +32,10 @@ function CreateFormBtn() {
   async function onSubmit(values: formSchemaType) {
     const {orgId, projectId } = hParams;
     try {
-      const formId = await CreateForm(orgId.toString() || "",projectId.toString() || "",values);
+      
+      const employeeId = typeof window !== "undefined" ? localStorage.getItem("employeeId") : "";
+      console.log(employeeId);
+      const formId = await CreateForm(orgId.toString() || "",projectId.toString() || "", employeeId as string,values);
       toast({
         title: "Success",
         description: "Form created successfully",

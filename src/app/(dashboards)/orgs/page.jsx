@@ -23,6 +23,8 @@ export default function Orgs() {
                 else {
                     setOrgId(orgs[0].id);
                     if (orgId) {
+                        const employeeId = orgs[0].employees[0].id;
+                        localStorage.setItem("employeeId", employeeId);
                         router.push(`/orgs/${orgId}/projects`);
                         setLoaded(true);
                     }

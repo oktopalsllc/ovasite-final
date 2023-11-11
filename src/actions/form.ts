@@ -45,19 +45,13 @@ import { employeeService } from "@/services/employee-service/employee.service";
 export async function CreateForm(
   orgId: string,
   projectId: string,
+  employeeId: string,
   data: formSchemaType
 ) {
   const validation = formSchema.safeParse(data);
   if (!validation.success) {
     throw new Error("form not valid");
   }
-
-  const employeeId = await employeeService.getCurrentEmployee(orgId);
-  console.log(employeeId);
-  // const user = await currentUser();
-  // if (!user) {
-  //   throw new UserNotFoundErr();
-  // }
 
   const { title, description } = data;
 
@@ -66,7 +60,7 @@ export async function CreateForm(
       // userId: user.id,
       title,
       description,
-      employee: { connect: { id: "cloteir6l0003ix5shr6by1sx" } },
+      employee: { connect: { id: employeeId as string } },
       project: { connect: { id: projectId } },
       organization: { connect: { id: orgId } },
     },
