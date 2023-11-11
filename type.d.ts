@@ -1,0 +1,223 @@
+// Define Enums
+enum EmployeeRole {
+  OWNER = "OWNER",
+  ADMIN = "ADMIN",
+  MEMBER = "MEMBER",
+  GUEST = "GUEST",
+}
+
+enum UserRole {
+  USER = "USER",
+  ADMIN = "ADMIN",
+  SUPER_ADMIN = "SUPER_ADMIN",
+}
+
+enum Source {
+  FACEBOOK = "FACEBOOK",
+  TWITTER = "TWITTER",
+  INSTAGRAM = "INSTAGRAM",
+  LINKEDIN = "LINKEDIN",
+  GOOGLE = "GOOGLE",
+  OTHER = "OTHER",
+}
+
+enum ProjectRole {
+  SUPERVISOR = "SUPERVISOR",
+  FIELD_AGENT = "FIELD_AGENT",
+  GUEST = "GUEST",
+  MANAGER = "MANAGER",
+}
+
+// Define Types
+type User = {
+  id: string;
+  email: string;
+  password: string;
+  phoneNumber?: string | null;
+  role: UserRole;
+  source: Source;
+  passwordResetToken?: string | null;
+  passwordResetAt?: Date | null;
+  stripeCustomerId?: string | null;
+  stripeSubscriptionId?: string | null;
+  stripePriceId?: string | null;
+  stripeCurrentPeriodEnd?: Date | null;
+  employees: Employee[];
+  organizations: Organization[];
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type Subscription = {
+  id: string;
+  name: string;
+  slug: string;
+  numberOfOrgs: string;
+  numberOfEmployees: string;
+  numberOfProjects: string;
+  numberOfForms: string;
+  numberOfSubmissions: string;
+  offlineSubmission: boolean;
+  price?: Price | null;
+};
+
+type Price = {
+  id: string;
+  amount: number;
+  testId?: string | null;
+  productionId?: string | null;
+  subscriptionId: string;
+  subscription: Subscription;
+};
+
+type Organization = {
+  id: string;
+  name: string;
+  logo?: string | null;
+  address?: string | null;
+  inviteCode: string;
+  createdAt: Date;
+  updatedAt: Date;
+  employees: Employee[];
+  forms: Form[];
+  invite: Invite[];
+  projects: Project[];
+  reports: Report[];
+  submissions: Submission[];
+  userId: string;
+  user: User;
+};
+
+type Employee = {
+  id: string;
+  fullName?: string | null | undefined;
+  email?: string | null;
+  contactNumber?: string | null;
+  address?: string | null;
+  avatar?: string | null;
+  role: EmployeeRole;
+  userId: string;
+  organizationId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  organization: Organization;
+  user: User;
+  projectAssociations: EmployeeProjectAssociation[];
+  forms: Form[];
+  reports: Report[];
+  submissions: Submission[];
+  invite: Invite[];
+};
+
+type Invite = {
+  id: string;
+  token: string;
+  email: string;
+  inviteCode?: string | null;
+  role: EmployeeRole;
+  expirationDate: Date;
+  organizationId: string;
+  employeeId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  organization: Organization;
+  employee: Employee;
+};
+
+type Project = {
+  id: string;
+  name: string;
+  description: string;
+  expectedDuration: string;
+  status: string;
+  isCompleted: boolean;
+  startDate: Date;
+  endDate: Date;
+  organizationId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  projectAssociations: EmployeeProjectAssociation[];
+  forms: Form[];
+  organization: Organization;
+  reports: Report[];
+  submissions: Submission[];
+};
+
+type EmployeeProjectAssociation = {
+  id: string;
+  employeeId: string;
+  projectId: string;
+  role: ProjectRole;
+  createdAt: Date;
+  updatedAt: Date;
+  employee: Employee;
+  project: Project;
+};
+
+type Form = {
+  id: string;
+  title: string;
+  formData: string;
+  description: string;
+  published: boolean;
+  creatorId: string;
+  organizationId: string;
+  projectId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  employee: Employee;
+  organization: Organization;
+  project: Project;
+  submissions: Submission[];
+};
+
+type Submission = {
+  id: string;
+  title: string;
+  description: string;
+  submissionData: string;
+  geolocation?: string | null;
+  creatorId: string;
+  organizationId: string;
+  formId: string;
+  projectId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  form: Form;
+  organization: Organization;
+  project: Project;
+};
+
+type Report = {
+  id: string;
+  title: string;
+  reportData: string;
+  creatorId: string;
+  organizationId: string;
+  projectId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  employee: Employee;
+  organization: Organization;
+  project: Project;
+};
+
+type Audit = {
+  id: string;
+  userMail: string;
+  ipAddress?: string | null;
+  orgId: string;
+  type: string;
+  tableName: string;
+  dateTime: Date;
+  oldValues: string;
+  newValues: string;
+  rowId: string;
+};
+
+//    {
+//     EmployeeRole,
+//     UserRole,
+//     Source,
+//     ProjectRole
+//   };

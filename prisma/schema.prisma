@@ -1,0 +1,281 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+// model Form {
+//   id          Int      @id @default(autoincrement())
+//   userId      String
+//   createdAt   DateTime @default(now())
+//   published   Boolean  @default(false)
+//   name        String
+//   description String   @default("")
+//   content     String   @default("[]")
+
+//   visits      Int @default(0)
+//   submissions Int @default(0)
+
+//   shareURL        String            @unique @default(uuid())
+//   FormSubmissions FormSubmissions[]
+
+//   @@unique([name, userId])
+// }
+
+// model FormSubmissions {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   formId    Int
+//   form      Form     @relation(fields: [formId], references: [id])
+
+//   content String
+// }
+model User {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  externalId         String @unique
+  password           String?
+  phoneNumber        String?
+  role               UserRole  @default(USER)
+  source             Source    @default(OTHER)
+  passwordResetToken String?
+  passwordResetAt    DateTime?
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+
+  employees     Employee[]
+  organizations Organization[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subscription {
+  id                  String       @id @default(cuid())
+  name                String       @unique
+  slug                String
+  numberOfOrgs        String
+  numberOfEmployees   String
+  numberOfProjects    String
+  numberOfForms       String
+  numberOfSubmissions String
+  offlineSubmission   Boolean       @default(true)
+  price               Price?
+}
+
+model Price {
+  id              String       @id @default(cuid())
+  amount          Int
+  testId          String?
+  productionId    String?
+  subscriptionId  String @unique
+  subscription    Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+}
+
+
+model Organization {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  logo        String?
+  address     String?
+  inviteCode  String       @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  employees   Employee[]
+  forms       Form[]
+  invite      Invite[]
+  projects    Project[]
+  reports     Report[]
+  submissions Submission[]
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, name])
+}
+
+model Employee {
+  id                  String                       @id @default(cuid())
+  fullName            String?
+  email               String?
+  contactNumber       String?
+  address             String?
+  avatar              String?
+  role                EmployeeRole                 @default(MEMBER)
+  userId              String
+  organizationId      String
+  createdAt           DateTime                     @default(now())
+  updatedAt           DateTime                     @updatedAt
+  organization        Organization                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user                User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectAssociations EmployeeProjectAssociation[]
+  forms               Form[]
+  reports             Report[]
+  submissions         Submission[]
+  invite              Invite[]
+
+  @@index([userId, organizationId])
+}
+
+model Invite {
+  id             String       @id @default(cuid())
+  token          String
+  email          String
+  inviteCode     String?
+  role           EmployeeRole @default(MEMBER)
+  expirationDate DateTime
+  organizationId String
+  employeeId     String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  employee       Employee     @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@map("Invite")
+}
+
+model Project {
+  id                  String                       @id @default(cuid())
+  name                String
+  description         String
+  expectedDuration    String
+  status              String
+  isCompleted         Boolean                      @default(false)
+  startDate           DateTime
+  endDate             DateTime
+  organizationId      String
+  createdAt           DateTime                     @default(now())
+  updatedAt           DateTime                     @updatedAt
+  projectAssociations EmployeeProjectAssociation[]
+  forms               Form[]
+  organization        Organization                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  reports             Report[]
+  submissions         Submission[]
+
+  @@index([organizationId])
+}
+
+model EmployeeProjectAssociation {
+  id         String      @id @default(cuid())
+  employeeId String
+  projectId  String
+  role       ProjectRole @default(FIELD_AGENT)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  employee   Employee    @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  project    Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([employeeId, projectId])
+}
+
+model Form {
+  id             String       @id @default(cuid())
+  title          String
+  formData       String       @default("[]")
+  description    String       @default("")
+  published      Boolean      @default(false)
+  // visits         Int @default(0)
+  // subCount       Int @default(0)
+  creatorId      String
+  organizationId String
+  projectId      String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  employee       Employee     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  submissions    Submission[]
+
+  @@index([projectId, creatorId, organizationId])
+}
+
+model Submission {
+  id             String       @id @default(cuid())
+  title          String
+  description    String
+  submissionData String
+  geolocation    String?
+
+  creatorId      String
+  employee       Employee     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  organizationId String
+  formId         String
+  projectId      String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  form           Form         @relation(fields: [formId], references: [id], onDelete: Cascade)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([formId, projectId, creatorId, organizationId])
+}
+
+model Report {
+  id             String   @id @default(cuid())
+  title          String
+  reportData     String
+  creatorId      String
+  organizationId String
+  projectId      String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  employee       Employee @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, creatorId, organizationId])
+}
+
+
+model Audit {
+  id        String   @id @default(cuid())
+  userMail  String
+  ipAddress String?
+  orgId     String
+  type      String
+  tableName String
+  dateTime  DateTime @default(now())
+  oldValues String
+  newValues String
+  rowId     String
+}
+
+enum EmployeeRole {
+  OWNER
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum Source {
+  FACEBOOK
+  TWITTER
+  INSTAGRAM
+  LINKEDIN
+  GOOGLE
+  OTHER
+}
+enum ProjectRole {
+  SUPERVISOR
+  FIELD_AGENT
+  GUEST
+  MANAGER
+}
+
