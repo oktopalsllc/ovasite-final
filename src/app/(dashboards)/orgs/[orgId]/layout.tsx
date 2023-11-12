@@ -8,7 +8,7 @@ export default function OrgsLayout({
 }) {
   return (
     <section className="flex flex-col md:flex-row"> 
-      {/* <SidebarNav activeLink={"projects"} /> */}
+      <SidebarNav activeLink={"projects"} />
       <section className=" bg-mobile-bg md:bg-ova_white md:ml-[25vw]  md:w-[75vw]">
         {children}
       </section>
