@@ -221,3 +221,91 @@ type Audit = {
 //     Source,
 //     ProjectRole
 //   };
+
+// ========================== AUTH ========================
+
+interface ISignInForm {
+  email: string;
+  password: string;
+}
+
+interface ISignUpForm {
+  email: string;
+  password: string;
+  source: string;
+}
+
+// SIGN IN
+type UserInfo = {
+  createdAt: string;
+  email: string;
+  id: string;
+  role: string;
+  stripeCurrentPeriodEnd: string;
+  stripeCustomerId: string;
+  stripePriceId: string;
+  stripeSubscriptionId: string;
+  organizations: [];
+};
+
+interface ISignInResponse {
+  access_token: string;
+  userInfo: UserInfo;
+}
+
+type SuccessfulSignInResponse = {
+  success: true;
+  data: ISignInResponse;
+};
+
+type FailedSignInResponse = {
+  success: false;
+  error: string;
+};
+
+type SignInResponse = SuccessfulSignInResponse | FailedSignInResponse;
+
+// SIGN UP
+
+interface ISignUpResponse {
+  message: string;
+}
+
+type SuccessfulSignUpResponse = {
+  success: true;
+  data: ISignUpResponse;
+};
+
+type FailedSignUpResponse = {
+  success: false;
+  error: string;
+};
+
+type SignUpResponse = SuccessfulSignUpResponse | FailedSignUpResponse;
+
+// Organisation
+interface ICreateOrganisationForm {
+  name: string;
+}
+interface ICreateOrgResponse {
+  address: string;
+  createdAt: string;
+  id: string;
+  inviteCode: string;
+  logo: string;
+  name: string;
+  updatedAt: string;
+  userId: string;
+}
+
+type SuccessfulCreateOrgResponse = {
+  success: true;
+  data: ICreateOrgResponse;
+};
+
+type FailedCreateOrgResponse = {
+  success: false;
+  error: string;
+};
+
+type CreateOrgResponse = SuccessfulCreateOrgResponse | FailedCreateOrgResponse;
