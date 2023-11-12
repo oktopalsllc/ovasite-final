@@ -11,12 +11,13 @@ export const projectService = {
   getEmpProjects,
   updateProject,
   editEmpRole,
+  exportProject,
   deleteProject,
   removeEmployee,
 };
 
 // Create a new project
-async function createProject(orgId: string, data: string) {
+async function createProject(orgId: string, data: string, token: string) {
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/project/create`,
     {
@@ -27,7 +28,7 @@ async function createProject(orgId: string, data: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -38,7 +39,8 @@ async function createProject(orgId: string, data: string) {
 async function addProjectEmp(
   orgId: string,
   projectId: string,
-  data: string
+  data: string,
+  token:string
 ) {
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/project/adduser/${projectId}`,
@@ -50,7 +52,7 @@ async function addProjectEmp(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -58,7 +60,7 @@ async function addProjectEmp(
 }
 
 // Get a project by its id
-async function getProject(orgId: string, projectId: string) {
+async function getProject(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/project/${projectId}`,
     {
@@ -66,7 +68,7 @@ async function getProject(orgId: string, projectId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -74,20 +76,20 @@ async function getProject(orgId: string, projectId: string) {
 }
 
 // Get organization projects
-async function getProjects(orgId: string) {
+async function getProjects(orgId: string, token: string) {
   const response = await axios.get(`${apiUrl}/orgs/${orgId}/projects`, {
     withCredentials: true,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + localStorage.getItem("token"),
+      Authorization: "Bearer " + token,
     },
   });
   return response.data.projects;
 }
 
 // Get associated employees
-async function getProjectEmps(orgId: string, projectId: string) {
+async function getProjectEmps(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/projectusers/${projectId}`,
     {
@@ -95,7 +97,7 @@ async function getProjectEmps(orgId: string, projectId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -103,7 +105,7 @@ async function getProjectEmps(orgId: string, projectId: string) {
 }
 
 // Get employee projects
-async function getEmpProjects(orgId: string, empId: string) {
+async function getEmpProjects(orgId: string, empId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/userprojects/${empId}`,
     {
@@ -111,7 +113,7 @@ async function getEmpProjects(orgId: string, empId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -122,7 +124,8 @@ async function getEmpProjects(orgId: string, empId: string) {
 async function updateProject(
   orgId: string,
   projectId: string,
-  data: string
+  data: string,
+  token: string
 ) {
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/project/update/${projectId}`,
@@ -134,7 +137,7 @@ async function updateProject(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -145,7 +148,8 @@ async function updateProject(
 async function editEmpRole(
   orgId: string,
   projectId: string,
-  data: string
+  data: string, 
+  token: string
 ) {
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/project/updateprojectrole/${projectId}`,
@@ -157,7 +161,7 @@ async function editEmpRole(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -165,7 +169,7 @@ async function editEmpRole(
 }
 
 // Delete a project
-async function deleteProject(orgId: string, projectId: string) {
+async function deleteProject(orgId: string, projectId: string, token: string) {
   const response = await axios.delete(
     `${apiUrl}/orgs/${orgId}/project/delete/${projectId}`,
     {
@@ -173,7 +177,7 @@ async function deleteProject(orgId: string, projectId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -184,7 +188,8 @@ async function deleteProject(orgId: string, projectId: string) {
 async function removeEmployee(
   orgId: string,
   projectId: string,
-  empId: string
+  empId: string,
+  token: string
 ) {
   const response = await axios.delete(
     `${apiUrl}/orgs/${orgId}/${projectId}/removeemployee/${empId}`,
@@ -193,7 +198,7 @@ async function removeEmployee(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -201,7 +206,7 @@ async function removeEmployee(
 }
 
 // Export a project to csv
-async function exportProject(orgId: string, projectId: string) {
+async function exportProject(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/project/export/${projectId}`,
     {
@@ -209,7 +214,7 @@ async function exportProject(orgId: string, projectId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );

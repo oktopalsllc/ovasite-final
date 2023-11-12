@@ -1,6 +1,3 @@
-import DesignerContextProvider from "@/components/form/context/DesignerContext";
-import NextTopLoader from "nextjs-toploader";
-
 
 export default function Projects({
   children,
@@ -9,11 +6,7 @@ export default function Projects({
 }) {
   return (
     <>
-      <NextTopLoader />
-      <DesignerContextProvider>
-
         {children}
-      </DesignerContextProvider>
     </>
   );
 }

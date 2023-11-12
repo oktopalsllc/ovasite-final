@@ -37,19 +37,6 @@ function FormBuilder({ form }: { form: Form }) {
   });
 
   const sensors = useSensors(mouseSensor, touchSensor);
-  // const formString = typeof window !== 'undefined' ? localStorage.getItem('formData') : "";
-  // const formData = formString?.toString() || "";
-  // console.log(formData);
-  // const getDesigner = async() => {
-  //   console.log("🚀 ~ file: FormBuilder.tsx:67 ~ getDesigner ~ form:", form)
-  //   if (isReady) return;    
-  //   console.log("🚀 ~ file: FormBuilder.tsx:67 ~ getDesigner ~ form:", form)
-  //   const elements = JSON.parse(form.formData);
-  //   setElements(elements);
-  //   setSelectedElement(null);
-  //   const readyTimeout = setTimeout(() => setIsReady(true), 500);
-  //   return () => clearTimeout(readyTimeout);
-  // };
 
   useEffect(() => {
     if (isReady) return;
@@ -59,7 +46,6 @@ function FormBuilder({ form }: { form: Form }) {
       setSelectedElement(null);
     } catch (error) {
       console.error("Error parsing form data:", error);
-      // Handle error appropriately
     }
     const readyTimeout = setTimeout(() => setIsReady(true), 500);
     return () => clearTimeout(readyTimeout);
