@@ -76,7 +76,7 @@ const Header = () => {
           <li>
             <Link href="/signup">
               <button className="items-center bg-[#FF595A] border-0 py-2 px-6 focus:outline-none 
-    hover:bg-[#fe5000] rounded text-[#001233]  font-bold"  onClick={closeMenu}>Get Started
+    hover:bg-[#fe5000] rounded text-[#001233] text-white font-bold"  onClick={closeMenu}>Get Started
                 {/* <svg fill="none" stroke="currentColor" strokeLinecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
       <path d="M5 12h14M12 5l7 7-7 7"></path>
     </svg>*/}
