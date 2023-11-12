@@ -1,35 +1,55 @@
-'use client';
-import React from 'react';
-import '@/styles/styles.css'
-import Link from 'next/link';
-import Image from 'next/image';
+"use client";
+import React from "react";
+import "@/styles/styles.css";
+import Link from "next/link";
+import Image from "next/image";
 
 export const Hero = () => {
   return (
-  <div id='hero'>
-<div id='heroUP'>
-  <h1>Your all-in-one platform for data</h1>
-  <h1><span className='text-[#FF595A]'>collection</span>,<span className='text-[#4CAF50]'>monitoring</span> and <span className='text-[#FFA500]'>evaluation.</span> </h1>
-</div>
-<div style={{textAlign:'center',fontWeight:'400',fontSize:'18px',lineHeight:'30px',paddingLeft:'23%',paddingRight:'23%'}}>
-  <p>OvaSite simplifies data collection, analysis and action. With a user-friendly interface and robust tools,it converts data into actionable insights, enabling informed decisions that fuel progress.</p>
-</div>
-<div style={{textAlign:'center',marginTop:'20px'}}>
-<Link href="/signup">
-  <button style={{marginRight:'30px'}} className="items-center bg-[#FF595A] border-0 py-2 px-6 focus:outline-none 
-    hover:bg-[#fe5000] rounded text-[#001233]  font-bold "  >Get Started
-  </button>
-  </Link>
-  <Link href="/features">
-  <button style={{marginRight:'30px',border:'1px solid #001233'}} className="items-center  border-0 py-2 px-6 focus:outline-none 
-   rounded text-[#001233] font-medium "  >Learn More
-  </button>
-  </Link>
-</div>
-<div style={{marginTop:"4%"}}>
-  <Image alt='Frame6' width={85} height={100} src='/Frame6.png' style={{paddingLeft:'15%', width: '85%'}}/>
-</div>
-  </div>
+    <section className="h-[800px] md:h-screen relative bg-[#EFDEDBB8]">
+      <div className="w-full h-full grid grid-cols-2">
+        <div className="w-full h-full bg-[url('/hero-bg-l.svg')] bg-no-repeat bg-[length:30%_30%] md:bg-auto bg-left-bottom"></div>
+        <div className="w-full h-full bg-[url('/hero-bg-r.svg')] bg-no-repeat bg-[length:60%_60%] md:bg-auto bg-right-bottom bg-none"></div>
+      </div>
+      <div className="top-0 left-0 absolute">
+        <div className="w-9/12 h-full mx-auto mt-2 md:mt-16 pt-36">
+          <div className="text-2xl leading-6 font-extrabold md:text-[64px] md:leading-[92px] md:font-extrabold text-center">
+            <h1>Your all-in-one platform for data</h1>
+            <h1>
+              <span className="text-[#FF595A]">collection, </span>
+              <span className="text-[#4CAF50]"> monitoring</span> and{" "}
+              <span className="text-[#FFA500]">evaluation.</span>{" "}
+            </h1>
+          </div>
+          <div className="md:w-8/12 mx-auto text-center">
+            <p className="text-center font-normal text-xs leading-4 md:text-2xl md:leading-9 mt-8">
+              OvaSite simplifies data collection, analysis and action. With a
+              user-friendly interface and robust tools,it converts data into
+              actionable insights, enabling informed decisions that fuel
+              progress.
+            </p>
+          </div>
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <Link href="/signup" className="items-center bg-[#FF595A] border-0 py-2 px-6 focus:outline-none hover:bg-[#fe5000] rounded font-bold text-white">
+                Get Started
+            </Link>
+            <Link href="/features" className="items-center  border-0 py-2 px-6 focus:outline-none rounded text-[#001233] font-medium "
+              >
+                Learn More
+            </Link>
+          </div>
+          <div className="w-full mx-auto mt-32">
+            <Image
+              alt="Frame6"
+              width={100}
+              height={50}
+              src="/Frame6.svg"
+              className="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

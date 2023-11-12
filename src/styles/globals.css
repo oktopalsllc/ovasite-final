@@ -2,6 +2,36 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@layer base {
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
+  [multiple],
+  textarea,
+  select {
+    @apply mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-[#001233] focus:ring-[#001233] block w-full rounded-md sm:text-sm focus:ring-1;
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    @apply border-gray-300 rounded text-[#03045E] focus:ring-[#03045E];
+  }
+
+  label {
+    @apply text-[18px] leading-[27px] font-normal;
+  }
+}
+
+
 body{
   margin: 0;
   padding: 0;

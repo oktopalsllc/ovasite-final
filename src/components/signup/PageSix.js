@@ -47,12 +47,12 @@ function PageSix() {
             <div>
               <div>
                 <Link href="/home">
-                  <Image alt='Logo' width={70} height={undefined}
-                    src="Logo.jpg"
-                    style={{ marginLeft: "20%", marginTop: "10px" }}
-                  />
+                  <Image alt="Logo" src="/Logo.jpg" width={60} height={60} />
                 </Link>
-                <Image alt='frame' width={400} height={undefined}
+                <Image
+                  alt="frame"
+                  width={400}
+                  height={200}
                   src="/Frame7567.jpg"
                   style={{ marginLeft: "20%", marginTop: "40px" }}
                 />
@@ -172,7 +172,7 @@ rounded text-[#001233] font-medium "
             </div>
           </div>
           <div>
-            <Image alt='frame' width={undefined} height={undefined} src="Frame750.jpg" />
+            <Image alt="frame" width={200} height={200} src="/Frame750.jpg" />
           </div>
         </div>
       </div>
