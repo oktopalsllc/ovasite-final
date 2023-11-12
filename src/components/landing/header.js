@@ -41,7 +41,7 @@ const Header = () => {
               <Image alt='Logo' src='/Logo.png' width={60} height={60} />
             </Link>
             <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center gap-4">
-              <Link className="mr-5 hover:text-[#FF595A]" href='/home'>Home</Link>
+              <Link className="mr-5 hover:text-[#FF595A]" href='/'>Home</Link>
               <Link className="mr-5 hover:text-[#FF595A]" href='/about'>About</Link>
               <Link className="mr-5 hover:text-[#FF595A]" href='/features'>Features</Link>
               <Link className="mr-5 hover:text-[#FF595A]" href='/pricing'>Pricing</Link>
