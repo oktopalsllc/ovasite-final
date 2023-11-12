@@ -12,26 +12,26 @@ export const formService = {
   getUserForms,
   publishForm,
   updateForm,
+  updateFormData,
   deleteForm,
 };
 
 // Create a new form
-async function createForm(orgId: string, data: formSchemaType) {
-  const validation = formSchema.safeParse(data);
-  if (!validation.success) {
-    throw new Error("form not valid");
-  }
+async function createForm(orgId: string, data: string, token: string) {
+  const{title, description, projectId} = JSON.parse(data);
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/form/create`,
     {
-      data,
+      title: title,
+      description: description,
+      projectId: projectId
     },
     {
       withCredentials: true,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -39,13 +39,14 @@ async function createForm(orgId: string, data: formSchemaType) {
 }
 
 // Get a form by Id
-async function getForm(formId: string, orgId: string) {
+async function getForm(formId: string, orgId: string, token: string) {
+  console.log(token);
   const response = await axios.get(`${apiUrl}/orgs/${orgId}/form/${formId}`, {
     withCredentials: true,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + localStorage.getItem("token"),
+      Authorization: "Bearer " + token,
     },
   });
 
@@ -53,7 +54,7 @@ async function getForm(formId: string, orgId: string) {
 }
 
 // Get form data by form Id
-async function getFormData(formId: string, orgId: string) {
+async function getFormData(formId: string, orgId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/form/data/${formId}`,
     {
@@ -61,7 +62,7 @@ async function getFormData(formId: string, orgId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -70,7 +71,7 @@ async function getFormData(formId: string, orgId: string) {
 }
 
 // Get form submissions
-async function getFormSubmissions(formId: string, orgId: string) {
+async function getFormSubmissions(formId: string, orgId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/form/submissions/${formId}`,
     {
@@ -78,7 +79,7 @@ async function getFormSubmissions(formId: string, orgId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -86,7 +87,7 @@ async function getFormSubmissions(formId: string, orgId: string) {
 }
 
 // Get forms for a particular project
-async function getForms(orgId: string, projectId: string) {
+async function getForms(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/forms/${projectId}`,
     {
@@ -94,7 +95,7 @@ async function getForms(orgId: string, projectId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -106,7 +107,8 @@ async function getForms(orgId: string, projectId: string) {
 async function getUserForms(
   orgId: string,
   empId: string,
-  projectId: string
+  projectId: string,
+  token: string
 ) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/userforms/${empId}/${projectId}`,
@@ -115,7 +117,7 @@ async function getUserForms(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -124,7 +126,7 @@ async function getUserForms(
 }
 
 // Publish a form for use
-async function publishForm(orgId: string, formId: string) {
+async function publishForm(orgId: string, formId: string, token: string) {
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/form/publish/${formId}`,
     {
@@ -132,7 +134,7 @@ async function publishForm(orgId: string, formId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -141,7 +143,7 @@ async function publishForm(orgId: string, formId: string) {
 }
 
 // Update a form
-async function updateForm(orgId: string, formId: string, data: string) {
+async function updateForm(orgId: string, formId: string, data: string, token: string) {
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/form/update/${formId}`,
     {
@@ -152,7 +154,27 @@ async function updateForm(orgId: string, formId: string, data: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+
+  return response.data.updatedForm;
+}
+
+// Update a form data
+async function updateFormData(orgId: string, formId: string, data: string, token: string) {
+  const response = await axios.patch(
+    `${apiUrl}/orgs/${orgId}/form/update/data/${formId}`,
+    {
+      data,
+    },
+    {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -161,7 +183,7 @@ async function updateForm(orgId: string, formId: string, data: string) {
 }
 
 // Delete a form
-async function deleteForm(orgId: string, formId: string) {
+async function deleteForm(orgId: string, formId: string, token: string) {
   const response = await axios.delete(
     `${apiUrl}/orgs/${orgId}/form/delete/${formId}`,
     {
@@ -169,7 +191,7 @@ async function deleteForm(orgId: string, formId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );

@@ -3,7 +3,6 @@ import axios from "axios";
 const apiUrl = process.env.API_URL;
 
 export const submissionService = {
-  getGeolocation,
   createSubmission,
   getSubmission,
   getProjectSubmission,
@@ -14,29 +13,8 @@ export const submissionService = {
   deleteSubmission,
 };
 
-// Get geolocation(longitude, latitude)
-async function getGeolocation(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        const geolocation = {
-          latitude,
-          longitude
-        };
-        resolve(JSON.stringify(geolocation));
-      }, (error) => {
-        reject(error);
-      });
-    } else {
-      reject(new Error("Geolocation is not supported by this browser."));
-    }
-  });
-}
-
-
 // Create a new submission
-async function createSubmission(orgId: string, data: string) {
+async function createSubmission(orgId: string, data: string, token: string) {
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/submission/create`,
     {
@@ -47,7 +25,7 @@ async function createSubmission(orgId: string, data: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -55,13 +33,13 @@ async function createSubmission(orgId: string, data: string) {
 }
 
 // Get a submission by Id
-async function getSubmission(orgId: string, id: string) {
+async function getSubmission(orgId: string, id: string, token: string) {
   const response = await axios.get(`${apiUrl}/orgs/${orgId}/submission/${id}`, {
     withCredentials: true,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + localStorage.getItem("token"),
+      Authorization: "Bearer " + token,
     },
   });
 
@@ -69,7 +47,7 @@ async function getSubmission(orgId: string, id: string) {
 }
 
 // Get submissions of a project
-async function getProjectSubmission(orgId: string, projectId: string) {
+async function getProjectSubmission(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/submissions/project/${projectId}`,
     {
@@ -77,7 +55,7 @@ async function getProjectSubmission(orgId: string, projectId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -86,7 +64,7 @@ async function getProjectSubmission(orgId: string, projectId: string) {
 }
 
 // Get submissions of a project
-async function getformSubmission(orgId: string, formId: string) {
+async function getformSubmission(orgId: string, formId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/submissions/form/${formId}`,
     {
@@ -94,7 +72,7 @@ async function getformSubmission(orgId: string, formId: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -106,7 +84,8 @@ async function getformSubmission(orgId: string, formId: string) {
 async function getEmpSubmission(
   orgId: string,
   empId: string,
-  projectId: string
+  projectId: string,
+  token: string
 ) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/usersubmissions/${empId}/${projectId}`,
@@ -115,7 +94,7 @@ async function getEmpSubmission(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -127,7 +106,8 @@ async function getEmpSubmission(
 async function updateSubmission(
   orgId: string,
   id: string,
-  data: string
+  data: string,
+  token: string
 ) {
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/submission/update/${id}`,
@@ -139,7 +119,7 @@ async function updateSubmission(
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -148,7 +128,7 @@ async function updateSubmission(
 }
 
 // Export a submission
-async function exportSubmission(orgId: string, id: string) {
+async function exportSubmission(orgId: string, id: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/submission/export/${id}`,
     {
@@ -156,7 +136,7 @@ async function exportSubmission(orgId: string, id: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );
@@ -165,7 +145,7 @@ async function exportSubmission(orgId: string, id: string) {
 }
 
 // Delete a submission
-async function deleteSubmission(orgId: string, id: string) {
+async function deleteSubmission(orgId: string, id: string, token: string) {
   const response = await axios.delete(
     `${apiUrl}/orgs/${orgId}/submission/delete/${id}`,
     {
@@ -173,7 +153,7 @@ async function deleteSubmission(orgId: string, id: string) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + token,
       },
     }
   );

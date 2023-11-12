@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { orgService } from '@/services/org-service/org.service.ts';
 import { useRouter } from 'next/navigation';
-import Loader from '@/components/shared/Loader';
+import { ImSpinner2 } from "react-icons/im";
 import '@/styles/styles.css';
 
 export default function Orgs() {
@@ -44,11 +44,11 @@ export default function Orgs() {
         <>
             {loaded ?
                 <></> :
-                <section className='orgLoader flex flex-col justify-center items-center top-50 h-full  bg-navy_blue'>
+                <section className='orgLoader flex flex-col justify-center items-center top-50 h-full'>
                     <h2>Please wait while we load your profile...</h2>
                     <br />
                     <br />
-                    <Loader />
+        <ImSpinner2 className="animate-spin h-12 w-12" />
                 </section>
             }
         </>

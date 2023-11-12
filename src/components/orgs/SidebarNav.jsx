@@ -1,6 +1,8 @@
+"use client";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 
 const navItem = () => {
 
@@ -8,6 +10,8 @@ const navItem = () => {
 
 
 export const SidebarNav = ({ activeLink }) => {
+    const params = useParams();
+    const{ orgId } = params;
 
     const [togglemenu, setToggleMenu] = useState(false)
     const th_style = "p-2 border-b text-[1.125rem] text-ova_dark_secondary";
@@ -100,7 +104,7 @@ export const SidebarNav = ({ activeLink }) => {
                     </Link>
                 </li>
                 <li className={`${activeLink == 'teams' ? activeLinkStyle : null} px-[1.2rem] py-[0.8rem] mt-[2rem]"`}>
-                    <Link href="/teams" className="flex flex-row items-center">
+                    <Link href={`/orgs/${orgId}/teams`} className="flex flex-row items-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="48"
@@ -235,7 +239,7 @@ export const SidebarNav = ({ activeLink }) => {
                     </Link>
                 </li>
                 <li className={`${activeLink == 'teams' ? activeLinkStyle : null} px-[1.2rem] py-[0.8rem] mt-[2rem]"`}>
-                    <Link href="/teams" className="flex flex-row items-center">
+                    <Link href={`/orgs/${orgId}/teams`} className="flex flex-row items-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="48"

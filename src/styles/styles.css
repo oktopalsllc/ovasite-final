@@ -19,6 +19,10 @@ justify-content: space-around;
 #divs>div{
 margin-right: 20px;
 }
+.orgLoader {
+  min-height: 100vh !important;
+}
+
 #span{
   border: 1px solid #68040a;
   position: absolute;
