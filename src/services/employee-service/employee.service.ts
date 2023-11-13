@@ -1,4 +1,5 @@
-"use server"
+"use server";
+import axiosInstance from "@/lib/axios";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();

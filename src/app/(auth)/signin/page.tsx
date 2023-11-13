@@ -49,7 +49,7 @@ const Page = () => {
         if (userInfo.organizations.length == 0) {
           router.push("/orgs/create-org");
         } else {
-          router.push("/users/update-profile");
+          router.push("/orgs");
         }
       } else {
         const error = response.error;
