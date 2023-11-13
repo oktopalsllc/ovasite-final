@@ -13,7 +13,6 @@ export default function Projects({params}: {
     };
   }){
     const {orgId} = params;
-    console.log("🚀 ~ file: page.tsx:16 ~ orgId:", orgId)
     const router = useRouter();
     return <h3>paste id for top abeg</h3>
 }
