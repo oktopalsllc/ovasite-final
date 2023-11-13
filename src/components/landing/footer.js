@@ -5,41 +5,40 @@ import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <footer className="w-10/12 lg:w-9/12 mx-auto py-6">
-      <div className="flex justify-between items-center">
-        <a className="text-[#FF595A]">
-          <span className="text-xl">OvaSite</span>
-        </a>
+    <footer className="text-gray-600 body-font bg-[white]">
+      <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+        <Link href='/' className="flex title-font font-bold items-center md:justify-start justify-center text-[#FF595A]">
 
-        <div className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-          <a className="text-gray-500">
+          <span className="ml-3 text-xl">OvaSite</span>
+        </Link>
+
+        <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+
+          <Link href='https://twitter.com/oktopals' target="_blank" className="ml-3">
             <Image
-              src="/ig.svg"
-              alt="instagram"
-              width={48}
-              height={48}
-              className="w-8 h-8 md:w-12 md:h-12 text-black"
-            />
-          </a>
-          <a className="ml-3 text-gray-500">
-            <Image
-              src="/fb.svg"
-              alt="faceboook"
-              width={48}
-              height={48}
-              className="w-8 h-8 md:w-12 md:h-12 text-black"
-            />
-          </a>
-          <a className="ml-3 text-gray-500">
-            <Image
-              src="/x.svg"
+              src="/twitterx.svg"
               alt="x"
-              width={48}
-              height={48}
-              className="w-8 h-8 md:w-12 md:h-12 text-black"
+              width={30}
+              height={25}
             />
-          </a>
-        </div>
+          </Link>
+          <Link href='https://www.linkedin.com/company/httpswwwlinkedincomoktopalsllc' target="_blank" className="ml-3">
+            <Image
+              src="/linkedinThin.svg"
+              alt="linkedin"
+              width={30}
+              height={30}
+            />
+          </Link>
+          <Link href='https://www.linkedin.com/company/httpswwwlinkedincomoktopalsllc' target="_blank" className="ml-3">
+            <Image
+              src="/mailThin.svg"
+              alt="mail"
+              width={30}
+              height={30}
+            />
+          </Link>
+        </span>
       </div>
     </footer>
   );

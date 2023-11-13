@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 const schema = yup.object({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
+  source: yup.string().required("Source is required")
 });
 
 function PageOne() {
@@ -28,7 +29,7 @@ function PageOne() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<ISignInForm>({
+  } = useForm<ISignUpForm>({
     resolver: yupResolver(schema),
   });
 
@@ -152,7 +153,7 @@ function PageOne() {
                       <select {...register("source")}>
                         <option value="FACEBOOK">Facebook</option>
                         <option value="ADVERTS">Adverts</option>
-                        <option value="OTHER">other</option>
+                        <option value="OTHER">Other</option>
                       </select>
                     </div>
                   </div>

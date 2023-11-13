@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import ThemeSwitcher from "@/components/form/ThemeSwitcher";
 
 const navItem = () => {
 
@@ -209,6 +210,7 @@ export const SidebarNav = ({ activeLink }) => {
                             LogOut
                         </h4>
                     </Link>
+                    <ThemeSwitcher />
                 </li>
             </ul>
 
@@ -343,7 +345,10 @@ export const SidebarNav = ({ activeLink }) => {
                         <h4 className="ml-[1rem] font-normal text-[1.25em] text-ova_white">
                             LogOut
                         </h4>
+                        
                     </Link>
+                    <br/>
+                    <ThemeSwitcher />
                 </li>
             </ul>
         </nav>

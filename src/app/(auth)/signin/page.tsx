@@ -41,6 +41,7 @@ const Page = () => {
       if (response.success) {
         const access_token = response.data.access_token;
         const userInfo = response.data.userInfo;
+        console.log("🚀 ~ file: page.tsx:44 ~ onSubmit ~ userInfo:", userInfo)
 
         localStorage.setItem("token", access_token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));

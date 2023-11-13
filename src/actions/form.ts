@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { formSchema, formSchemaType } from "@/schemas/form";
 // import { currentUser } from "@clerk/nextjs";
-import { employeeService } from "@/services/employee-service/employee.service";
+import { getCurrentEmployee } from "@/services/employee-service/employee.service";
 
 // class UserNotFoundErr extends Error {}
 
