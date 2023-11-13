@@ -10,7 +10,7 @@ export const Hero = () => {
   <div id='hero'>
 <div id='heroUP'>
   <h1>Your all-in-one platform for data</h1>
-  <h1><span className='text-[#FF595A]'>collection</span>,<span className='text-[#4CAF50]'>monitoring</span> and <span className='text-[#FFA500]'>evaluation.</span> </h1>
+  <h1><span className='text-[#FF595A]'>collection</span>, <span className='text-[#4CAF50]'>monitoring</span> and <span className='text-[#FFA500]'>evaluation.</span> </h1>
 </div>
 <div style={{textAlign:'center',fontWeight:'400',lineHeight:'30px',paddingLeft:'23%',paddingRight:'23%'}} id='action'>
   <p>OvaSite simplifies data collection, analysis and action. With a user-friendly interface and robust tools,it converts data into actionable insights, enabling informed decisions that fuel progress.</p>

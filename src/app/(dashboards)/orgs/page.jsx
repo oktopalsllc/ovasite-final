@@ -8,7 +8,7 @@ import '@/styles/styles.css';
 export default function Orgs() {
     const router = useRouter();
     const [orgId, setOrgId] = useState('');
-    const [loaded, setLoaded] = useState(false); 
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         async function loadOrgs() {
@@ -48,7 +48,7 @@ export default function Orgs() {
                     <h2>Please wait while we load your profile...</h2>
                     <br />
                     <br />
-        <ImSpinner2 className="animate-spin h-12 w-12" />
+                    <ImSpinner2 className="animate-spin h-12 w-12" />
                 </section>
             }
         </>

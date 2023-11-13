@@ -1,7 +1,8 @@
 "use client";
-import { 
+import {
   // GetFormStats, 
-  GetForms } from "@/actions/form";
+  GetForms
+} from "@/actions/form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/form/ui/card";
 import { Skeleton } from "@/components/form/ui/skeleton";
 import { ReactNode, Suspense, useEffect, useState } from "react";
@@ -19,8 +20,15 @@ import Link from "next/link";
 import { BiRightArrowAlt } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
 import { useParams } from "next/navigation";
+import FormCards from "@/components/form/list/FormCards";
 
-export default function Home() {
+export default function Project({params,
+}: {
+  params: {
+    projectId: string;
+  };
+}) {
+  const projectId = params.projectId;
   return (
     <div className="container pt-4">
       {/* <Suspense fallback={<StatsCards loading={true} />}>
@@ -36,7 +44,7 @@ export default function Home() {
             <FormCardSkeleton key={el} />
           ))}
         >
-          <FormCards />
+          <FormCards projectId={projectId} />
         </Suspense>
       </div>
     </div>
@@ -137,91 +145,4 @@ export default function Home() {
 
 function FormCardSkeleton() {
   return <Skeleton className="border-2 border-primary-/20 h-[190px] w-full" />;
-}
-
-async function FormCards() {
-  // const hParams = useParams();
-  // const { projectId } = hParams;
-  // const forms = await GetForms(projectId.toString()|| "");
-  // return (
-  //   <>
-  //     {forms.map((form) => (
-  //       <FormCard key={form.id} form={form} />
-  //     ))}
-  //   </>
-  // );
-  
-  const [forms, setForms] = useState<Form[]>([]);
-  const hParams = useParams();
-  const { projectId } = hParams;
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedForms = await GetForms(projectId.toString() || "");
-        setForms(fetchedForms);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    fetchData();
-  }, [projectId]);
-  return (
-    <>
-      {forms.map((form) => (
-        <FormCard key={form.id} form={form} />
-      ))}
-    </>
-  );
-}
-
-function FormCard({ form }: { form: Form }) {
-  
-  const hParams = useParams();
-  const { orgId, projectId } = hParams;
-  const orgValue = orgId.toString() || "";
-  const projectValue = projectId.toString() || "";
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 justify-between">
-          <span className="truncate font-bold">{form.title}</span>
-          {form.published && <Badge>Published</Badge>}
-          {!form.published && <Badge variant={"destructive"}>Draft</Badge>}
-        </CardTitle>
-        <CardDescription className="flex items-center justify-between text-muted-foreground text-sm">
-          {formatDistance(form.createdAt, new Date(), {
-            addSuffix: true,
-          })}
-          {form.published && (
-            <span className="flex items-center gap-2">
-              {/* <LuView className="text-muted-foreground" />
-              <span>{form.visits.toLocaleString()}</span>
-              <FaWpforms className="text-muted-foreground" />
-              <span>{form.subCount.toLocaleString()}</span> */}
-            </span>
-          )}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="h-[20px] truncate text-sm text-muted-foreground">
-        {form.description || "No description"}
-      </CardContent>
-      <CardFooter>
-        {form.published && (
-          <Button asChild className="w-full mt-2 text-md gap-4">
-            <Link href={`/orgs/${orgValue}/projects/${projectValue}/forms/${form.id}`}>
-              View submissions <BiRightArrowAlt />
-            </Link>
-          </Button>
-        )}
-        {!form.published && (
-          <Button asChild variant={"secondary"} className="w-full mt-2 text-md gap-4">
-            <Link href={`/orgs/${orgValue}/projects/${projectValue}/forms/builder/${form.id}`}>
-              Edit form <FaEdit />
-            </Link>
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
-  );
 }

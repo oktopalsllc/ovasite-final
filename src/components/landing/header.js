@@ -68,7 +68,7 @@ const Header = () => {
 
       <div>
         <ul id='ul' style={menuStyle}>
-          <li><Link className="hover:text-[#fe5000] cursor-pointer text-[#1F1F1F]" href='/home' onClick={closeMenu}>Home</Link></li>
+          <li><Link className="hover:text-[#fe5000] cursor-pointer text-[#1F1F1F]" href='/' onClick={closeMenu}>Home</Link></li>
           <li><Link className="hover:text-[#fe5000] cursor-pointer text-[#1F1F1F]" href='/about' onClick={closeMenu}>About</Link></li>
           <li><Link className="hover:text-[#fe5000] cursor-pointer text-[#1F1F1F]" href='/features' onClick={closeMenu}>Features</Link></li>
           <li> <Link className="hover:text-[#fe5000]  cursor-pointer text-[#1F1F1F]" href='/pricing' onClick={closeMenu}>Pricing</Link></li>
