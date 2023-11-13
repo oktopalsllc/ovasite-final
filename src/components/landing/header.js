@@ -5,7 +5,6 @@ import Link from 'next/link';
 import '@/styles/styles.css';
 import Image from 'next/image';
 
-
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -37,9 +36,9 @@ const Header = () => {
   <div  className="custom-container">
 <div className="text-[#1F1F1F] body-font" style={{backgroundColor:'white'}}>
   <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a className="flex title-font font-bold items-center mb-4 md:mb-0 " style={{color:'rgb(256, 89, 90)',marginLeft:'50px'}}>
+    <Link href='/' className="flex title-font font-bold items-center mb-4 md:mb-0 " style={{color:'rgb(256, 89, 90)',marginLeft:'50px'}}>
       <Image alt='Logo' src='/Logo.jpg' width={60} height={60} />
-    </a>
+    </Link>
     <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center gap-4">
       <Link className="mr-5 hover:text-[#FF595A]" href='/'>Home</Link>
       <Link className="mr-5 hover:text-[#FF595A]" href='/about'>About</Link>
