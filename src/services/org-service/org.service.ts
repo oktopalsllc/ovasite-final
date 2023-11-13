@@ -11,6 +11,7 @@ export const orgService = {
   getOrgOwners,
   updateOrg,
   deleteOrg,
+  updateEmployeeProfiledata,
 };
 
 // Create a new organization
@@ -121,3 +122,24 @@ export async function createOrg2(
     };
   }
 }
+
+
+async function updateEmployeeProfiledata(
+  data: IEmployeeUpdateProfile,
+  orgId: string,
+  empId: string
+): Promise<EmployeeUpdateProfileResponse> {
+  try {
+    const response = await axiosInstance.patch(`/orgs/${orgId}/employees/${empId}`, data);
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: "Unable to update employee profile",
+    };
+  }
+}
+

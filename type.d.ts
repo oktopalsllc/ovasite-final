@@ -222,6 +222,18 @@ type Audit = {
 //     ProjectRole
 //   };
 
+// ========================== RESPONSES ========================
+
+interface SuccessfulEResponse {
+  success: true;
+  data: IEmployeeUpdateProfileResponse;
+};
+
+interface FailedResponse {
+  success: false;
+  error: string;
+};
+
 // ========================== AUTH ========================
 
 interface ISignInForm {
@@ -253,37 +265,26 @@ interface ISignInResponse {
   userInfo: UserInfo;
 }
 
-type SuccessfulSignInResponse = {
+interface SuccessfulSignInResponse extends SuccessfulEResponse{
   success: true;
   data: ISignInResponse;
 };
 
-type FailedSignInResponse = {
-  success: false;
-  error: string;
-};
+type SignInResponse = SuccessfulSignInResponse | FailedResponse;
 
-type SignInResponse = SuccessfulSignInResponse | FailedSignInResponse;
-
-// SIGN UP
-
+// ===================== SIGN UP =====================
 interface ISignUpResponse {
   message: string;
 }
 
-type SuccessfulSignUpResponse = {
+interface SuccessfulSignUpResponse extends SuccessfulEResponse {
   success: true;
   data: ISignUpResponse;
 };
 
-type FailedSignUpResponse = {
-  success: false;
-  error: string;
-};
+type SignUpResponse = SuccessfulSignUpResponse | FailedResponse;
 
-type SignUpResponse = SuccessfulSignUpResponse | FailedSignUpResponse;
-
-// Organisation
+// ========================= Organisation ===========================
 interface ICreateOrganisationForm {
   name: string;
 }
@@ -298,14 +299,52 @@ interface ICreateOrgResponse {
   userId: string;
 }
 
-type SuccessfulCreateOrgResponse = {
+interface SuccessfulCreateOrgResponse extends SuccessfulEResponse {
   success: true;
   data: ICreateOrgResponse;
 };
 
-type FailedCreateOrgResponse = {
-  success: false;
-  error: string;
+type CreateOrgResponse = SuccessfulCreateOrgResponse | FailedResponse;
+
+// ========================= Employee ===========================
+interface IEmployeeRole {
+  OWNER: "OWNER";
+  ADMIN: "ADMIN";
+  MEMBER: "MEMBER";
+  GUEST: "GUEST";
+}
+
+interface IEmployee {
+  fullName: string;
+  email: string;
+  contactNumber: string;
+  address: string;
+  avatar?: string;
+  role?: IEmployeeRole;
+  userId?: string;
+  organizationId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface IEmployeeUpdateProfile extends IEmployee {}
+
+interface IEmployeeUpdateProfileResponse {
+  id: string;
+  fullName: string;
+  email: string;
+  contactNumber: string;
+  address: string;
+  avatar: string;
+  role: string;
+  userId: string;
+  organizationId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface SuccessfulEmployeeUpdateProfileResponse extends SuccessfulEResponse {
+  data: IEmployeeUpdateProfileResponse;
 };
 
-type CreateOrgResponse = SuccessfulCreateOrgResponse | FailedCreateOrgResponse;
+type EmployeeUpdateProfileResponse = SuccessfulEmployeeUpdateProfileResponse | FailedResponse;

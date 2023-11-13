@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { toast } from "@/components/form/ui/use-toast";
 
 const schema = yup.object({
   email: yup.string().required("Email is required"),
@@ -41,7 +42,6 @@ const Page = () => {
       if (response.success) {
         const access_token = response.data.access_token;
         const userInfo = response.data.userInfo;
-        console.log("🚀 ~ file: page.tsx:44 ~ onSubmit ~ userInfo:", userInfo)
 
         localStorage.setItem("token", access_token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -49,10 +49,14 @@ const Page = () => {
         if (userInfo.organizations.length == 0) {
           router.push("/orgs/create-org");
         } else {
-          router.push("/users/update-profile");
+          router.push("/orgs");
         }
       } else {
         const error = response.error;
+        toast({
+          title: "Error",
+          description: error,
+        });
       }
     } catch (error) {}
   };
