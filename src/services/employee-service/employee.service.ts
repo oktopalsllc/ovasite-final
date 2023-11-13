@@ -6,10 +6,7 @@ export const employeeService = {
   getCurrentEmployee,
 };
 
-async function getCurrentEmployee(orgId: string) {
-  const userString =
-    typeof window !== "undefined" ? localStorage.getItem("userId") : "";
-  const userId = userString?.toString() || "";
+async function getCurrentEmployee(orgId: string, userId: string) {
   if (!userId) {
     return null;
   }
