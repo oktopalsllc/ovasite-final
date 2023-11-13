@@ -1,9 +1,11 @@
+import axiosInstance from "@/lib/axios";
 import axios from "axios";
 
 const apiUrl = process.env.API_URL;
 
 export const orgService = {
   createOrg,
+  createOrg2,
   getOrgs,
   getOrgById,
   getOrgOwners,
@@ -100,4 +102,22 @@ export async function deleteOrg(orgId: string, token: string) {
     },
   });
   return response.data;
+}
+
+// Create a new organization
+export async function createOrg2(
+  data: ICreateOrganisationForm
+): Promise<CreateOrgResponse> {
+  try {
+    const response = await axiosInstance.post("/orgs", { ...data });
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: "Error creating Organisation",
+    };
+  }
 }

@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextTopLoader />
         <DesignerContextProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             {children}
             <Toaster />
           </ThemeProvider>
