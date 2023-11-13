@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { orgService } from "@/services/org-service/org.service";
 import { useRouter } from "next/navigation";
+import { getCurrentEmployee } from "@/services/employee-service/employee.service";
 
 const schema = yup.object({
   name: yup.string().required("Oranisation name is required"),
@@ -31,8 +32,10 @@ function CreateOrg() {
       const response = await orgService.createOrg2(data);
 
       if (response.success) {
-        const { userId } = response.data;
-        // router.push(`/users/update-profile/${userId}`);
+        const { id: orgId, userId } = response.data;
+        const employeeId = await getCurrentEmployee(orgId, userId);
+        
+        router.push(`/orgs/${orgId}/employee-profile/${employeeId}`);
       } else {
         const error = response.error;
       }
