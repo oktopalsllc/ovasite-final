@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { toast } from "@/components/form/ui/use-toast";
 
 const schema = yup.object({
   email: yup.string().required("Email is required"),
@@ -52,6 +53,10 @@ const Page = () => {
         }
       } else {
         const error = response.error;
+        toast({
+          title: "Error",
+          description: error,
+        });
       }
     } catch (error) {}
   };
