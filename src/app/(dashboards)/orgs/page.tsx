@@ -4,6 +4,7 @@ import { orgService } from '@/services/org-service/org.service.ts';
 import { useRouter } from 'next/navigation';
 import { ImSpinner2 } from "react-icons/im";
 import '@/styles/styles.css';
+import { getCurrentEmployee } from '@/services/employee-service/employee.service.ts';
 
 export default function Orgs() {
     const router = useRouter();
@@ -13,18 +14,19 @@ export default function Orgs() {
     useEffect(() => {
         async function loadOrgs() {
             try {
-                const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
-                const token = tokenString?.toString() || "";
-                const orgs = await orgService.getOrgs(token);
-                if (orgs.length == 0) {
+                const user = typeof window !== 'undefined' ? localStorage.getItem('userInfo') : "";
+                const userInfo = JSON.parse(user as string);
+                const userId = userInfo?.id as string;
+                const orgsId = userInfo?.organizations[0].id as string;
+                if (userInfo?.organizations.length == 0) {
                     alert("You belong to no organizations!");
                     router.push(`/orgs/create-org`);
                 }
                 else {
-                    setOrgId(orgs[0].id);
+                    setOrgId(orgsId);
                     if (orgId) {
-                        const employeeId = orgs[0].employees[0].id;
-                        localStorage.setItem("employeeId", employeeId);
+                        const employeeId = await getCurrentEmployee(orgsId, userId);
+                        localStorage.setItem("employeeId", employeeId as string);
                         router.push(`/orgs/${orgId}/projects`);
                         setLoaded(true);
                     }

@@ -93,7 +93,7 @@ function PageThree() {
                                   {/* <p className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-[#001233] focus:ring-[#001233] block w-full rounded-md sm:text-sm focus:ring-1'> */}
                                   <label
                                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    for="grid-city"
+                                    htmlFor="grid-city"
                                   >
                                     State
                                   </label>
@@ -111,7 +111,7 @@ function PageThree() {
                                   {/* <p className='mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-[#001233] focus:ring-[#001233] block w-full rounded-md sm:text-sm focus:ring-1'> */}
                                   <label
                                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    for="grid-city"
+                                    htmlFor="grid-city"
                                   >
                                     City
                                   </label>
