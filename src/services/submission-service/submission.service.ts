@@ -49,7 +49,7 @@ async function getSubmission(orgId: string, id: string, token: string) {
 // Get submissions of a project
 async function getProjectSubmission(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
-    `${apiUrl}/orgs/${orgId}/submissions/project/${projectId}`,
+    `${apiUrl}/orgs/${orgId}/submissions/${projectId}`,
     {
       withCredentials: true,
       headers: {
