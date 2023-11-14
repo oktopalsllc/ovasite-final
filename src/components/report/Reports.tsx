@@ -42,7 +42,7 @@ async function ReportsTable({ projectId }: { projectId: string }) {
     };
 
     const rows: Row[] = [];
-    if (reports.lenght > 0) {
+    if (reports.length > 0) {
         reports.forEach((report: any) => {
             rows.push({
                 title: report.title,
@@ -55,7 +55,7 @@ async function ReportsTable({ projectId }: { projectId: string }) {
 
     return (
         <>
-            {reports.lenght > 0 ?
+            {reports.length > 0 ?
                 <div className="rounded-md border">
                     <Table>
                         <TableHeader>

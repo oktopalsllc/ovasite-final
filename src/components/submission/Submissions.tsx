@@ -52,7 +52,6 @@ async function SubmissionsTable({ projectId }: { projectId: string }) {
 
     const rows: Row[] = [];
     submissions.forEach((submission: any) => {
-        const content = JSON.parse(submission.submissionData);
         rows.push({
             title: submission.title,
             submissionId: submission.id,
@@ -63,7 +62,7 @@ async function SubmissionsTable({ projectId }: { projectId: string }) {
 
     return (
         <>
-            {submissions.lenght > 0 ?
+            {submissions.length > 0 ?
                 <div className="rounded-md border">
                     <Table>
                         <TableHeader>
