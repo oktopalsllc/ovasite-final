@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-function SidebarMenu({ activeLink = 'projects' }) {
+function SidebarMenu() {
+  const [activeLink, setActiveLink] = useState("projects");
   const [isCollapsed, setCollapsed] = useState(false);
 
   const toggleCollapse = () => {
@@ -8,7 +9,9 @@ function SidebarMenu({ activeLink = 'projects' }) {
   };
 
   return (
-    <div className={`${isCollapsed ? '' : 'w-96'} bg-gray-800 text-white h-screen`}>
+    <div
+      className={`${isCollapsed ? "" : "w-96"} bg-gray-800 text-white h-screen`}
+    >
       <div className="p-4">
         {/* Your Sidebar Content */}
         <div
@@ -19,9 +22,11 @@ function SidebarMenu({ activeLink = 'projects' }) {
           <span>{isCollapsed ? "" : "Collapse"}</span>
         </div>
         <div className="mt-4 px-3 space-y-6">
-
           {/* Sidebar items with icons and text */}
-          <div className="flex items-center space-x-4 cursor-pointer">
+          <div
+            onClick={()=>setActiveLink("projects")}
+            className="flex items-center space-x-4 cursor-pointer"
+          >
             {/* Icon */}
             <span className="text-xl">
               <svg
@@ -41,11 +46,24 @@ function SidebarMenu({ activeLink = 'projects' }) {
               </svg>
             </span>
             {/* Text */}
-            {!isCollapsed && <span className={`${activeLink == "projects" ? 'text-[#FF595A] font-semibold' : "text-ova_white"} ml-[1rem]  text-lg `}>Project</span>}
+            {!isCollapsed && (
+              <span
+                className={`${
+                  activeLink == "projects"
+                    ? "text-[#FF595A] font-semibold"
+                    : "text-ova_white"
+                } ml-[1rem]  text-lg `}
+              >
+                Project
+              </span>
+            )}
           </div>
 
           {/* Add more sidebar items as needed */}
-          <div className="flex items-center space-x-4 cursor-pointer">
+          <div
+            onClick={()=>setActiveLink("teams")}
+            className="flex items-center space-x-4 cursor-pointer"
+          >
             {/* Icon */}
             <span className="text-xl">
               <svg
@@ -65,11 +83,24 @@ function SidebarMenu({ activeLink = 'projects' }) {
               </svg>
             </span>
             {/* Text */}
-            {!isCollapsed && <span className={`${activeLink == "teams" ? 'text-[#FF595A] font-semibold' : "text-ova_white"} ml-[1rem]  text-lg `}>Teams</span>}
+            {!isCollapsed && (
+              <span
+                className={`${
+                  activeLink == "teams"
+                    ? "text-[#FF595A] font-semibold"
+                    : "text-ova_white"
+                } ml-[1rem]  text-lg `}
+              >
+                Teams
+              </span>
+            )}
           </div>
 
           {/* Add more sidebar items as needed */}
-          <div className="flex items-center space-x-4 cursor-pointer">
+          <div
+            onClick={()=>setActiveLink("subscriptions")}
+            className="flex items-center space-x-4 cursor-pointer"
+          >
             {/* Icon */}
             <span className="text-xl">
               <svg
@@ -89,11 +120,24 @@ function SidebarMenu({ activeLink = 'projects' }) {
               </svg>
             </span>
             {/* Text */}
-            {!isCollapsed && <span className={`${activeLink == "subscriptions" ? 'text-[#FF595A] font-semibold' : "text-ova_white"} ml-[1rem]  text-lg `}>Subscriptions</span>}
+            {!isCollapsed && (
+              <span
+                className={`${
+                  activeLink == "subscriptions"
+                    ? "text-[#FF595A] font-semibold"
+                    : "text-ova_white"
+                } ml-[1rem]  text-lg `}
+              >
+                Subscriptions
+              </span>
+            )}
           </div>
 
           {/* Add more sidebar items as needed */}
-          <div className="flex items-center space-x-4 cursor-pointer">
+          <div
+            onClick={()=>setActiveLink("audit")}
+            className="flex items-center space-x-4 cursor-pointer"
+          >
             {/* Icon */}
             <span className="text-xl">
               <svg
@@ -113,11 +157,24 @@ function SidebarMenu({ activeLink = 'projects' }) {
               </svg>
             </span>
             {/* Text */}
-            {!isCollapsed && <span className={`${activeLink == "audit" ? 'text-[#FF595A] font-semibold' : "text-ova_white"} ml-[1rem]  text-lg `}>Audit</span>}
+            {!isCollapsed && (
+              <span
+                className={`${
+                  activeLink == "audit"
+                    ? "text-[#FF595A] font-semibold"
+                    : "text-ova_white"
+                } ml-[1rem]  text-lg `}
+              >
+                Audit
+              </span>
+            )}
           </div>
 
           {/* Add more sidebar items as needed */}
-          <div className="flex items-center space-x-4 cursor-pointer">
+          <div
+            onClick={()=>setActiveLink("support")}
+            className="flex items-center space-x-4 cursor-pointer"
+          >
             {/* Icon */}
             <span className="text-xl">
               <svg
@@ -137,7 +194,17 @@ function SidebarMenu({ activeLink = 'projects' }) {
               </svg>
             </span>
             {/* Text */}
-            {!isCollapsed && <div className={`${activeLink == "support" ? 'text-[#FF595A] font-semibold' : "text-ova_white"} ml-[1rem]  text-lg `}>Customer Support</div>}
+            {!isCollapsed && (
+              <div
+                className={`${
+                  activeLink == "support"
+                    ? "text-[#FF595A] font-semibold"
+                    : "text-ova_white"
+                } ml-[1rem]  text-lg `}
+              >
+                Customer Support
+              </div>
+            )}
           </div>
         </div>
       </div>
