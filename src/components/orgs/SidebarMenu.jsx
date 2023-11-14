@@ -12,7 +12,7 @@ function SidebarMenu() {
     <div
       className={`${
         isCollapsed ? "" : "w-96"
-      } bg-[#001333] text-white max-h-full overflow-scroll`}
+      } bg-[#001333] text-white max-h-full overflow-y-scroll`}
     >
       <div className="p-0">
         {/* Your Sidebar Content */}
