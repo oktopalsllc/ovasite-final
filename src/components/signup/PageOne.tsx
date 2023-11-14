@@ -9,6 +9,7 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import { authService } from "@/services/auth-service/auth.service";
 import { useRouter } from "next/navigation";
 import { ImSpinner2 } from "react-icons/im";
+import { toast } from "../form/ui/use-toast";
 
 const schema = yup.object({
   email: yup.string().required("Email is required"),
@@ -48,9 +49,17 @@ function PageOne() {
       } else {
         setIsLoading(false);
         const error = response.error;
+        toast({
+          title: "Error",
+          description: error,
+        });
       }
     } catch (error) {
       setIsLoading(false);
+      toast({
+        title: "Error",
+        description: 'An error occured. Try again',
+      });
     }
   };
 
