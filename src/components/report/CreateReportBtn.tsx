@@ -41,7 +41,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                     title: "Success",
                     description: message,
                 });
-                router.push(`/orgs/${orgId}/projects/reports/${reportId}`);
+                router.push(`/orgs/${orgId}/projects/${projectId}/reports/${reportId}`);
             }
             else {
                 toast({
@@ -64,19 +64,18 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
             <DialogTrigger asChild>
                 <Button
                     variant={"outline"}
-                    className="group border border-primary/20 h-[20px] bg-white items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
+                    className="group border border-primary/20 h-[50px] w-[50px] bg-white items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
                 >
-                    <BsFileEarmarkPlus className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
-                    <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">Create new report</p>
+                    <BsFileEarmarkPlus title="Create report" className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
                 </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Create project</DialogTitle>
-                    <DialogDescription>Create a new project to start collecting responses</DialogDescription>
+                    <DialogTitle>Create report</DialogTitle>
+                    <DialogDescription>Create a new report</DialogDescription>
                 </DialogHeader>
                 <Form {...report}>
-                    <form onSubmit={report.handleSubmit(onSubmit)} className="space-y-2">
+                    <form onSubmit={report.handleSubmit(onSubmit)} className="">
                         <FormField
                             control={report.control}
                             name="title"
@@ -123,7 +122,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                                 <FormItem>
                                     <FormLabel>Challenges and Recommendation</FormLabel>
                                     <FormControl>
-                                        <Textarea rows={3} {...field} />
+                                        <Textarea rows={2} {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -136,7 +135,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                                 <FormItem>
                                     <FormLabel>Executive Summary</FormLabel>
                                     <FormControl>
-                                        <Textarea rows={3} {...field} />
+                                        <Textarea rows={2} {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -149,7 +148,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                                 <FormItem>
                                     <FormLabel>Conclusion</FormLabel>
                                     <FormControl>
-                                        <Textarea rows={5} {...field} />
+                                        <Textarea rows={3} {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
