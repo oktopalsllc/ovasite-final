@@ -11,6 +11,7 @@ export const orgService = {
   getOrgOwners,
   updateOrg,
   deleteOrg,
+  getUserOrgs,
   updateEmployeeProfiledata,
 };
 
@@ -124,7 +125,25 @@ export async function createOrg2(
 }
 
 
-async function updateEmployeeProfiledata(
+export async function getUserOrgs(): Promise<UserOrgsResponse> {
+  try {
+    const response = await axiosInstance.get(`/orgs`);
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: "Unable to get uer orgs",
+    };
+  }
+}
+
+
+
+
+export async function updateEmployeeProfiledata(
   data: IEmployeeUpdateProfile,
   orgId: string,
   empId: string
