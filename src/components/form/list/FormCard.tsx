@@ -1,4 +1,3 @@
-"use client";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/form/ui/card";
 import { Form } from "@prisma/client";
 import { Badge } from "@/components/form/ui/badge";

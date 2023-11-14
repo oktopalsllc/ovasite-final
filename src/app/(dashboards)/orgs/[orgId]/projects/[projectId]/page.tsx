@@ -12,32 +12,71 @@ import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
 import { Separator } from "@/components/form/ui/separator";
 import CreateFormBtn from "@/components/form/CreateFormBtn";
-import { Form } from "@prisma/client";
-import { Badge } from "@/components/form/ui/badge";
-import { formatDistance } from "date-fns";
-import { Button } from "@/components/form/ui/button";
-import Link from "next/link";
-import { BiRightArrowAlt } from "react-icons/bi";
-import { FaEdit } from "react-icons/fa";
-import { useParams } from "next/navigation";
 import FormCards from "@/components/form/list/FormCards";
+import Submissions from "@/components/submission/Submissions";
+import Reports from "@/components/report/Reports";
 
-export default function Project({params,
+export default function Project({ params,
 }: {
   params: {
     projectId: string;
   };
 }) {
   const projectId = params.projectId;
+  const items = [
+    { id: 1, name: 'Forms' },
+    { id: 2, name: 'Submissions' },
+    { id: 3, name: 'Reports' },
+    { id: 4, name: 'Insights' },
+    { id: 5, name: 'Settings' },
+  ];
+
+  const [active, setActive] = useState(1);
+  const ActiveItem = () => {
+    switch (active) {
+      case 1:
+        return <FormCards projectId={projectId} />;
+      case 2:
+        return <Submissions projectId={projectId} />;
+      case 3:
+        return <Reports projectId={projectId} />;
+      case 4:
+        return <h1>Insights</h1>;
+      case 5:
+        return <h1>Settings</h1>;
+      default:
+        return <FormCards projectId={projectId} />;
+    }
+  };
   return (
     <div className="container pt-4">
       {/* <Suspense fallback={<StatsCards loading={true} />}>
         <CardStatsWrapper />
       </Suspense> */}
+      <h2 className="text-4xl font-bold col-span-2">
+        Project
+      </h2>
       <Separator className="my-6" />
-      <h2 className="text-4xl font-bold col-span-2">Your forms</h2>
+      <div className="flex flex-row">
+        {items.map((item, i) => {
+          return (
+            <div
+              key={i}
+              className={`m-2 p-2 text-xl hover:bg-gray-300 hover:text-gray-800 w-full`}
+              onClick={(i) => {
+                setActive(item.id);
+              }}>
+              {item.name}
+            </div>
+          );
+        })}
+      </div>
       <Separator className="my-6" />
-      <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <h3 className="text-3xl font-bold col-span-2">
+        {items.find((item) => item.id === active)?.name ?? 'Default Name'}
+      </h3>
+      <Separator className="my-6" />
+      {/* <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <CreateFormBtn />
         <Suspense
           fallback={[1, 2, 3, 4].map((el) => (
@@ -46,6 +85,11 @@ export default function Project({params,
         >
           <FormCards projectId={projectId} />
         </Suspense>
+      </div> */}
+      
+      <Separator className="my-6" />
+      <div className="flex flex-row">
+        {ActiveItem()}
       </div>
     </div>
   );
