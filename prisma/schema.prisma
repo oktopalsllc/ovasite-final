@@ -173,7 +173,7 @@ model Submission {
   description    String
   submissionData String
   geolocation    String?
-
+  formData       String?
   creatorId      String
   employee       Employee     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   organizationId String

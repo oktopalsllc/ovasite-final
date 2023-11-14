@@ -46,7 +46,7 @@ function FormCards({ projectId }: { projectId: string }) {
               </Suspense>
             </div>
             : 
-            <div className="grid gric-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-6">
               <CreateFormBtn />
               <h4 className="mt-14 text-2xl font-bold col-span-2">No forms yet</h4>
             </div>

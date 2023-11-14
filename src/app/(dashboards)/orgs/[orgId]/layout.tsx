@@ -7,9 +7,9 @@ export default function OrgsLayout({
   children: React.ReactNode
 }) {
   return (
-    <section className="flex flex-col md:flex-row"> 
+    <section className="flex flex-col gap-20 md:flex-row"> 
       <SidebarNav activeLink={"projects"} />
-      <section className=" bg-mobile-bg md:bg-ova_white md:ml-[25vw]  md:w-[75vw]">
+      <section className="bg-mobile-bg md:bg-ova_white md:ml-[25vw]  md:w-[75vw]">
         {children}
       </section>
     </section>

@@ -7,6 +7,7 @@ export const projectService = {
   createProject,
   addProjectEmp,
   getProject,
+  getProjectStats,
   getProjects,
   getProjectEmps,
   getEmpProjects,
@@ -79,6 +80,22 @@ async function addProjectEmp(
 async function getProject(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/project/${projectId}`,
+    {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.data;
+}
+
+// Get a project stats
+async function getProjectStats(orgId: string, projectId: string, token: string){
+  const response = await axios.get(
+    `${apiUrl}/orgs/${orgId}/project/stats/${projectId}`,
     {
       withCredentials: true,
       headers: {
