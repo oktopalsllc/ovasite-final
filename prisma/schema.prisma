@@ -1,56 +1,21 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-// model Form {
-//   id          Int      @id @default(autoincrement())
-//   userId      String
-//   createdAt   DateTime @default(now())
-//   published   Boolean  @default(false)
-//   name        String
-//   description String   @default("")
-//   content     String   @default("[]")
-
-//   visits      Int @default(0)
-//   submissions Int @default(0)
-
-//   shareURL        String            @unique @default(uuid())
-//   FormSubmissions FormSubmissions[]
-
-//   @@unique([name, userId])
-// }
-
-// model FormSubmissions {
-//   id        Int      @id @default(autoincrement())
-//   createdAt DateTime @default(now())
-//   formId    Int
-//   form      Form     @relation(fields: [formId], references: [id])
-
-//   content String
-// }
 model User {
-  id                 String    @id @default(cuid())
-  email              String    @unique
-  externalId         String @unique
-  password           String?
-  phoneNumber        String?
-  role               UserRole  @default(USER)
-  source             Source    @default(OTHER)
-  passwordResetToken String?
-  passwordResetAt    DateTime?
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  id                     String    @id @default(cuid())
+  email                  String    @unique   
+  password               String?
+  phoneNumber            String?
+  role                   UserRole  @default(USER)
+  source                 Source    @default(OTHER)
+  passwordResetToken     String?
+  passwordResetAt        DateTime?
 
   employees     Employee[]
   organizations Organization[]
@@ -60,36 +25,40 @@ model User {
 }
 
 model Subscription {
-  id                  String       @id @default(cuid())
-  name                String       @unique
+  id                  String  @id @default(cuid())
+  name                String  @unique
   slug                String
   numberOfOrgs        String
   numberOfEmployees   String
   numberOfProjects    String
   numberOfForms       String
   numberOfSubmissions String
-  offlineSubmission   Boolean       @default(true)
+  offlineSubmission   Boolean @default(true)
   price               Price?
 }
 
 model Price {
-  id              String       @id @default(cuid())
-  amount          Int
-  testId          String?
-  productionId    String?
-  subscriptionId  String @unique
-  subscription    Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  id             String       @id @default(cuid())
+  amount         Int
+  testId         String?
+  productionId   String?
+  subscriptionId String       @unique
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
 }
-
 
 model Organization {
   id          String       @id @default(cuid())
   name        String       @unique
+  email       String?       @unique
   logo        String?
   address     String?
   inviteCode  String       @unique
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
   employees   Employee[]
   forms       Form[]
   invite      Invite[]
@@ -183,8 +152,8 @@ model Form {
   formData       String       @default("[]")
   description    String       @default("")
   published      Boolean      @default(false)
-  // visits         Int @default(0)
-  // subCount       Int @default(0)
+  visits         Int          @default(0)
+  subCount       Int          @default(0)
   creatorId      String
   organizationId String
   projectId      String
@@ -199,7 +168,7 @@ model Form {
 }
 
 model Submission {
-  id             String       @id @default(cuid())
+  id             String  @id @default(cuid())
   title          String
   description    String
   submissionData String
@@ -236,7 +205,6 @@ model Report {
   @@index([projectId, creatorId, organizationId])
 }
 
-
 model Audit {
   id        String   @id @default(cuid())
   userMail  String
@@ -257,7 +225,6 @@ enum EmployeeRole {
   GUEST
 }
 
-
 enum UserRole {
   USER
   ADMIN
@@ -272,10 +239,10 @@ enum Source {
   GOOGLE
   OTHER
 }
+
 enum ProjectRole {
   SUPERVISOR
   FIELD_AGENT
   GUEST
   MANAGER
 }
-

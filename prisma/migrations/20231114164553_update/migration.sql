@@ -14,17 +14,12 @@ CREATE TYPE "ProjectRole" AS ENUM ('SUPERVISOR', 'FIELD_AGENT', 'GUEST', 'MANAGE
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "externalId" TEXT NOT NULL,
     "password" TEXT,
     "phoneNumber" TEXT,
     "role" "UserRole" NOT NULL DEFAULT 'USER',
     "source" "Source" NOT NULL DEFAULT 'OTHER',
     "passwordResetToken" TEXT,
     "passwordResetAt" TIMESTAMP(3),
-    "stripe_customer_id" TEXT,
-    "stripe_subscription_id" TEXT,
-    "stripe_price_id" TEXT,
-    "stripe_current_period_end" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -61,11 +56,16 @@ CREATE TABLE "Price" (
 CREATE TABLE "Organization" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "email" TEXT,
     "logo" TEXT,
     "address" TEXT,
     "inviteCode" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "stripe_customer_id" TEXT,
+    "stripe_subscription_id" TEXT,
+    "stripe_price_id" TEXT,
+    "stripe_current_period_end" TIMESTAMP(3),
     "userId" TEXT NOT NULL,
 
     CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
@@ -202,15 +202,6 @@ CREATE TABLE "Audit" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_externalId_key" ON "User"("externalId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_stripe_customer_id_key" ON "User"("stripe_customer_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_stripe_subscription_id_key" ON "User"("stripe_subscription_id");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Subscription_name_key" ON "Subscription"("name");
 
 -- CreateIndex
@@ -220,7 +211,16 @@ CREATE UNIQUE INDEX "Price_subscriptionId_key" ON "Price"("subscriptionId");
 CREATE UNIQUE INDEX "Organization_name_key" ON "Organization"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Organization_email_key" ON "Organization"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Organization_inviteCode_key" ON "Organization"("inviteCode");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Organization_stripe_customer_id_key" ON "Organization"("stripe_customer_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Organization_stripe_subscription_id_key" ON "Organization"("stripe_subscription_id");
 
 -- CreateIndex
 CREATE INDEX "Organization_userId_name_idx" ON "Organization"("userId", "name");

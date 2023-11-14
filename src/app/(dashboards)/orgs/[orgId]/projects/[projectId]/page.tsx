@@ -15,6 +15,7 @@ import CreateFormBtn from "@/components/form/CreateFormBtn";
 import FormCards from "@/components/form/list/FormCards";
 import Submissions from "@/components/submission/Submissions";
 import Reports from "@/components/report/Reports";
+import Insights from "@/components/project/stats/Insights";
 
 export default function Project({ params,
 }: {
@@ -41,7 +42,7 @@ export default function Project({ params,
       case 3:
         return <Reports projectId={projectId} />;
       case 4:
-        return <h1>Insights</h1>;
+        return <Insights projectId={projectId} />
       case 5:
         return <h1>Settings</h1>;
       default:
@@ -57,12 +58,12 @@ export default function Project({ params,
         Project
       </h2>
       <Separator className="my-6" />
-      <div className="flex flex-row">
+      <div className="grid gric-cols-6 text-center md:grid-cols-6 lg:grid-cols-6 gap-6">
         {items.map((item, i) => {
           return (
             <div
               key={i}
-              className={`m-2 p-2 text-xl hover:bg-gray-300 hover:text-gray-800 w-full`}
+              className={`m-2 p-2 md:text-lg lg:text-xl hover:bg-gray-300 hover:text-gray-800 w-full`}
               onClick={(i) => {
                 setActive(item.id);
               }}>
