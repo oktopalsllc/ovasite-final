@@ -8,6 +8,7 @@ const apiUrl = process.env.API_URL;
 export const authService = {
   signin,
   signup,
+  logout,
 };
 
 // async function signin(email: string, password: string){
@@ -88,7 +89,16 @@ async function signup(data: ISignUpForm): Promise<SignUpResponse> {
   } catch (err) {
     return {
       success: false,
-      error: "User already exists",
+      error: "Registration failed!",
     };
   }
+}
+
+async function logout() {
+  try {
+    const response = await axiosInstance.post("auth/logout");
+    console.log("🚀 ~ file: auth.service.ts:100 ~ logout ~ response:", response)
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
+  } catch (err) {}
 }

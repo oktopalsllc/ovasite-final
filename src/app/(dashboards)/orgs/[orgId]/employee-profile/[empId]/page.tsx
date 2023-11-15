@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { orgService } from "@/services/org-service/org.service";
 import { useRouter } from "next/navigation";
 import { getCurrentEmployee } from "@/services/employee-service/employee.service";
 import { toast } from "@/components/form/ui/use-toast";
+import { ImSpinner2 } from "react-icons/im";
 
 const schema = yup.object({
   fullName: yup.string().required("Full Name name is required"),
@@ -25,6 +26,7 @@ function EmployeeProfle({
     empId: string;
   };
 }) {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { orgId, empId } = params;
 
@@ -41,6 +43,7 @@ function EmployeeProfle({
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await orgService.updateEmployeeProfiledata(
         data,
         orgId,
@@ -48,15 +51,19 @@ function EmployeeProfle({
       );
 
       if (response.success) {
+        setIsLoading(false);
         router.push("/orgs");
       } else {
         const error = response.error;
+        setIsLoading(false);
         toast({
           title: "Error",
           description: error,
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -143,9 +150,10 @@ function EmployeeProfle({
           <div className="mt-6">
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
+              className="flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
             >
               Update Profile
+              {isLoading && <ImSpinner2 className="ml-4 animate-spin" />}
             </button>
           </div>
         </form>

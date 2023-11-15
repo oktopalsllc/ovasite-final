@@ -1,4 +1,5 @@
 'use client';
+import SidebarMenu from "@/components/orgs/SidebarMenu";
 import { SidebarNav } from "@/components/orgs/SidebarNav";
 
 export default function OrgsLayout({
@@ -7,9 +8,10 @@ export default function OrgsLayout({
   children: React.ReactNode
 }) {
   return (
-    <section className="flex flex-col gap-20 md:flex-row"> 
-      <SidebarNav activeLink={"projects"} />
-      <section className="px-10 bg-mobile-bg md:bg-ova_white md:ml-[25vw]  md:w-[75vw]">
+    <section className="flex flex-col md:flex-row bg-gray-100"> 
+      {/* <SidebarNav activeLink={"projects"} /> */}
+      <SidebarMenu />
+      <section className="px-10 md:w-[75vw]">
         {children}
       </section>
     </section>

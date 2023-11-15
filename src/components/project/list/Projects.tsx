@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Project } from "@prisma/client";
 import { ImSpinner2 } from "react-icons/im";
 import ProjectCard from "./ProjectCard";
+import ProjectCard2 from "./ProjectCard2";
 
 async function ProjectCards({ orgId }: { orgId: string }) {
 
@@ -29,7 +30,7 @@ async function ProjectCards({ orgId }: { orgId: string }) {
                 loaded ?
                     <>
                         {projects.map((project) => (
-                            <ProjectCard key={project.id} project={project} />
+                            <ProjectCard2 key={project.id} project={project} />
                         ))}
                     </> : <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }

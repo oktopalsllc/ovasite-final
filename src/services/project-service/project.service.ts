@@ -1,5 +1,6 @@
 import axios from "axios";
 import { projectSchema, projectSchemaType } from "@/schemas/project";
+import axiosInstance from "@/lib/axios";
 
 const apiUrl = process.env.API_URL;
 
@@ -110,15 +111,20 @@ async function getProjectStats(orgId: string, projectId: string, token: string){
 }
 
 // Get organization projects
+// async function getProjects(orgId: string, token: string) {
+//   const response = await axios.get(`${apiUrl}/orgs/${orgId}/projects`, {
+//     withCredentials: true,
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//       Authorization: "Bearer " + token,
+//     },
+//   });
+//   return response.data;
+// }
+
 async function getProjects(orgId: string, token: string) {
-  const response = await axios.get(`${apiUrl}/orgs/${orgId}/projects`, {
-    withCredentials: true,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
+  const response = await axiosInstance.get(`orgs/${orgId}/projects`);
   return response.data;
 }
 

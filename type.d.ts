@@ -233,12 +233,12 @@ type Audit = {
 interface SuccessfulEResponse {
   success: true;
   data: IEmployeeUpdateProfileResponse;
-};
+}
 
 interface FailedResponse {
   success: false;
   error: string;
-};
+}
 
 // ========================== AUTH ========================
 
@@ -271,10 +271,10 @@ interface ISignInResponse {
   userInfo: UserInfo;
 }
 
-interface SuccessfulSignInResponse extends SuccessfulEResponse{
+interface SuccessfulSignInResponse extends SuccessfulEResponse {
   success: true;
   data: ISignInResponse;
-};
+}
 
 type SignInResponse = SuccessfulSignInResponse | FailedResponse;
 
@@ -286,13 +286,16 @@ interface ISignUpResponse {
 interface SuccessfulSignUpResponse extends SuccessfulEResponse {
   success: true;
   data: ISignUpResponse;
-};
+}
 
 type SignUpResponse = SuccessfulSignUpResponse | FailedResponse;
 
 // ========================= Organisation ===========================
 interface ICreateOrganisationForm {
   name: string;
+  address: string;
+  orgEmail: string;
+  logo?: string;
 }
 interface ICreateOrgResponse {
   address: string;
@@ -308,7 +311,7 @@ interface ICreateOrgResponse {
 interface SuccessfulCreateOrgResponse extends SuccessfulEResponse {
   success: true;
   data: ICreateOrgResponse;
-};
+}
 
 type CreateOrgResponse = SuccessfulCreateOrgResponse | FailedResponse;
 
@@ -351,6 +354,34 @@ interface IEmployeeUpdateProfileResponse {
 
 interface SuccessfulEmployeeUpdateProfileResponse extends SuccessfulEResponse {
   data: IEmployeeUpdateProfileResponse;
-};
+}
 
-type EmployeeUpdateProfileResponse = SuccessfulEmployeeUpdateProfileResponse | FailedResponse;
+type EmployeeUpdateProfileResponse =
+  | SuccessfulEmployeeUpdateProfileResponse
+  | FailedResponse;
+
+//  ===================== ORGANISATION ======================
+interface IOrganisation {
+  id: string;
+  name: string;
+  email: string;
+  logo: string;
+  address: string;
+  inviteCode: string;
+  createdAt: string;
+  updatedAt: string;
+  stripeCustomerId: string;
+  stripeSubscriptionId: string;
+  stripePriceId: string;
+  stripeCurrentPeriodEnd: string;
+  userId: string;
+}
+interface IUserOrgs extends IOrganisation {
+  employees: Employee[];
+}
+
+interface SuccessfulUserOrgsResponse extends SuccessfulEResponse {
+  data: IUserOrgs;
+}
+
+type UserOrgsResponse = SuccessfulUserOrgsResponse | FailedResponse;

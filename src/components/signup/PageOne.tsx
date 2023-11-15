@@ -8,14 +8,17 @@ import { useForm } from "react-hook-form";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { authService } from "@/services/auth-service/auth.service";
 import { useRouter } from "next/navigation";
+import { ImSpinner2 } from "react-icons/im";
+import { toast } from "../form/ui/use-toast";
 
 const schema = yup.object({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
-  source: yup.string().required("Source is required")
+  source: yup.string().required("Source is required"),
 });
 
 function PageOne() {
+  const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
@@ -37,14 +40,27 @@ function PageOne() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await authService.signup(data);
 
       if (response.success) {
+        setIsLoading(false);
         router.push("/signin");
       } else {
+        setIsLoading(false);
         const error = response.error;
+        toast({
+          title: "Error",
+          description: error,
+        });
       }
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: "Error",
+        description: "An error occured. Try again",
+      });
+    }
   };
 
   if (!useIsMounted) return;
@@ -161,9 +177,16 @@ function PageOne() {
                   <div>
                     <button
                       type="submit"
-                      className="flex w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
+                      className="flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
                     >
-                      Sign Up
+                      {isLoading ? (
+                        <>
+                          Signing Up{" "}
+                          <ImSpinner2 className="ml-4 animate-spin" />
+                        </>
+                      ) : (
+                        <>Sign Up</>
+                      )}
                     </button>
                     <p className="text-center mt-6 text-sm leading-6 text-[#001233]">
                       By signing up, you are indicating that you have read and
