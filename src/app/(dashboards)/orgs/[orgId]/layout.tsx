@@ -8,10 +8,10 @@ export default function OrgsLayout({
   children: React.ReactNode
 }) {
   return (
-    <section className="flex flex-col md:flex-row"> 
+    <section className="flex flex-col md:flex-row bg-gray-100"> 
       {/* <SidebarNav activeLink={"projects"} /> */}
       <SidebarMenu />
-      <section className=" bg-mobile-bg md:bg-ova_white md:ml-[25vw]  md:w-[75vw]">
+      <section className="px-10 md:w-[75vw]">
         {children}
       </section>
     </section>

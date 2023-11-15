@@ -1,4 +1,6 @@
 "use client";
+
+import React from "react";
 import { authService } from "@/services/auth-service/auth.service.ts";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,7 +19,11 @@ const schema = yup.object({
   password: yup.string().required("Password is required"),
 });
 
-const Page = () => {
+interface SignInProps {
+  signIn: (data: ISignInForm) => Promise<void>;
+}
+
+function SignIn({ signIn } : SignInProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -40,56 +46,17 @@ const Page = () => {
 
     try {
       setIsLoading(true);
-      const response = await authService.signin(data);
 
-      if (response.success) {
-        const access_token = response.data.access_token;
-        const userInfo = response.data.userInfo;
+      await signIn(data);
 
-        localStorage.setItem("token", access_token);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      setIsLoading(false);
 
-        if (userInfo.organizations.length == 0) {
-          setIsLoading(false);
-          router.push("/orgs/create-org");
-        } else {
-          setIsLoading(false);
-          router.push("/orgs");
-        }
-      } else {
-        const error = response.error;
-        setIsLoading(false);
-        toast({
-          title: "Error",
-          description: error,
-        });
-      }
     } catch (error) {
       setIsLoading(false);
     }
   };
 
   if (!useIsMounted) return;
-
-  //   const handleSubmit = async (e: any) => {
-  //     e.preventDefault();
-  //     try {
-  //       const email = e.target[0].value;
-  //       const password = e.target[1].value;
-  //       const response = await authService.signin(email, password);
-  //       const { access_token, userInfo } = response;
-  //       // if(response === false || response === undefined)
-  //       // {
-  //       //     console.log("Invalid credentials");
-  //       //     return;
-  //       // }
-  //       localStorage.setItem("token", access_token);
-  //       localStorage.setItem("userId", userInfo.id);
-  //       router.push(`/orgs`);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
 
   return (
     <>
@@ -192,13 +159,9 @@ const Page = () => {
                         type="submit"
                         className="flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
                       >
-                        {isLoading ? (
-                          <>
-                            Signing In{" "}
-                            <ImSpinner2 className="ml-4 animate-spin" />
-                          </>
-                        ) : (
-                          <>Sign In</>
+                        Sign In
+                        {isLoading && (
+                          <ImSpinner2 className="ml-4 animate-spin" />
                         )}
                       </button>
                     </div>
@@ -234,6 +197,6 @@ const Page = () => {
       </div>
     </>
   );
-};
+}
 
-export default Page;
+export default SignIn;

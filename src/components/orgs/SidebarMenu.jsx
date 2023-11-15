@@ -96,7 +96,7 @@ function SidebarMenu() {
 
             {/* Item */}
             <div
-              onClick={() => setActiveLink("organisations")}
+              onClick={() => setActiveLink("teams")}
               className="flex items-center space-x-4 cursor-pointer"
             >
               {/* Icon */}
@@ -120,19 +120,19 @@ function SidebarMenu() {
               {!isCollapsed && (
                 <span
                   className={`${
-                    activeLink == "organisations"
+                    activeLink == "teams"
                       ? "text-[#FF595A] font-semibold"
                       : "text-ova_white"
                   } ml-[1rem]  text-lg `}
                 >
-                  Organisations
+                  Teams
                 </span>
               )}
             </div>
 
             {/* Item */}
             <div
-              onClick={() => setActiveLink("employees")}
+              onClick={() => setActiveLink("subscriptions")}
               className="flex items-center space-x-4 cursor-pointer"
             >
               {/* Icon */}
@@ -157,12 +157,12 @@ function SidebarMenu() {
               {!isCollapsed && (
                 <span
                   className={`${
-                    activeLink == "employees"
+                    activeLink == "subscriptions"
                       ? "text-[#FF595A] font-semibold"
                       : "text-ova_white"
                   } ml-[1rem]  text-lg `}
                 >
-                  Employees
+                  Subscriptions
                 </span>
               )}
             </div>
