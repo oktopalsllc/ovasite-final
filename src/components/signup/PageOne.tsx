@@ -58,7 +58,7 @@ function PageOne() {
       setIsLoading(false);
       toast({
         title: "Error",
-        description: 'An error occured. Try again',
+        description: "An error occured. Try again",
       });
     }
   };
@@ -179,9 +179,13 @@ function PageOne() {
                       type="submit"
                       className="flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
                     >
-                      Sign Up
-                      {isLoading && (
-                        <ImSpinner2 className="ml-4 animate-spin" />
+                      {isLoading ? (
+                        <>
+                          Signing Up{" "}
+                          <ImSpinner2 className="ml-4 animate-spin" />
+                        </>
+                      ) : (
+                        <>Sign Up</>
                       )}
                     </button>
                     <p className="text-center mt-6 text-sm leading-6 text-[#001233]">
