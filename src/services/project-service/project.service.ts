@@ -9,6 +9,7 @@ export const projectService = {
   getProject,
   getProjectStats,
   getProjects,
+  getOrgEmployees,
   getProjectEmps,
   getEmpProjects,
   updateProject,
@@ -119,6 +120,22 @@ async function getProjects(orgId: string, token: string) {
     },
   });
   return response.data;
+}
+
+async function getOrgEmployees(orgId: string, projectId: string, token: string) {
+  const response = await axios.get(
+    `${apiUrl}/orgs/${orgId}/projectemployees/${projectId}`,
+    {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.data;
+  
 }
 
 // Get associated employees

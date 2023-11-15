@@ -1,7 +1,7 @@
 "use client";
 
 import { Form } from "@prisma/client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PreviewDialogBtn from "./PreviewDialogBtn";
 import PublishFormBtn from "./PublishFormBtn";
 import SaveFormBtn from "./SaveFormBtn";
@@ -18,14 +18,12 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Confetti from "react-confetti";
 
 function FormBuilder({ form }: { form: Form }) {  
-  console.log("🚀 ~ file: FormBuilder.tsx:34 ~ FormBuilder ~ form:", form)
-  console.log("hello world");
   const { setElements, setSelectedElement } = useDesigner();
   const [isReady, setIsReady] = useState(false);
   
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      distance: 10, // 10px
+      distance: 10,
     },
   });
 

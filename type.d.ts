@@ -104,6 +104,7 @@ type Employee = {
   organization: Organization;
   user: User;
   projectAssociations: EmployeeProjectAssociation[];
+  projects: Project[];
   forms: Form[];
   reports: Report[];
   submissions: Submission[];
@@ -134,11 +135,13 @@ type Project = {
   isCompleted: boolean;
   startDate: Date;
   endDate: Date;
+  creatorId: string;
   organizationId: string;
   createdAt: Date;
   updatedAt: Date;
   projectAssociations: EmployeeProjectAssociation[];
   forms: Form[];
+  creator: Employee;
   organization: Organization;
   reports: Report[];
   submissions: Submission[];

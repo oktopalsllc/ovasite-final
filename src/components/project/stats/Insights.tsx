@@ -21,7 +21,7 @@ export default function Insights({ projectId }: { projectId: string }) {
 
 
     return (
-        <div className="container pt-4">
+        <div className="container">
             <Suspense fallback={<StatsCards loading={true} />}>
                 <CardStatsWrapper projectId={projectId} />
             </Suspense>
@@ -92,11 +92,11 @@ function StatsCards(props: StatsCardProps) {
             />
             <StatsCard
                 title="Total Visits"
-                icon={<LuView className="text-blue-600" />}
+                icon={<LuView className="text-[#001333]" />}
                 helperText="Total form visits of all forms"
                 value={data?.visits.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-blue-600"
+                className="shadow-md shadow-[#001333]"
             />
 
             <StatsCard
@@ -128,11 +128,11 @@ function StatsCards(props: StatsCardProps) {
 
             <StatsCard
                 title="Total Reports"
-                icon={<FaWpforms className="text-blue-600" />}
+                icon={<FaWpforms className="text-[#3f3cbb]" />}
                 helperText="Reports created about the project"
                 value={data?.reports.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-blue-600"
+                className="shadow-md shadow-[#3f3cbb]"
             />
         </div>
     );
