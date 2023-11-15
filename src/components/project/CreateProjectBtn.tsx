@@ -29,19 +29,19 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
   });
 
   async function onSubmit(values: projectSchemaType) {
-    try {      
+    try {
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
       const responseData = await projectService.createProject(orgId, values, token as string);
       const { message, status, newProject } = responseData;
       const projectId = newProject.id as string;
-      if(status) {
+      if (status) {
         toast({
           title: "Success",
           description: message,
         });
         router.push(`/orgs/${orgId}/projects/${projectId}`);
       }
-      else{
+      else {
         toast({
           title: "Error",
           description: "Something went wrong, please try again later",
@@ -62,16 +62,15 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
-          className="group border border-primary/20 h-[190px] bg-white items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
+          className="group border shadow-lg border-primary/20 h-[40px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-2"
         >
-          <BsFileEarmarkPlus className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
-          <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">Create new project</p>
+          <BsFileEarmarkPlus className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
+          <p className="font-bold text-lg text-muted-foreground group-hover:text-primary">Create new project</p>
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="bg-white">
         <DialogHeader>
           <DialogTitle>Create project</DialogTitle>
-          <DialogDescription>Create a new project to start collecting responses</DialogDescription>
         </DialogHeader>
         <Form {...project}>
           <form onSubmit={project.handleSubmit(onSubmit)} className="space-y-2">
@@ -82,7 +81,7 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input placeholder="Not less than 4 characters" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,38 +94,40 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
                 <FormItem>
                   <FormLabel>Expected Duration</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input placeholder="Example: 2 weeks / 6 months / 3 years" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={project.control}
-              name="startDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Start Date</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={project.control}
-              name="endDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>End Date</FormLabel>
-                  <FormControl>
-                    <Input type="date" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={project.control}
+                name="startDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Start Date</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={project.control}
+                name="endDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>End Date</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={project.control}
               name="description"
@@ -134,7 +135,7 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea rows={5} {...field} />
+                    <Textarea rows={4} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -143,7 +144,7 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
           </form>
         </Form>
         <DialogFooter>
-          <Button onClick={project.handleSubmit(onSubmit)} disabled={project.formState.isSubmitting} className="w-full mt-4">
+          <Button onClick={project.handleSubmit(onSubmit)} disabled={project.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
             {!project.formState.isSubmitting && <span>Save</span>}
             {project.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
           </Button>

@@ -29,7 +29,7 @@ function SaveFormBtn({ id }: { id: string }) {
   return (
     <Button
       variant={"outline"}
-      className="gap-2"
+      className="text-white bg-peach_primary hover:bg-peach_secondary hover:cursor-pointer hover:border-dashed gap-2"
       disabled={loading}
       onClick={() => {
         startTransition(updateFormContent);

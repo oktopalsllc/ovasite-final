@@ -23,6 +23,7 @@ const config: Config = {
         silver: "#ecebff",
         "bubble-gum": "#ff77e9",
         bermuda: "#78dcca",
+        bermuda_dark: "#28a891"
       },
       colors: {
         navy_blue: "#001333",
