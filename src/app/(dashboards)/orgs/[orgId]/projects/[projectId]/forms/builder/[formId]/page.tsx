@@ -2,7 +2,8 @@
 import { Form } from "@prisma/client";
 import { GetFormById } from "@/actions/form";
 import FormBuilder from "@/components/form/FormBuilder";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
+import { ImSpinner2 } from "react-icons/im";
 
 function BuilderPage({
   params,
@@ -31,16 +32,14 @@ function BuilderPage({
     fetchData();
   }, []);
 
-  // const form = await GetFormById("clotepg8f0002ou4sknx7jc8q");
-  // console.log(form);
-  // if (!form) {
-  //   throw new Error("form not found");
-  // }
+ 
   if (form === null || form === undefined) {
-    // You can render a loading state here
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <ImSpinner2 className="animate-spin h-12 w-12" />
+      </div>
+    );
   }
-  // console.log(form);
   return <FormBuilder form={form} />;
 }
 

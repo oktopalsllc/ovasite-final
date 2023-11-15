@@ -38,10 +38,6 @@ type User = {
   source: Source;
   passwordResetToken?: string | null;
   passwordResetAt?: Date | null;
-  stripeCustomerId?: string | null;
-  stripeSubscriptionId?: string | null;
-  stripePriceId?: string | null;
-  stripeCurrentPeriodEnd?: Date | null;
   employees: Employee[];
   organizations: Organization[];
   createdAt: Date;
@@ -73,11 +69,16 @@ type Price = {
 type Organization = {
   id: string;
   name: string;
+  email: string | null;
   logo?: string | null;
   address?: string | null;
   inviteCode: string;
   createdAt: Date;
   updatedAt: Date;
+  stripeCustomerId?: string | null;
+  stripeSubscriptionId?: string | null;
+  stripePriceId?: string | null;
+  stripeCurrentPeriodEnd?: Date | null;
   employees: Employee[];
   forms: Form[];
   invite: Invite[];
@@ -103,6 +104,7 @@ type Employee = {
   organization: Organization;
   user: User;
   projectAssociations: EmployeeProjectAssociation[];
+  projects: Project[];
   forms: Form[];
   reports: Report[];
   submissions: Submission[];
@@ -133,11 +135,13 @@ type Project = {
   isCompleted: boolean;
   startDate: Date;
   endDate: Date;
+  creatorId: string;
   organizationId: string;
   createdAt: Date;
   updatedAt: Date;
   projectAssociations: EmployeeProjectAssociation[];
   forms: Form[];
+  creator: Employee;
   organization: Organization;
   reports: Report[];
   submissions: Submission[];
@@ -160,6 +164,8 @@ type Form = {
   formData: string;
   description: string;
   published: boolean;
+  visits: number;
+  subCount: number;
   creatorId: string;
   organizationId: string;
   projectId: string;
