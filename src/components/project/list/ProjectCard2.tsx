@@ -1,6 +1,7 @@
 import { useParams } from "next/navigation";
 import React from "react";
 import { HiDotsVertical } from "react-icons/hi";
+import { Project } from "@prisma/client";
 
 function ProjectCard2({ project }: { project: Project }) {
   const hParams = useParams();
