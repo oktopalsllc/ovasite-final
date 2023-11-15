@@ -32,6 +32,8 @@ function FormCards({ projectId }: { projectId: string }) {
       {loaded
         ?
         <div>
+          <CreateFormBtn />
+          <Separator className="my-6" />
           {forms.length > 0 ?
             <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Suspense
@@ -39,7 +41,6 @@ function FormCards({ projectId }: { projectId: string }) {
                   <FormCardSkeleton key={el} />
                 ))}
               >
-                <CreateFormBtn />
                 {forms.map((form) => (
                   <FormCard key={form.id} form={form} />
                 ))}
@@ -47,7 +48,6 @@ function FormCards({ projectId }: { projectId: string }) {
             </div>
             : 
             <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <CreateFormBtn />
               <h4 className="mt-14 text-2xl font-bold col-span-2">No forms yet</h4>
             </div>
           }

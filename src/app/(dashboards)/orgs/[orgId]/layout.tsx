@@ -11,7 +11,7 @@ export default function OrgsLayout({
     <section className="flex flex-col md:flex-row bg-gray-100"> 
       {/* <SidebarNav activeLink={"projects"} /> */}
       <SidebarMenu />
-      <section className="px-10 md:w-[75vw]">
+      <section className="px-10 md:w-[75vw] bg-white">
         {children}
       </section>
     </section>

@@ -64,15 +64,15 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
             <DialogTrigger asChild>
                 <Button
                     variant={"outline"}
-                    className="group border border-primary/20 h-[50px] w-[50px] bg-white items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
+                    className="group border shadow-lg border-primary/20 h-[40px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-4"
                 >
-                    <BsFileEarmarkPlus title="Create report" className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
+                    <BsFileEarmarkPlus title="Create report" className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
+                    <p className="font-bold text-lg text-muted-foreground group-hover:text-primary">Create new report</p>
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="bg-white">
                 <DialogHeader>
                     <DialogTitle>Create report</DialogTitle>
-                    <DialogDescription>Create a new report</DialogDescription>
                 </DialogHeader>
                 <Form {...report}>
                     <form onSubmit={report.handleSubmit(onSubmit)} className="">
@@ -80,7 +80,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                             control={report.control}
                             name="title"
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="mb-2">
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
@@ -89,58 +89,63 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={report.control}
-                            name="introduction"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Introduction</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={report.control}
-                            name="dataCollectionMethod"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Data Collection Methodology</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={report.control}
-                            name="challengeRecommendation"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Challenges and Recommendation</FormLabel>
-                                    <FormControl>
-                                        <Textarea rows={2} {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={report.control}
-                            name="executiveSummary"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Executive Summary</FormLabel>
-                                    <FormControl>
-                                        <Textarea rows={2} {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <div className="grid grid-cols-2 gap-4 mb-2">
+                            <FormField
+                                control={report.control}
+                                name="introduction"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Introduction</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={report.control}
+                                name="dataCollectionMethod"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Data Collection Methodology</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 mb-2">
+                            <FormField
+                                control={report.control}
+                                name="challengeRecommendation"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Challenges and Recommendation</FormLabel>
+                                        <FormControl>
+                                            <Textarea rows={2} {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={report.control}
+                                name="executiveSummary"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Executive Summary</FormLabel>
+                                        <FormControl>
+                                            <Textarea rows={2} {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                         <FormField
                             control={report.control}
                             name="conclusion"
@@ -157,7 +162,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                     </form>
                 </Form>
                 <DialogFooter>
-                    <Button onClick={report.handleSubmit(onSubmit)} disabled={report.formState.isSubmitting} className="w-full mt-4">
+                    <Button onClick={report.handleSubmit(onSubmit)} disabled={report.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
                         {!report.formState.isSubmitting && <span>Save</span>}
                         {report.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
                     </Button>

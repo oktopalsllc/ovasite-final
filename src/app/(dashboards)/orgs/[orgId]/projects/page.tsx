@@ -10,11 +10,12 @@ export default function Projects({ params }: { params: { orgId: string } }) {
   return (
     <>
       <div className="w-full">
+          <Separator className="my-3" />
         <div className="flex items-center justify-between">
           <h2 className="text-4xl font-bold col-span-2">Projects</h2>
           <CreateProjectBtn orgId={orgId} />
-        </div>
-
+        </div>        
+        <Separator className="my-6" />
         <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <Suspense
             fallback={[1, 2, 3, 4].map((el) => (

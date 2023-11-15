@@ -39,7 +39,7 @@ export default function Project({ params,
       try {
         const project = await projectService.getProject(orgValue, projectId, token);
         if (project) {
-          setName(project.name);
+          setName(project);
           setLoaded(true);
         }
       } catch (error) {

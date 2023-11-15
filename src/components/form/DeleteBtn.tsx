@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import {formService} from "@/services/form-service/form.service";
 
-function VisitBtn({ shareUrl }: { shareUrl: string }) {
+function VisitBtn({ shareUrl }: { shareUrl: object }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -19,12 +20,12 @@ function VisitBtn({ shareUrl }: { shareUrl: string }) {
   const shareLink = `http://localhost:3000/submit/${shareUrl}`;
   return (
     <Button
-      className="w-[90px] text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
-      onClick={() => {
-        window.open(shareLink, "_blank");
-      }}
+      className="w-[90px] text-white bg-peach_primary hover:bg-peach_secondary hover:cursor-pointer hover:border-dashed"
+    //   onClick={() => {
+    //     window.open(shareLink, "_blank");
+    //   }}
     >
-      Visit
+      Delete
     </Button>
   );
 }
