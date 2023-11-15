@@ -31,25 +31,26 @@ function FormCards({ projectId }: { projectId: string }) {
     <>
       {loaded
         ?
-        <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div>
           {forms.length > 0 ?
-          <>
-          <Suspense
-          fallback={[1, 2, 3, 4].map((el) => (
-            <FormCardSkeleton key={el} />
-          ))}
-        >
-          <CreateFormBtn />
-          {forms.map((form) => (
-            <FormCard key={form.id} form={form} />
-          ))}
-        </Suspense>
-          </>  
-          : <div className="flex flex-row gap-4 mt-14 justify-center">
-              <CreateFormBtn />
-              <h4 className="mt-14">No forms yet</h4>
+            <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Suspense
+                fallback={[1, 2, 3, 4].map((el) => (
+                  <FormCardSkeleton key={el} />
+                ))}
+              >
+                <CreateFormBtn />
+                {forms.map((form) => (
+                  <FormCard key={form.id} form={form} />
+                ))}
+              </Suspense>
             </div>
-        }
+            : 
+            <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <CreateFormBtn />
+              <h4 className="mt-14 text-2xl font-bold col-span-2">No forms yet</h4>
+            </div>
+          }
         </div> : <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
       }
     </>
