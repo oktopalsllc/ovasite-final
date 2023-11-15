@@ -49,7 +49,7 @@ function ProjectCard2({ project }: { project: Project }) {
         {/* Header */}
         <div className="w-full flex justify-between items-center mb-6 border-b border-gray-200 p-6 ">
           <h3 className="font-bold text-sm md:text-xl truncate w-1/2">{project.name}</h3>
-          <div className="flex items-center space-x-4 w-1/2">
+          <div className="flex justify-end items-center space-x-4 w-1/2">
             <div
               className={`${
                 project.isCompleted
