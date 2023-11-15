@@ -18,6 +18,7 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import Confetti from "react-confetti";
 
 function FormBuilder({ form }: { form: Form }) {  
+
   const { setElements, setSelectedElement } = useDesigner();
   const [isReady, setIsReady] = useState(false);
   
@@ -76,7 +77,7 @@ function FormBuilder({ form }: { form: Form }) {
             <div className="my-4 flex flex-col gap-2 items-center w-full border-b pb-4">
               <Input className="w-full" readOnly value={shareUrl} />
               <Button
-                className="mt-2 w-full"
+                className="mt-2 w-full text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
                 onClick={() => {
                   navigator.clipboard.writeText(shareUrl);
                   toast({
@@ -89,14 +90,18 @@ function FormBuilder({ form }: { form: Form }) {
               </Button>
             </div>
             <div className="flex justify-between">
-              <Button variant={"link"} asChild>
-                <Link href={"/"} className="gap-2">
+              <Button variant={"link"} asChild 
+              className="text-white bg-peach_primary hover:bg-peach_secondary hover:cursor-pointer hover:border-dashed"
+              >
+                <Link href={`/orgs/${form.organizationId}/projects/${form.projectId}`} className="gap-2">
                   <BsArrowLeft />
-                  Go back home
+                  Go back
                 </Link>
               </Button>
-              <Button variant={"link"} asChild>
-                <Link href={`/forms/${form.id}`} className="gap-2">
+              <Button variant={"link"} asChild
+               className="text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"            
+              >
+                <Link href={`/orgs/${form.organizationId}/projects/${form.projectId}/forms/${form.id}`} className="gap-2">
                   Form details
                   <BsArrowRight />
                 </Link>
@@ -126,7 +131,7 @@ function FormBuilder({ form }: { form: Form }) {
             )}
           </div>
         </nav>
-        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-[200px] bg-accent bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
+        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-[100vh] bg-white">
           <Designer />
         </div>
       </main>
