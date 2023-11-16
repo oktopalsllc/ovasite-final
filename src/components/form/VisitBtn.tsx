@@ -19,7 +19,7 @@ function VisitBtn({ shareUrl }: { shareUrl: string }) {
   const shareLink = `http://localhost:3000/submit/${shareUrl}`;
   return (
     <Button
-      className="w-[90px] text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
+      className="w-[150px] text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
       onClick={() => {
         window.open(shareLink, "_blank");
       }}

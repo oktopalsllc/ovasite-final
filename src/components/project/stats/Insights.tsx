@@ -19,7 +19,6 @@ import { ImSpinner2 } from "react-icons/im";
 
 export default function Insights({ projectId }: { projectId: string }) {
 
-
     return (
         <div className="container">
             <Suspense fallback={<StatsCards loading={true} />}>
@@ -109,7 +108,7 @@ function StatsCards(props: StatsCardProps) {
             />
 
             <StatsCard
-                title="Submission Rate"
+                title="Successful Submissions"
                 icon={<HiCursorClick className="text-green-600" />}
                 helperText="Visits that result in form submission"
                 value={data?.submissionRate.toLocaleString() + "%" || ""}

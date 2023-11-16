@@ -4,43 +4,44 @@ import prisma from "@/lib/prisma";
 import { formSchema, formSchemaType } from "@/schemas/form";
 // import { currentUser } from "@clerk/nextjs";
 import { getCurrentEmployee } from "@/services/employee-service/employee.service";
+import axios from 'axios';
 
 // class UserNotFoundErr extends Error {}
 
-// export async function GetFormStats(orgId: string) {
-//   // const user = await currentUser();
-//   // if (!user) {
-//   //   throw new UserNotFoundErr();
-//   // }
+export async function GetFormStats(formId: string) {
+  // const user = await currentUser();
+  // if (!user) {
+  //   throw new UserNotFoundErr();
+  // }
 
-//   const stats = await prisma.form.aggregate({
-//     where: {
-//       organizationId: orgId,
-//     },
-//     _sum: {
-//       visits: true,
-//       subCount: true,
-//     },
-//   });
+  const stats = await prisma.form.findUnique({
+    where: {
+      id: formId,
+    },
+    select: {
+      visits: true,
+      subCount: true,
+    },
+  });
 
-//   const visits = stats._sum.visits || 0;
-//   const submissions = stats._sum.subCount || 0;
+  const visits = stats?.visits || 0;
+  const submissions = stats?.subCount || 0;
 
-//   let submissionRate = 0;
+  let submissionRate = 0;
 
-//   if (visits > 0) {
-//     submissionRate = (submissions / visits) * 100;
-//   }
+  if (visits > 0) {
+    submissionRate = (submissions / visits) * 100;
+  }
 
-//   const bounceRate = 100 - submissionRate;
+  const bounceRate = 100 - submissionRate;
 
-//   return {
-//     visits,
-//     submissions,
-//     submissionRate,
-//     bounceRate,
-//   };
-// }
+  return {
+    visits,
+    submissions,
+    submissionRate,
+    bounceRate,
+  };
+}
 
 export async function CreateForm(
   orgId: string,
@@ -120,9 +121,14 @@ export async function PublishForm(id: string) {
 }
 
 export async function GetFormContentByUrl(formId: string) {
-  return await prisma.form.findUnique({
+  return await prisma.form.update({
     select: {
       formData: true,
+    },
+    data: {
+      visits: {
+        increment: 1,
+      },
     },
     where: {
       id: formId,
@@ -131,14 +137,16 @@ export async function GetFormContentByUrl(formId: string) {
 }
 
 export async function SubmitForm(formId: string, content: string) {
-  // const form = await GetFormById(formId);
-  // if (!form) return null;
-  const updatedForm = await prisma.form.findUnique({
-    // data: {
-    //   subCount: {
-    //     increment: 1,
-    //   },
-    // },
+  const { formValues, location } = JSON.parse(content);  
+  const { latitude, longitude } = location;
+  const geoData = await axios.get(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`);
+  const geoDataString = JSON.stringify(geoData.data);
+  const updatedForm = await prisma.form.update({
+    data: {
+      subCount: {
+        increment: 1,
+      },
+    },
     where: {
       id: formId,
       published: true,
@@ -149,7 +157,9 @@ export async function SubmitForm(formId: string, content: string) {
     data: {
       title: updatedForm.title,
       description: updatedForm.description,
-      submissionData: content,
+      submissionData: JSON.stringify(formValues),
+      formData: updatedForm.formData,
+      geolocation: geoDataString,
       form: { connect: { id: formId as string } },
       employee: { connect: { id: updatedForm.creatorId } },
       project: { connect: { id: updatedForm.projectId as string } },
@@ -187,6 +197,7 @@ export async function GetFormWithSubmissions(id: string) {
     },
     include: {
       submissions: true,
+      employee: true
     },
   });
 }

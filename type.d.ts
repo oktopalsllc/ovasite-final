@@ -182,6 +182,7 @@ type Submission = {
   title: string;
   description: string;
   submissionData: string;
+  formData: string;
   geolocation?: string | null;
   creatorId: string;
   organizationId: string;
@@ -190,6 +191,7 @@ type Submission = {
   createdAt: Date;
   updatedAt: Date;
   form: Form;
+  employee: Employee;
   organization: Organization;
   project: Project;
 };
