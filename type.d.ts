@@ -69,7 +69,6 @@ type Price = {
 type Organization = {
   id: string;
   name: string;
-  email: string | null;
   logo?: string | null;
   address?: string | null;
   inviteCode: string;

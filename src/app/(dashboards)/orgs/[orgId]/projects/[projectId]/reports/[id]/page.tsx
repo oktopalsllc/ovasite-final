@@ -103,8 +103,9 @@ export default function Report({ params }: { params: { id: string } }) {
                 toast({
                     title: "Success",
                     description: message,
-                });                
-                router.back();
+                });             
+                window.location.reload();
+                router.refresh();
             }
             else {
                 toast({

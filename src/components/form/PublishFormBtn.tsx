@@ -28,6 +28,7 @@ function PublishFormBtn({ id }: { id: string }) {
         title: "Success",
         description: "Your form is now available to the public",
       });
+      window.location.reload();
       router.refresh();
     } catch (error) {
       toast({
@@ -47,13 +48,13 @@ function PublishFormBtn({ id }: { id: string }) {
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-white">
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Are you sure you are ready to publish this form?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. After publishing you will not be able to edit this form. <br />
             <br />
             <span className="font-medium">
-              By publishing this form you will make it available to the public and you will be able to collect
-              submissions.
+              By publishing this form it will be available to the public and you will be able to collect
+              responses.
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>

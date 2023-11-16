@@ -120,7 +120,7 @@ function StatsCards(props: StatsCardProps) {
                 title="Declined Submissions"
                 icon={<TbArrowBounce className="text-red-600" />}
                 helperText="Form visits that leaves without feedback"
-                value={data?.submissionRate.toLocaleString() + "%" || ""}
+                value={data?.bounceRate.toLocaleString() + "%" || ""}
                 loading={loading}
                 className="shadow-md shadow-red-600"
             />

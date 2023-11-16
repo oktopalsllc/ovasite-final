@@ -116,9 +116,9 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
   if (submitted) {
     return (
       <div className="flex justify-center w-full h-full items-center p-8">
-        <div className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-xl shadow-blue-700 rounded">
-          <h1 className="text-2xl font-bold">Form submitted</h1>
-          <p className="text-muted-foreground">Thank you for submitting the form, you can close this page now.</p>
+        <div className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-xl shadow-peach_primary rounded">
+          <h1 className="text-2xl font-bold">Response collected</h1>
+          <p className="text-muted-foreground">Thank you for your response, you can close this page now.</p>
         </div>
       </div>
     );
@@ -128,7 +128,7 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
     <div className="flex bg-white justify-center w-full h-full items-center p-8">
       <div
         key={renderKey}
-        className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-xl shadow-blue-700 rounded"
+        className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-xl shadow-peach_primary rounded"
       >
         {content.map((element) => {
           const FormElement = FormElements[element.type].formComponent;
@@ -143,7 +143,7 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
           );
         })}
         <Button
-          className="mt-8 text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
+          className="mt-8 text-white bg-peach_primary hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed"
           onClick={() => {
             startTransition(submitForm);
           }}

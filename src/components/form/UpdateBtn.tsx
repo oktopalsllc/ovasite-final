@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -19,11 +18,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { toast } from "./ui/use-toast";
-import { CreateForm } from "@/actions/form";
 import { formService } from "@/services/form-service/form.service";
 import { Form as FormData } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 function UpdateBtn({formObj}: {formObj: FormData}) {
+  const router = useRouter();
   const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
   });
@@ -43,7 +43,9 @@ function UpdateBtn({formObj}: {formObj: FormData}) {
         toast({
           title: "Success",
           description: message + "\n Refresh page to see changes.",
-        });
+        });        
+        window.location.reload();
+        router.refresh();
       } else {
         toast({
           title: "Error",
