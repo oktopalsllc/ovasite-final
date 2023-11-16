@@ -11,25 +11,25 @@ import PageEight from "@/components/signup/PageEight";
 import PageTwo from "./PageTwo";
 
 function PagesController() {
-  const [currentStep, setCurrentStep] = useState(1);
+  // const [currentStep, setCurrentStep] = useState(1);
 
-  const handleNext = () => {
-    setCurrentStep(currentStep + 1);
-  };
+  // const handleNext = () => {
+  //   setCurrentStep(currentStep + 1);
+  // };
 
-  const handleBack = () => {
-    setCurrentStep(currentStep - 1);
-  };
-  //! ================================================================================
+  // const handleBack = () => {
+  //   setCurrentStep(currentStep - 1);
+  // };
+  // //! ================================================================================
 
-  const options = [
-    { label: "LinkedIn", value: "linkedin" },
-    { label: "Facebook", value: "facebook" },
-    { label: "Instagram", value: "instagram" },
-    { label: "Affiliate", value: "affiliate" },
-    { label: "Twitter(X)", value: "twitter" },
-    { label: "Referrals", value: "referrals" },
-  ];
+  // const options = [
+  //   { label: "LinkedIn", value: "linkedin" },
+  //   { label: "Facebook", value: "facebook" },
+  //   { label: "Instagram", value: "instagram" },
+  //   { label: "Affiliate", value: "affiliate" },
+  //   { label: "Twitter(X)", value: "twitter" },
+  //   { label: "Referrals", value: "referrals" },
+  // ];
 
   return (
     <>
@@ -37,23 +37,23 @@ function PagesController() {
         {/* first page */}
         <PageOne />
         {/* second page */}
-        <PageTwo />
+        {/* <PageTwo /> */}
         {/* third page */}
-        <PageThree />
+        {/* <PageThree /> */}
         {/* Fourth Page */}
-        <PageFour />
+        {/* <PageFour /> */}
 
         {/* fifth page */}
-        <PageFive />
+        {/* <PageFive /> */}
 
         {/* sixth page */}
-        <PageSix />
+        {/* <PageSix /> */}
 
         {/* seventh page  */}
-        <PageSeven />
+        {/* <PageSeven /> */}
 
         {/* eighth page */}
-        <PageEight />
+        {/* <PageEight /> */}
       </div>
     </>
   );

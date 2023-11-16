@@ -84,7 +84,7 @@ async function signin(credentials: ISignInForm): Promise<SignInResponse> {
 
       return {
         success: false,
-        error: "Registration failed!",
+        error: "Signin in failed!",
       };
     }
   }

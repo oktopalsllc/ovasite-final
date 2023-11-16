@@ -33,7 +33,6 @@ export default function Report({ params }: { params: { id: string } }) {
     const [challenge, setChallenge] = useState("");
     const [reportId, setReportId] = useState("");
     const [orgName, setOrgName] = useState("");
-    const [orgMail, setOrgMail] = useState("");
     const [loaded, setLoaded] = useState(false);
     const [projectName, setProjectName] = useState("");
     const urlParams = useParams();
@@ -66,8 +65,6 @@ export default function Report({ params }: { params: { id: string } }) {
                     setChallenge(reportData.challengeRecommendation);
                     setReportId(report.id);
                     setOrgName(report.organization.name);
-
-                    setOrgMail(report.organization.email);
                     setProjectName(report.project.name);
                     setLoaded(true);
                 }
@@ -89,10 +86,16 @@ export default function Report({ params }: { params: { id: string } }) {
         const doc = new jsPDF();
 
         // Set content for the PDF
-        const content = `Organization Name: ${orgName != null ? orgName : orgMail}\n\n Project Name: ${projectName}\n\n  Title: ${title}\n\n Date: ${convertDate(reportDate)}\n\n Last Updated: ${convertDate(updatedDate)}\n\n Reported By: ${empName != null ? empName : empId}\n\n Introduction: ${introduction}\n\n Data Collection Methodology: ${dataMethod}\n\n Challenges and Recommendation: ${challenge}\n\n Executive Summary: ${execSum}\n\n Conclusion: ${conclusion}`;
+        const content = `Organization Name: ${orgName != null ? orgName : "Organization Report"}\n\n Project Name: ${projectName}\n\n  Title: ${title}\n\n Date: ${convertDate(reportDate)}\n\n Last Updated:${convertDate(updatedDate)}\n\n Reported By: ${empName != null ? empName : empId}\n\n Introduction:\n\n ${introduction}\n\n Data Collection Methodology:\n\n ${dataMethod}\n\n Challenges and Recommendation:\n\n ${challenge}\n\n Executive Summary:\n\n ${execSum}\n\n Conclusion:\n\n ${conclusion}`;
+        // Define the maximum width for text
+        const maxWidth = 180; // adjust as needed
 
-        // Add the content to the PDF
-        doc.text(content, 10, 10);
+        // Split text to fit within maxWidth
+        const wrappedText = doc.splitTextToSize(content, maxWidth);
+        
+        doc.setFontSize(10);
+        // Add the wrapped text to the PDF
+        doc.text(wrappedText, 10, 10);
 
         // Save the PDF as a file
         doc.save("Downloaded-Report.pdf");
@@ -158,6 +161,32 @@ export default function Report({ params }: { params: { id: string } }) {
         }
     }
 
+    const handleCSVDownload = () => {
+        // Function to escape and enclose each field in double quotes
+        const escapeCSVField = (field: string) => {
+            if (field === null || field === undefined) return '""';
+            const escapedField = field.toString().replace(/"/g, '""'); // Escape double quotes
+            return `"${escapedField}"`; // Enclose in double quotes
+        };
+    
+        const csvContent = [
+            ["Title", "Report Date", "Updated Date", "Employee Name", "Employee ID", "Executive Summary", "Introduction", "Data Collection Method", "Conclusion", "Challenges & Recommendations", "Organization Name"],
+            [title, convertDate(reportDate), convertDate(updatedDate), empName, empId, execSum, introduction, dataMethod, conclusion, challenge, orgName]
+        ].map(row => row.map(escapeCSVField).join(",")).join("\n");
+    
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "ReportData.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+    
+    
+
     function handleBack() {
         router.back();
     }
@@ -179,7 +208,7 @@ export default function Report({ params }: { params: { id: string } }) {
                     <div className="flex flex-col gap-5">
 
                         <h1 className="font-semibold text-lg">
-                            {orgName != "" && orgName != null && orgName != undefined ? orgName : orgMail}
+                            {orgName != "" && orgName != null && orgName != undefined ? orgName : "Organization"}
                         </h1>
                         <div className="flex flex-col lg:flex-row gap-10 lg:gap-10">
                             <h1 className="font-semibold">Report By: {empName != null ? empName : empId}</h1>
@@ -279,6 +308,12 @@ export default function Report({ params }: { params: { id: string } }) {
                             className="bg-blue-500 text-sm lg:w-[100px] md:w-[100px] w-full hover:bg-blue-300 hover:cursor-pointer hover:border-dashed text-white p-2 rounded-md"
                         >
                             Download
+                        </button>
+                        <button
+                            onClick={handleCSVDownload}
+                            className="bg-blue-500 text-sm lg:w-[100px] md:w-[100px] w-full hover:bg-blue-300 hover:cursor-pointer hover:border-dashed text-white p-2 rounded-md"
+                        >
+                            CSV
                         </button>
                         <button
                             onClick={handleDelete}
