@@ -95,7 +95,7 @@ function CreateFormBtn() {
         </Form>
         <DialogFooter>
           <Button onClick={form.handleSubmit(onSubmit)} disabled={form.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
-            {!form.formState.isSubmitting && <span>Save</span>}
+            {!form.formState.isSubmitting && <span>Create</span>}
             {form.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
           </Button>
         </DialogFooter>

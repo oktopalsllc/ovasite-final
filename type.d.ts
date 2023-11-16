@@ -295,8 +295,6 @@ type SignUpResponse = SuccessfulSignUpResponse | FailedResponse;
 // ========================= Organisation ===========================
 interface ICreateOrganisationForm {
   name: string;
-  address: string;
-  orgEmail: string;
   logo?: string;
 }
 interface ICreateOrgResponse {

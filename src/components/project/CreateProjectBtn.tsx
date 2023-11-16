@@ -145,7 +145,7 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
         </Form>
         <DialogFooter>
           <Button onClick={project.handleSubmit(onSubmit)} disabled={project.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
-            {!project.formState.isSubmitting && <span>Save</span>}
+            {!project.formState.isSubmitting && <span>Create</span>}
             {project.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
           </Button>
         </DialogFooter>

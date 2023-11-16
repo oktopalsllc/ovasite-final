@@ -163,7 +163,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                 </Form>
                 <DialogFooter>
                     <Button onClick={report.handleSubmit(onSubmit)} disabled={report.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
-                        {!report.formState.isSubmitting && <span>Save</span>}
+                        {!report.formState.isSubmitting && <span>Create</span>}
                         {report.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
                     </Button>
                 </DialogFooter>
