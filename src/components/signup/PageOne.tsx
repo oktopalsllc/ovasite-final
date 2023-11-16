@@ -8,14 +8,17 @@ import { useForm } from "react-hook-form";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { authService } from "@/services/auth-service/auth.service";
 import { useRouter } from "next/navigation";
+import { ImSpinner2 } from "react-icons/im";
+import { toast } from "../form/ui/use-toast";
 
 const schema = yup.object({
   email: yup.string().required("Email is required"),
   password: yup.string().required("Password is required"),
-  source: yup.string().required("Source is required")
+  source: yup.string().required("Source is required"),
 });
 
 function PageOne() {
+  const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
@@ -37,14 +40,27 @@ function PageOne() {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await authService.signup(data);
 
       if (response.success) {
+        setIsLoading(false);
         router.push("/signin");
       } else {
+        setIsLoading(false);
         const error = response.error;
+        toast({
+          title: "Error",
+          description: error,
+        });
       }
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+      toast({
+        title: "Error",
+        description: "An error occured. Try again",
+      });
+    }
   };
 
   if (!useIsMounted) return;
@@ -60,22 +76,15 @@ function PageOne() {
   // };
   //! ================================================================================
 
-  const options = [
-    { label: "LinkedIn", value: "linkedin" },
-    { label: "Facebook", value: "facebook" },
-    { label: "Instagram", value: "instagram" },
-    { label: "Affiliate", value: "affiliate" },
-    { label: "Twitter(X)", value: "twitter" },
-    { label: "Referrals", value: "referrals" },
-  ];
+ 
   return (
     <>
-      <div style={{ display: currentStep === 1 ? "block" : "none" }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 h-screen relative place-content-center">
+      <div >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:overflow-y-hidden h-screen relative place-content-center">
           {/* Logo */}
-          <div className="absolute top-5 left-5">
-            <Link href="/home">
-              <Image alt="Logo" src="/Logo.jpg" width={60} height={60} />
+          <div className="absolute top-5 left-20 pl-8 pb-10">
+            <Link href="/">
+              <Image alt="Logo" src="/Logo.png" width={60} height={60} />
             </Link>
           </div>
 
@@ -83,13 +92,13 @@ function PageOne() {
           <div className="flex flex-1 flex-col justify-center px-4 py-2 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div className="mx-auto w-full max-w-sm lg:w-96">
               <div>
-                <h1 className="title-font font-bold text-xl text-[#001233] mb-4 mt-10">
+                <h1 className="title-font font-bold text-lg text-[#001233] mb-2 mt-10">
                   Create your account
                 </h1>
               </div>
 
-              <div className="mt-10">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <div className="mt-8">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <div>
                     <label
                       htmlFor="email"
@@ -151,9 +160,13 @@ function PageOne() {
                     </label>
                     <div className="mt-2 relative">
                       <select {...register("source")}>
-                        <option value="FACEBOOK">Facebook</option>
-                        <option value="ADVERTS">Adverts</option>
                         <option value="OTHER">Other</option>
+                        <option value="TWITTER">Twitter</option>
+                        <option value="FACEBOOK">Facebook</option>
+                        <option value="INSTAGRAM">Instagram</option>
+                        <option value="LINKEDIN">LinkedIn</option>
+                        <option value="GOOGLE">Google</option>
+                        <option value="FRIEND">Friend</option>
                       </select>
                     </div>
                   </div>
@@ -161,11 +174,18 @@ function PageOne() {
                   <div>
                     <button
                       type="submit"
-                      className="flex w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
+                      className="flex items-center w-full mt-2 justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
                     >
-                      Sign Up
+                      {isLoading ? (
+                        <>
+                          Signing Up{" "}
+                          <ImSpinner2 className="ml-4 animate-spin" />
+                        </>
+                      ) : (
+                        <>Sign Up</>
+                      )}
                     </button>
-                    <p className="text-center mt-6 text-sm leading-6 text-[#001233]">
+                    <p className="text-center mt-3 text-sm leading-6 text-[#001233]">
                       By signing up, you are indicating that you have read and
                       agreed to our
                       <Link
@@ -181,7 +201,7 @@ function PageOne() {
                   </div>
                 </form>
 
-                <div className="mt-10">
+                <div className="">
                   <div className="relative">
                     <div
                       className="absolute inset-0 flex items-center"
