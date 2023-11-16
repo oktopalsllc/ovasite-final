@@ -82,7 +82,6 @@ function EmployeeProfle({
             <input
               id="fullName"
               type="text"
-              autoComplete="fullName"
               placeholder="Full name"
               {...register("fullName")}
             />
@@ -100,7 +99,6 @@ function EmployeeProfle({
             <input
               id="email"
               type="email"
-              autoComplete="email"
               placeholder="Email"
               {...register("email")}
             />
@@ -118,7 +116,6 @@ function EmployeeProfle({
             <input
               id="contactNumber"
               type="text"
-              autoComplete="contactNumber"
               placeholder="Contact Number"
               {...register("contactNumber")}
             />
@@ -138,7 +135,6 @@ function EmployeeProfle({
             <input
               id="address"
               type="text"
-              autoComplete="address"
               placeholder="Address"
               {...register("address")}
             />
