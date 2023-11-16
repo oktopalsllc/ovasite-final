@@ -45,10 +45,10 @@ function ProjectCard2({ project }: { project: Project }) {
   return (
     <>
       {/* <pre>{JSON.stringify(project, null, 2)}</pre> */}
-      <div className="border border-gray-200 shadow-lg rounded-lg bg-white">
+      <div className="w-full border border-gray-200 shadow-lg rounded-lg bg-white">
         {/* Header */}
         <div className="w-full flex justify-between items-center mb-6 border-b border-gray-200 p-6 ">
-          <h3 className="font-bold text-sm md:text-xl truncate w-1/2">{project.name}</h3>
+          <h3 className="font-bold text-base md:text-xl truncate w-1/2">{project.name}</h3>
           <div className="flex justify-end items-center space-x-4 w-1/2">
             <div
               className={`${
@@ -84,7 +84,7 @@ function ProjectCard2({ project }: { project: Project }) {
             {convertDate(project.endDate)}
           </div>
         </div>
-        <div className="px-6 py-6">
+        <div className="px-6 py-6 w-full">
           <div className="block font-bold ">Description</div>
           <div className="block truncate">
             {project.description || "No description"}

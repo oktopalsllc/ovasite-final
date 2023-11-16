@@ -32,7 +32,7 @@ async function ProjectCards({ orgId }: { orgId: string }) {
                         {projects.map((project) => (
                             <ProjectCard2 key={project.id} project={project} />
                         ))}
-                    </> : <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
+                    </> : <div className="grid place-content-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }
         </>
     );
