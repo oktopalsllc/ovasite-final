@@ -11,7 +11,6 @@ import { ImSpinner2 } from "react-icons/im";
 import { projectService } from "@/services/project-service/project.service";
 
 export default function Project({ params,
-export default function Project({ params,
 }: {
   params: {
     projectId: string;

@@ -9,14 +9,14 @@ export default function Projects({ params }: { params: { orgId: string } }) {
   const { orgId } = params;
   return (
     <>
-      <div className="w-full">
+      <div className="w-full mt-16">
           <Separator className="my-3" />
         <div className="flex items-center justify-between">
-          <h2 className="text-4xl font-bold col-span-2">Projects</h2>
+          <h2 className="text-2xl md:text-4xl font-bold col-span-2">Projects</h2>
           <CreateProjectBtn orgId={orgId} />
         </div>        
-        <Separator className="my-6" />
-        <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <Separator className="my-2 md:my-6" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 py-4 md:py-8">
           <Suspense
             fallback={[1, 2, 3, 4].map((el) => (
               <ProjectCardSkeleton key={el} />

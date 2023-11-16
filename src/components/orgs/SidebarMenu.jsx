@@ -11,67 +11,30 @@ function SidebarMenu() {
   };
 
   return (
-    <nav className="md:w-96 h-screen md:bg-navy_blue z-50 ">
-      {/* nav header */}
-      <div
-        className="fixed w-full h-[4rem] z-50 top-0 left-0 bg-ova_white px-[1.2rem] flex flex-row
-        justify-between items-center md:static md:px-0 md:bg-navy_blue "
-      >
-        <Link
-          href="/"
-          className="flex title-font font-bold items-center mb-4 md:mb-0 "
-          style={{ color: "rgb(256, 89, 90)", marginLeft: "50px" }}
-        >
-          <Image alt="Logo" src="/Logo.png" width={60} height={60} />
-        </Link>
-      </div>
-
-      <div
-        className={`${
-          isCollapsed ? "" : "w-full"
-        } bg-[#001333] text-white max-h-full overflow-y-scroll hidden lg:block`}
-      >
-        <div className="p-0">
-          {/* Your Sidebar Content */}
+    <nav
+      className={`${
+        isCollapsed ? "" : "w-96"
+      } h-screen md:bg-navy_blue z-50 hidden lg:block`}
+    >
+      <div className="relative">
+        {isCollapsed ? (
           <div
-            className="flex items-center space-x-2 cursor-pointer p-6 border-b border-white"
             onClick={toggleCollapse}
+            className="grid place-content-center p-5 cursor-pointer"
           >
-            <span className="text-xl">
-              {isCollapsed ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-10 h-10"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-10 h-10"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25"
-                  />
-                </svg>
-              )}
-            </span>
-            <span className="ml-6">{isCollapsed ? "" : "Collapse"}</span>
+            <Image alt="Logo" src="/Logo.png" width={60} height={60} />
           </div>
+        ) : (
+          <div
+            onClick={toggleCollapse}
+            className="text-[#FF595A] text-[32px] font-extrabold grid place-content-center p-5 cursor-pointer"
+          >
+            Ovasite
+          </div>
+        )}
+      </div>
+      <div className={`bg-[#001333] text-white h-full`}>
+        <div className="p-0">
           
           <div className="mt-4 p-6 flex flex-col justify-between h-screen">
             <div className="space-y-6">
@@ -221,82 +184,78 @@ function SidebarMenu() {
                   </span>
                 )}
               </div>
-            </div>
 
-            <div className="flex flex-col">
-              <div className="space-y-6">
-                {/* Item */}
-                <div
-                  onClick={() => setActiveLink("support")}
-                  className="flex items-center space-x-4 cursor-pointer"
-                >
-                  {/* Icon */}
-                  <span className="text-xl">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="40"
-                      height="40"
-                      viewBox="0 0 48 48"
-                      fill="none"
-                    >
-                      <path
-                        d="M6 14V34C6 35.0609 6.42143 36.0783 7.17157 36.8284C7.92172 37.5786 8.93913 38 10 38H38C39.0609 38 40.0783 37.5786 40.8284 36.8284C41.5786 36.0783 42 35.0609 42 34V18C42 16.9391 41.5786 15.9217 40.8284 15.1716C40.0783 14.4214 39.0609 14 38 14H26L22 10H10C8.93913 10 7.92172 10.4214 7.17157 11.1716C6.42143 11.9217 6 12.9391 6 14Z"
-                        stroke="white"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                  {/* Text */}
-                  {!isCollapsed && (
-                    <div
-                      className={`${
-                        activeLink == "support"
-                          ? "text-[#FF595A] font-semibold"
-                          : "text-ova_white"
-                      } ml-[1rem]  text-lg `}
-                    >
-                      Customer Support
-                    </div>
-                  )}
-                </div>
+              {/* Item */}
+              <div
+                onClick={() => setActiveLink("support")}
+                className="flex items-center space-x-4 cursor-pointer"
+              >
+                {/* Icon */}
+                <span className="text-xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="40"
+                    height="40"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                  >
+                    <path
+                      d="M6 14V34C6 35.0609 6.42143 36.0783 7.17157 36.8284C7.92172 37.5786 8.93913 38 10 38H38C39.0609 38 40.0783 37.5786 40.8284 36.8284C41.5786 36.0783 42 35.0609 42 34V18C42 16.9391 41.5786 15.9217 40.8284 15.1716C40.0783 14.4214 39.0609 14 38 14H26L22 10H10C8.93913 10 7.92172 10.4214 7.17157 11.1716C6.42143 11.9217 6 12.9391 6 14Z"
+                      stroke="white"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                {/* Text */}
+                {!isCollapsed && (
+                  <div
+                    className={`${
+                      activeLink == "support"
+                        ? "text-[#FF595A] font-semibold"
+                        : "text-ova_white"
+                    } ml-[1rem]  text-lg `}
+                  >
+                    Customer Support
+                  </div>
+                )}
+              </div>
 
-                {/* Item */}
-                <div
-                  onClick={() => setActiveLink("logout")}
-                  className="flex items-center space-x-4 cursor-pointer"
-                >
-                  {/* Icon */}
-                  <span className="text-xl">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-10 h-10"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                      />
-                    </svg>
+              {/* Item */}
+              <div
+                onClick={() => setActiveLink("logout")}
+                className="flex items-center space-x-4 cursor-pointer"
+              >
+                {/* Icon */}
+                <span className="text-xl">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-10 h-10"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                    />
+                  </svg>
+                </span>
+                {/* Text */}
+                {!isCollapsed && (
+                  <span
+                    className={`${
+                      activeLink == "logout"
+                        ? "text-[#FF595A] font-semibold"
+                        : "text-ova_white"
+                    } ml-[1rem]  text-lg `}
+                  >
+                    Logout
                   </span>
-                  {/* Text */}
-                  {!isCollapsed && (
-                    <span
-                      className={`${
-                        activeLink == "logout"
-                          ? "text-[#FF595A] font-semibold"
-                          : "text-ova_white"
-                      } ml-[1rem]  text-lg `}
-                    >
-                      Logout
-                    </span>
-                  )}
-                </div>
+                )}
               </div>
             </div>
           </div>
