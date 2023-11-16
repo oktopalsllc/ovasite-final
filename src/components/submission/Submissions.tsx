@@ -79,7 +79,7 @@ export default function Submissions({ projectId }: { projectId: string }) {
                         </Table>
                     </div>
                     :
-                    <h1 className="text-2xl font-bold my-4">No submissions</h1>
+                    <h1 className="text-md font-bold my-4">No submissions</h1>
                 }
             </>
         )

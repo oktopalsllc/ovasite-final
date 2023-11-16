@@ -167,7 +167,7 @@ export default function Report({ params }: { params: { id: string } }) {
             {loaded ? <>
                 <div className="py-10 border-b border-muted">
                     <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
-                        <h1 className="text-4xl font-bold col-span-2">
+                        <h1 className="text-2xl font-bold col-span-2">
                             Report
                         </h1>
                         <button className=" w-[80px] outline-black hover:bg-blue-300 hover:cursor-pointer hover:border-dashed p-2 bg-blue-500 text-sm rounded-md text-white"

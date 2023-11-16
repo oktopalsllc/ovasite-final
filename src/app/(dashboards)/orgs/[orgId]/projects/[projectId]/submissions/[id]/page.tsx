@@ -90,25 +90,7 @@ export default function Submission({ params }: { params: { id: string } }) {
                 <h2 className="text-lg font-medium my-4">Submitted on: <span className="font-light">{convertDate(submission.createdAt)}</span></h2>
                 <p className="text-lg font-medium my-4">Description: <span className="font-light">{submission.description}</span></p>
                 <div className="rounded-md border">
-                    <Table>
-                        {/* <TableBody>
-                            <TableCell>
-                            {rows.map((row) => (
-                                    <TableRow key={row.id} className="uppercase">
-                                        {row.label}
-                                    </TableRow>
-                                ))}
-                            </TableCell>
-                            <TableCell>
-                            {cols.map((col, index) => (
-                                <TableCell key={index}>
-                                    {rows.map((row) => (
-                                        <ColCell key={row.id} type={row.type} value={col[row.id]} />
-                                    ))}
-                                </TableCell>
-                            ))}
-                            </TableCell>
-                        </TableBody> */}
+                    <Table>                        
                         <TableBody>
                             {rows.map((row) => (
                                 <TableRow key={row.id} >

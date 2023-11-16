@@ -62,10 +62,10 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
-          className="group border shadow-lg border-primary/20 h-[40px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-2"
+          className="group border shadow-lg border-primary/20 h-[40px] w-[150px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-2"
         >
           <BsFileEarmarkPlus className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
-          <p className="font-bold text-lg text-muted-foreground group-hover:text-primary">Create new project</p>
+          <p className="font-bold text-md text-muted-foreground group-hover:text-primary">New project</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-white">
@@ -145,7 +145,7 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
         </Form>
         <DialogFooter>
           <Button onClick={project.handleSubmit(onSubmit)} disabled={project.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
-            {!project.formState.isSubmitting && <span>Create</span>}
+            {!project.formState.isSubmitting && <span>Save</span>}
             {project.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
           </Button>
         </DialogFooter>

@@ -47,7 +47,7 @@ async function FormDetailPage({
   return (
     <div className="h-[100vh] overflow-y-auto px-4">
       <div className="py-10 border-b border-muted">
-        <h2 className="text-4xl font-bold col-span-2">Form</h2>
+        <h2 className="text-2xl font-bold col-span-2">Form</h2>
         <Separator className="my-3" />
         <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
           <h1 className="text-4xl font-bold truncate">{form.title}</h1>

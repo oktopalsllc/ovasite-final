@@ -69,7 +69,7 @@ export default function Project({ params,
     <>
       {loaded ?
         <div className="container pt-4">
-          <h2 className="text-4xl font-bold col-span-2">
+          <h2 className="text-2xl font-bold col-span-2">
             Project: {project?.name}
           </h2>
           <Separator className="my-3" />
@@ -78,7 +78,7 @@ export default function Project({ params,
               return (
                 <div
                   key={i}
-                  className={`m-2 p-2 md:text-lg lg:text-xl hover:bg-gray-300 hover:text-gray-800 w-full`}
+                  className={`m-2 p-2 md:text-sm lg:text-md hover:bg-gray-300 hover:text-gray-800 w-full`}
                   onClick={(i) => {
                     setActive(item.id);
                   }}>
@@ -88,7 +88,7 @@ export default function Project({ params,
             })}
           </div>
           <Separator className="my-3" />
-          <h3 className="text-3xl font-bold col-span-2">
+          <h3 className="text-xl font-bold col-span-2">
             {items.find((item) => item.id === active)?.name ?? 'Default Name'}
           </h3>
           <Separator className="my-3" />
