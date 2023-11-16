@@ -13,12 +13,13 @@ enum UserRole {
 }
 
 enum Source {
+  OTHER = "OTHER",
   FACEBOOK = "FACEBOOK",
   TWITTER = "TWITTER",
   INSTAGRAM = "INSTAGRAM",
   LINKEDIN = "LINKEDIN",
   GOOGLE = "GOOGLE",
-  OTHER = "OTHER",
+  FRIEND = "FRIEND"
 }
 
 enum ProjectRole {
