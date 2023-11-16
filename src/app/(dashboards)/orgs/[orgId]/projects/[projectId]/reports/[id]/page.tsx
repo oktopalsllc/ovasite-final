@@ -5,6 +5,15 @@ import { useParams, useRouter } from "next/navigation";
 import { toast } from "@/components/form/ui/use-toast";
 import { reportService } from "@/services/report-service/report.service";
 import { ImSpinner2 } from "react-icons/im";
+import { Separator } from "@/components/form/ui/separator";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+} from "@/components/form/ui/form";
 
 const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
 const token = tokenString?.toString() || "";
@@ -103,7 +112,7 @@ export default function Report({ params }: { params: { id: string } }) {
                 toast({
                     title: "Success",
                     description: message,
-                });             
+                });
                 window.location.reload();
                 router.refresh();
             }
@@ -124,8 +133,8 @@ export default function Report({ params }: { params: { id: string } }) {
             });
         }
     }
-    
-    const handleDelete = async () =>{
+
+    const handleDelete = async () => {
         try {
             const response = await reportService.deleteReport(orgValue, reportId, token);
             const { message, status } = response;
@@ -133,7 +142,7 @@ export default function Report({ params }: { params: { id: string } }) {
                 toast({
                     title: "Success",
                     description: message,
-                });                
+                });
                 router.back();
             }
             else {
@@ -148,48 +157,47 @@ export default function Report({ params }: { params: { id: string } }) {
             console.error(error);
         }
     }
-     
+
     function handleBack() {
         router.back();
     }
 
     return (
-        <>
+        <div className="h-[100vh] bg-white overflow-y-auto px-10 mb-10">
             {loaded ? <>
-                <div className="p-8 bg-[#EBEAEA]">
-                    <div className="flex flex-row mb-5 gap-5">
-                        <h1 className="text-xl font-semibold">
+                <div className="py-10 border-b border-muted">
+                    <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+                        <h1 className="text-4xl font-bold col-span-2">
                             Report
                         </h1>
-                        <div className="flex justify-end">
-                            <button className="outline-black p-2 bg-green-500 rounded-md text-white"
-                                onClick={handleBack}>
-                                Back
-                            </button>
-                        </div>
+                        <button className=" w-[80px] outline-black hover:bg-blue-300 hover:cursor-pointer hover:border-dashed p-2 bg-blue-500 text-sm rounded-md text-white"
+                            onClick={handleBack}>
+                            Back
+                        </button>
                     </div>
+                    <Separator className="my-3" />
                     <div className="flex flex-col gap-5">
 
                         <h1 className="font-semibold text-lg">
                             {orgName != "" && orgName != null && orgName != undefined ? orgName : orgMail}
                         </h1>
-                        <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
+                        <div className="flex flex-col lg:flex-row gap-10 lg:gap-10">
                             <h1 className="font-semibold">Report By: {empName != null ? empName : empId}</h1>
                             <h1 className="font-semibold">Created On: {convertDate(reportDate)} </h1>
                             <h1 className="font-semibold">Last Modified: {convertDate(updatedDate)} </h1>
                         </div>
                     </div>
                 </div>
+                
+                <Separator className="my-3" />
 
-
-
-                <div className="bg-gray-100 p-10">
+                <div className="bg-white ">
                     <div className="">
                         <h1 className="font-semibold">Title</h1>
                         <input
                             type="text"
                             title="Report Title"
-                            className="h-[35px] w-[350px] rounded-md p-2 mb-3"
+                            className="lg:h-[35px] lg:w-[350px] rounded-md p-2 mb-3"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
@@ -258,30 +266,30 @@ export default function Report({ params }: { params: { id: string } }) {
                             rows={5}
                             value={challenge}
                             onChange={(e) => setChallenge(e.target.value)}
-                            className=" w-full mb-3 p-2 bg-white border-gray-300 rounded-md"
+                            className=" lg:w-full md:w-full w-full mb-3 p-2 bg-white border-gray-300 rounded-md"
                         ></textarea>
                     </div>
-                    <div className="flex justify-end gap-4">
-                        <button className="outline-black p-4 bg-green-500 rounded-md text-white"
+                    <div className="flex lg:flex-row md:flex-row flex-col lg:justify-end md:justify-end align-center gap-4 mb-10 mt-5">
+                        <button className="outline-black text-sm lg:w-[100px] md:w-[100px] w-full p-2 hover:bg-green-300 bg-green-500 hover:cursor-pointer hover:border-dashed rounded-md text-white"
                             onClick={handleGenerate}>
-                            Update Report
+                            Update
                         </button>
                         <button
                             onClick={handleDownload}
-                            className="bg-blue-500 text-white p-4 rounded-md"
+                            className="bg-blue-500 text-sm lg:w-[100px] md:w-[100px] w-full hover:bg-blue-300 hover:cursor-pointer hover:border-dashed text-white p-2 rounded-md"
                         >
-                            Download Report
+                            Download
                         </button>
                         <button
                             onClick={handleDelete}
-                            className="bg-red-500 text-white p-4 rounded-md"
+                            className="bg-red-500 text-sm lg:w-[100px] md:w-[100px] w-full hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed text-white p-2 rounded-md"
                         >
-                            Delete Report
+                            Delete
                         </button>
                     </div>
                 </div>
             </> : <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }
-        </>
+        </div>
     );
 }

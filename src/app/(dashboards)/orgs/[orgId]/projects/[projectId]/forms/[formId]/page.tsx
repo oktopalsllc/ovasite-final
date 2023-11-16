@@ -19,14 +19,13 @@ import { LuView } from "react-icons/lu";
 import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
-import { ElementsType, FormElementInstance } from "@/components/form/FormElements";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/form/ui/table";
 import { format, formatDistance } from "date-fns";
 import { Badge } from "@/components/form/ui/badge";
-import { Checkbox } from "@/components/form/ui/checkbox";
 import { Separator } from "@/components/form/ui/separator";
 import DeleteBtn from "@/components/form/DeleteBtn";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 async function FormDetailPage({
   params,
@@ -35,20 +34,28 @@ async function FormDetailPage({
     formId: string;
   };
 }) {
+  const router = useRouter();
   const { formId } = params;
   const form = await GetFormById(formId);
   if (!form) {
     throw new Error("form not found");
   }
+  function handleBack() {
+    router.back();
+  }
 
   return (
-    <div className="h-[100vh] overflow-y-auto">
+    <div className="h-[100vh] overflow-y-auto px-4">
       <div className="py-10 border-b border-muted">
         <h2 className="text-4xl font-bold col-span-2">Form</h2>
         <Separator className="my-3" />
         <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
           <h1 className="text-4xl font-bold truncate">{form.title}</h1>
-          <div className="flex gap-2">
+          <div className="flex lg:flex-row md:flex-row flex-col gap-2">
+            <button className=" w-[150px] outline-black hover:bg-blue-300 hover:cursor-pointer hover:border-dashed p-2 bg-blue-500 rounded-md text-white"
+              onClick={handleBack}>
+              Back
+            </button>
             <VisitBtn shareUrl={form.id} />
             <DeleteBtn form={form} />
           </div>
