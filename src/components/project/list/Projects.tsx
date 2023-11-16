@@ -29,9 +29,12 @@ async function ProjectCards({ orgId }: { orgId: string }) {
             {
                 loaded ?
                     <>
-                        {projects.map((project) => (
-                            <ProjectCard2 key={project.id} project={project} />
-                        ))}
+                        {projects.length > 0 ?
+                            <>{projects.map((project) => (
+                                <ProjectCard2 key={project.id} project={project} />
+                                ))}
+                            </> : <h1 className="text-md font-bold my-4">No projects created</h1>
+                        }
                     </> : <div className="grid place-content-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }
         </>

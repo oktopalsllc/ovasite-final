@@ -48,7 +48,7 @@ export default function Submissions({ projectId }: { projectId: string }) {
         return (
             <>
                 {submissions.length > 0 ?
-                    <div className="rounded-md border">
+                    <div className="container overflow-x-auto rounded-md border">
                         <Table>
                             <TableHeader>
                                 <TableRow>

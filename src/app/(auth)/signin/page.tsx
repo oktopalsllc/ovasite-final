@@ -119,7 +119,7 @@ const Page = () => {
 
               <div className="mt-10">
                 <div>
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <form onSubmit={handleSubmit(onSubmit)} className="">
                     <div>
                       <label
                         htmlFor="email"
@@ -127,31 +127,31 @@ const Page = () => {
                       >
                         Email
                       </label>
-                      <div className="mt-2">
+                      <div className="mt-2 mb-5">
                         <input
                           id="email"
                           type="email"
                           autoComplete="email"
                           required
-                          placeholder="email"
+                          placeholder="youremail@provider.com"
                           {...register("email", { required: true })}
                         />
                       </div>
                     </div>
-
-                    <div className="mt-2 relative">
-                      <label
+                    
+                    <label
                         htmlFor="password"
-                        className="block text-sm font-medium leading-6 text-gray-900"
+                        className="text-sm mt-5 font-medium leading-6 text-gray-900"
                       >
                         Password
                       </label>
+                    <div className="mb-5 relative">
                       <input
                         id="password"
                         type={passwordVisible ? "text" : "password"}
                         autoComplete="current-password"
                         required
-                        placeholder="Password"
+                        placeholder="password"
                         {...register("password", { required: true })}
                       />
                       <Image
@@ -182,10 +182,10 @@ const Page = () => {
                         </label>
                       </div> */}
 
-                      <div className="text-sm leading-6">
+                      <div className="text-sm leading-6 mb-5">
                         <Link
                           href="/ForgotPassword"
-                          className="font-semibold text-[#001233] hover:text-[#001233]"
+                          className="font-semibold text-[#001233] hover:text-[#FF595A]"
                         >
                           Forgot password?
                         </Link>
