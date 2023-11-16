@@ -55,7 +55,7 @@ function ProjectCard2({ project }: { project: Project }) {
                 project.isCompleted
                   ? "bg-green-200 border border-green-400 text-green-700"
                   : "bg-blue-200 border border-blue-400 text-blue-700"
-              } text-xs font-semibold rounded-3xl px-2 py-1 block`}
+              } text-xs font-semibold rounded-3xl px-2 py-1 block w-2/3`}
             >
               {project.isCompleted ? "Completed" : project.status}
             </div>
