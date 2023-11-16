@@ -14,9 +14,6 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
   const formValues = useRef<{ [key: string]: string }>({});
   const formErrors = useRef<{ [key: string]: boolean }>({});
   const [renderKey, setRenderKey] = useState(new Date().getTime()); 
-  // const params = useParams();
-  // const { orgId } = params;
-  // const orgValue = orgId.toString() || "";
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
   async function getGeolocation(): Promise<string> {
@@ -95,12 +92,18 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
         // formInfo: formInfo,
         location: location
       });      
-      console.log("🚀 ~ file: FormSubmitComponent.tsx:97 ~ submitForm ~ location:", location)
-      // const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
-      // const token = tokenString?.toString() || "";
-      // await submissionService.createSubmission(orgValue, jsonContent, token);
-      await SubmitForm(formUrl, jsonContent);
-      setSubmitted(true);
+      const submit = await SubmitForm(formUrl, jsonContent);
+      if(submit)
+      {        
+        setSubmitted(true);
+      }
+      else{
+        toast({
+          title: "Error",
+          description: "Something went wrong",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",

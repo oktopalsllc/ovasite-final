@@ -2,18 +2,12 @@
 
 import prisma from "@/lib/prisma";
 import { formSchema, formSchemaType } from "@/schemas/form";
-// import { currentUser } from "@clerk/nextjs";
+import { createAuditLog } from "./auditHelper";
 import { getCurrentEmployee } from "@/services/employee-service/employee.service";
-import axios from 'axios';
-
-// class UserNotFoundErr extends Error {}
+import axios from "axios";
+var ip = require("ip");
 
 export async function GetFormStats(formId: string) {
-  // const user = await currentUser();
-  // if (!user) {
-  //   throw new UserNotFoundErr();
-  // }
-
   const stats = await prisma.form.findUnique({
     where: {
       id: formId,
@@ -58,7 +52,6 @@ export async function CreateForm(
 
   const form = await prisma.form.create({
     data: {
-      // userId: user.id,
       title,
       description,
       employee: { connect: { id: employeeId as string } },
@@ -66,19 +59,26 @@ export async function CreateForm(
       organization: { connect: { id: orgId } },
     },
   });
+  
 
   if (!form) {
     throw new Error("something went wrong");
   }
+  await createAuditLog(
+    form.creatorId,
+    ip.toString() || null,
+    form.organizationId,
+    "create",
+    "Form",
+    "",
+    JSON.stringify(form),
+    form.id.toString()
+  );
 
   return form.id;
 }
 
 export async function GetForms(projectId: string) {
-  // const user = await currentUser();
-  // if (!user) {
-  //   throw new UserNotFoundErr();
-  // }
 
   return await prisma.form.findMany({
     where: {
@@ -137,9 +137,11 @@ export async function GetFormContentByUrl(formId: string) {
 }
 
 export async function SubmitForm(formId: string, content: string) {
-  const { formValues, location } = JSON.parse(content);  
+  const { formValues, location } = JSON.parse(content);
   const { latitude, longitude } = location;
-  const geoData = await axios.get(`https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`);
+  const geoData = await axios.get(
+    `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
+  );
   const geoDataString = JSON.stringify(geoData.data);
   const updatedForm = await prisma.form.update({
     data: {
@@ -152,8 +154,8 @@ export async function SubmitForm(formId: string, content: string) {
       published: true,
     },
   });
-  if(!updatedForm) return false;
-  await prisma.submission.create({
+  if (!updatedForm) return false;
+  const submission = await prisma.submission.create({
     data: {
       title: updatedForm.title,
       description: updatedForm.description,
@@ -166,28 +168,20 @@ export async function SubmitForm(formId: string, content: string) {
       organization: { connect: { id: updatedForm.organizationId as string } },
     },
   });
+  if(!submission){
+    return false;
+  }
+  await createAuditLog(
+    submission.creatorId,
+    ip.address() || null,
+    submission.organizationId,
+    "create",
+    "Submission",
+    "",
+    JSON.stringify(submission),
+    submission.id.toString()
+  );
   return true;
-  // return await prisma.form.update({
-  //   data: {
-  //     subCount: {
-  //       increment: 1,
-  //     },
-  //     submissions: {
-  //       create: {
-  //         title: updatedForm.title,
-  //         description: updatedForm.description,
-  //         submissionData: content,
-  //         form: { connect: { id: formId  as string} },
-  //         employee: { connect: { id: updatedForm.creatorId } },
-  //         project: { connect: { id: updatedForm.projectId as string } },
-  //         organization: { connect: { id: updatedForm.organizationId as string } },
-  //       },
-  //     },
-  //   },
-  //   where: {
-  //     id: formId,
-  //   },
-  // });
 }
 
 export async function GetFormWithSubmissions(id: string) {
@@ -197,7 +191,7 @@ export async function GetFormWithSubmissions(id: string) {
     },
     include: {
       submissions: true,
-      employee: true
+      employee: true,
     },
   });
 }
