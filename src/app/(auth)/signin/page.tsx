@@ -98,14 +98,13 @@ const Page = () => {
         <div>
           <div className="grid grid-cols-1 place-content-center relative h-screen">
             {/* Logo */}
-            <div className="absolute top-5 left-5">
+            <div className="top-5 mx-auto ">
               <Link href="/">
                 <Image
                   src="/Logo.png"
                   alt=""
                   width={70}
                   height={70}
-                  style={{ marginLeft: "20%", marginTop: "10px" }}
                 />
               </Link>
             </div>
@@ -113,7 +112,7 @@ const Page = () => {
             {/* Login form */}
             <div className="mx-auto w-full max-w-sm lg:w-96">
               <div>
-                <h1 className="title-font font-bold text-xl text-[#001233] mb-4 mt-10">
+                <h1 className="title-font text-center font-bold text-xl text-[#001233] mb-4 mt-10">
                   Welcome Back
                 </h1>
               </div>
@@ -141,6 +140,12 @@ const Page = () => {
                     </div>
 
                     <div className="mt-2 relative">
+                      <label
+                        htmlFor="password"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                      >
+                        Password
+                      </label>
                       <input
                         id="password"
                         type={passwordVisible ? "text" : "password"}
@@ -162,7 +167,7 @@ const Page = () => {
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center">
+                      {/* <div className="flex items-center">
                         <input
                           id="remember-me"
                           name="remember-me"
@@ -175,7 +180,7 @@ const Page = () => {
                         >
                           Remember me
                         </label>
-                      </div>
+                      </div> */}
 
                       <div className="text-sm leading-6">
                         <Link
