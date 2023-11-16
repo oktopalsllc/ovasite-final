@@ -169,7 +169,7 @@ function PageOne() {
                       <select {...register("source")}>
                         <option value="OTHER">Other</option>
                         <option value="FACEBOOK">Facebook</option>
-                        <option value="TWITTER">TwitterD</option>
+                        <option value="TWITTER">Twitter</option>
                         <option value="INSTAGRAM">Instragram</option>
                         <option value="LINKEDIN">LinkedIn</option>
                         <option value="GOOGLE">Google</option>
