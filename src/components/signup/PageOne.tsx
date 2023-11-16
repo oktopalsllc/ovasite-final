@@ -167,9 +167,13 @@ function PageOne() {
                     </label>
                     <div className="mt-2 relative">
                       <select {...register("source")}>
-                        <option value="FACEBOOK">Facebook</option>
-                        <option value="ADVERTS">Adverts</option>
                         <option value="OTHER">Other</option>
+                        <option value="FACEBOOK">Facebook</option>
+                        <option value="TWITTER">Twitter</option>
+                        <option value="INSTAGRAM">Instragram</option>
+                        <option value="LINKEDIN">LinkedIn</option>
+                        <option value="GOOGLE">Google</option>
+                        <option value="FRIEND">Friend</option>
                       </select>
                     </div>
                   </div>

@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 
 function MobileMenu() {
     const [activeLink, setActiveLink] = useState("projects");
 
-    const params = useSearchParams();
-    const{ orgId } = params;
+    const urlParams = useParams();
+    const { orgId } = urlParams;
 
     const activeLinkStyle = "md:bg-peach_secondary rounded-md"
 
@@ -14,21 +14,18 @@ function MobileMenu() {
     <>
       {/* mobile nav */}
       <ul
-        className={`fixed w-[80%] z-50 h-screen top-[4rem] bg-navy_blue md:w-[25vw] 
-        md:mx-auto md:mt-[2rem] overflow-y-scroll left-0
-    
-    `}
+        className={`fixed w-1/2 z-50 h-screen top-20 bg-navy_blue overflow-y-scroll left-0`}
       >
         <li
           className={`${
             activeLink == "projects" ? activeLinkStyle : null
-          } px-[1.2rem] py-[0.8rem] mt-[2rem]`}
+          } px-[1.2rem] py-[0.8rem] mt-8`}
         >
           <Link href="/projects" className="flex flex-row items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
+              width="40"
+              height="40"
               viewBox="0 0 48 48"
               fill="none"
             >
@@ -45,7 +42,7 @@ function MobileMenu() {
                 activeLink == "projects"
                   ? "text-[#FF595A] font-semibold"
                   : "text-ova_white"
-              } ml-[1rem] font-normal  text-[1.5em] `}
+              } ml-[1rem] font-normal  text-lg `}
             >
               Projects
             </h4>
@@ -53,23 +50,23 @@ function MobileMenu() {
         </li>
         <li
           className={`${
-            activeLink == "teams" ? activeLinkStyle : null
-          } px-[1.2rem] py-[0.8rem] mt-[2rem]"`}
+            activeLink == "organisations" ? activeLinkStyle : null
+          } px-[1.2rem] py-[0.8rem] mt-4"`}
         >
           <Link
-            href={`/orgs/${orgId}/teams`}
+            href={`/orgs/${orgId}/organisations`}
             className="flex flex-row items-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
+              width="40"
+              height="40"
               viewBox="0 0 48 48"
               fill="none"
             >
               <path
                 d="M34 40H44V36C43.9999 34.7531 43.6113 33.5371 42.8883 32.5213C42.1652 31.5054 41.1436 30.74 39.9655 30.3315C38.7874 29.923 37.5112 29.8918 36.3145 30.242C35.1178 30.5923 34.0599 31.3067 33.288 32.286M34 40H14M34 40V36C34 34.688 33.748 33.434 33.288 32.286M33.288 32.286C32.5453 30.4299 31.2635 28.8389 29.608 27.7182C27.9525 26.5976 25.9992 25.9986 24 25.9986C22.0008 25.9986 20.0475 26.5976 18.392 27.7182C16.7365 28.8389 15.4547 30.4299 14.712 32.286M14 40H4V36C4.00009 34.7531 4.38867 33.5371 5.11172 32.5213C5.83477 31.5054 6.85637 30.74 8.0345 30.3315C9.21263 29.923 10.4888 29.8918 11.6855 30.242C12.8822 30.5923 13.9401 31.3067 14.712 32.286M14 40V36C14 34.688 14.252 33.434 14.712 32.286M30 14C30 15.5913 29.3679 17.1174 28.2426 18.2426C27.1174 19.3679 25.5913 20 24 20C22.4087 20 20.8826 19.3679 19.7574 18.2426C18.6321 17.1174 18 15.5913 18 14C18 12.4087 18.6321 10.8826 19.7574 9.75736C20.8826 8.63214 22.4087 8 24 8C25.5913 8 27.1174 8.63214 28.2426 9.75736C29.3679 10.8826 30 12.4087 30 14ZM42 20C42 21.0609 41.5786 22.0783 40.8284 22.8284C40.0783 23.5786 39.0609 24 38 24C36.9391 24 35.9217 23.5786 35.1716 22.8284C34.4214 22.0783 34 21.0609 34 20C34 18.9391 34.4214 17.9217 35.1716 17.1716C35.9217 16.4214 36.9391 16 38 16C39.0609 16 40.0783 16.4214 40.8284 17.1716C41.5786 17.9217 42 18.9391 42 20ZM14 20C14 21.0609 13.5786 22.0783 12.8284 22.8284C12.0783 23.5786 11.0609 24 10 24C8.93913 24 7.92172 23.5786 7.17157 22.8284C6.42143 22.0783 6 21.0609 6 20C6 18.9391 6.42143 17.9217 7.17157 17.1716C7.92172 16.4214 8.93913 16 10 16C11.0609 16 12.0783 16.4214 12.8284 17.1716C13.5786 17.9217 14 18.9391 14 20Z"
-                stroke={`${activeLink == "teams" ? "#FF595A" : "white"}`}
+                stroke={`${activeLink == "organisations" ? "#FF595A" : "white"}`}
                 strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -80,28 +77,28 @@ function MobileMenu() {
                 activeLink == "teams"
                   ? "text-[#FF595A] font-semibold"
                   : "text-ova_white"
-              } ml-[1rem] font-normal  text-[1.5em] `}
+              } ml-[1rem] font-normal  text-lg `}
             >
-              Teams
+              Organisations
             </h4>
           </Link>
         </li>
         <li
           className={`${
-            activeLink == "subscription" ? activeLinkStyle : null
-          } px-[1.2rem] py-[0.8rem] mt-[2rem]"`}
+            activeLink == "employees" ? activeLinkStyle : null
+          } px-[1.2rem] py-[0.8rem] mt-4"`}
         >
-          <Link href="/subscription" className="flex flex-row items-center">
+          <Link href="/employees" className="flex flex-row items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
+              width="40"
+              height="40"
               viewBox="0 0 48 48"
               fill="none"
             >
               <path
                 d="M18 34V14M18 34C18 35.0609 17.5786 36.0783 16.8284 36.8284C16.0783 37.5786 15.0609 38 14 38H10C8.93913 38 7.92172 37.5786 7.17157 36.8284C6.42143 36.0783 6 35.0609 6 34V14C6 12.9391 6.42143 11.9217 7.17157 11.1716C7.92172 10.4214 8.93913 10 10 10H14C15.0609 10 16.0783 10.4214 16.8284 11.1716C17.5786 11.9217 18 12.9391 18 14M18 34C18 35.0609 18.4214 36.0783 19.1716 36.8284C19.9217 37.5786 20.9391 38 22 38H26C27.0609 38 28.0783 37.5786 28.8284 36.8284C29.5786 36.0783 30 35.0609 30 34M18 14C18 12.9391 18.4214 11.9217 19.1716 11.1716C19.9217 10.4214 20.9391 10 22 10H26C27.0609 10 28.0783 10.4214 28.8284 11.1716C29.5786 11.9217 30 12.9391 30 14M30 34V14M30 34C30 35.0609 30.4214 36.0783 31.1716 36.8284C31.9217 37.5786 32.9391 38 34 38H38C39.0609 38 40.0783 37.5786 40.8284 36.8284C41.5786 36.0783 42 35.0609 42 34V14C42 12.9391 41.5786 11.9217 40.8284 11.1716C40.0783 10.4214 39.0609 10 38 10H34C32.9391 10 31.9217 10.4214 31.1716 11.1716C30.4214 11.9217 30 12.9391 30 14"
-                stroke={`${activeLink == "subscription" ? "#FF595A" : "white"}`}
+                stroke={`${activeLink == "employees" ? "#FF595A" : "white"}`}
                 strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -109,25 +106,25 @@ function MobileMenu() {
             </svg>
             <h4
               className={`${
-                activeLink == "subscription"
+                activeLink == "employees"
                   ? "text-[#FF595A] font-semibold"
                   : "text-ova_white"
-              } ml-[1rem] font-normal  text-[1.5em] `}
+              } ml-[1rem] font-normal  text-lg `}
             >
-              Subscription
+              Employees
             </h4>
           </Link>
         </li>
         <li
           className={`${
             activeLink == "audit" ? activeLinkStyle : null
-          } px-[1.2rem] py-[0.8rem] mt-[2rem]"`}
+          } px-[1.2rem] py-[0.8rem] mt-4"`}
         >
           <Link href="/audit" className="flex flex-row items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
+              width="40"
+              height="40"
               viewBox="0 0 48 48"
               fill="none"
             >
@@ -141,7 +138,7 @@ function MobileMenu() {
                 activeLink == "audit"
                   ? "text-[#FF595A] font-semibold"
                   : "text-ova_white"
-              } ml-[1rem] font-normal  text-[1.5em] `}
+              } ml-[1rem] font-normal  text-lg `}
             >
               Audit
             </h4>
@@ -173,7 +170,7 @@ function MobileMenu() {
                 activeLink == "support"
                   ? "text-[#FF595A] font-semibold"
                   : "text-ova_white"
-              } ml-[1rem] font-normal  text-[1.5em] `}
+              } ml-[1rem] font-normal  text-lg `}
             >
               Customer Support
             </h4>
@@ -196,7 +193,7 @@ function MobileMenu() {
                 strokeLinejoin="round"
               />
             </svg>
-            <h4 className="ml-[1rem] font-normal  text-[1.25em] text-ova_white">
+            <h4 className="ml-[1rem] font-normal  text-lg text-ova_white">
               LogOut
             </h4>
           </Link>

@@ -9,7 +9,7 @@ export default function Projects({ params }: { params: { orgId: string } }) {
   const { orgId } = params;
   return (
     <>
-      <div className="w-full mt-16">
+      <div className="w-full mt-0">
           <Separator className="my-3" />
         <div className="flex items-center justify-between">
           <h2 className="text-2xl md:text-4xl font-bold col-span-2">Projects</h2>
