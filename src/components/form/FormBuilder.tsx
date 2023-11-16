@@ -59,7 +59,7 @@ function FormBuilder({ form }: { form: Form }) {
     );
   }
 
-  const shareUrl = `http://localhost:3000/submit/${form.id}`;
+  const shareUrl = `${window.location.origin}/submit/${form.id}`;
 
   if (form.published) {
     return (
@@ -70,9 +70,9 @@ function FormBuilder({ form }: { form: Form }) {
             <h1 className="text-center text-4xl font-bold text-primary border-b pb-2 mb-10">
               🎊🎊 Form Published 🎊🎊
             </h1>
-            <h2 className="text-2xl">Share this form</h2>
-            <h3 className="text-xl text-muted-foreground border-b pb-10">
-              Anyone with the link can view and submit the form
+            <h2 className="text-center text-2xl">You can share this form</h2>
+            <h3 className="text-center text-xl text-muted-foreground border-b pb-10">
+              Anyone with the link can view and submit responses with the form
             </h3>
             <div className="my-4 flex flex-col gap-2 items-center w-full border-b pb-4">
               <Input className="w-full" readOnly value={shareUrl} />

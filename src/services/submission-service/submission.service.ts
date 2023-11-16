@@ -15,10 +15,13 @@ export const submissionService = {
 
 // Create a new submission
 async function createSubmission(orgId: string, data: string, token: string) {
+  const {formValues, formInfo, location} = JSON.parse(data);
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/submission/create`,
     {
-      data,
+      formValues: formValues,
+      formInfo: formInfo,
+      location: location,
     },
     {
       withCredentials: true,
@@ -33,8 +36,8 @@ async function createSubmission(orgId: string, data: string, token: string) {
 }
 
 // Get a submission by Id
-async function getSubmission(orgId: string, id: string, token: string) {
-  const response = await axios.get(`${apiUrl}/orgs/${orgId}/submission/${id}`, {
+async function getSubmission(orgId: string, submissionId: string, token: string) {
+  const response = await axios.get(`${apiUrl}/orgs/${orgId}/submission/${submissionId}`, {
     withCredentials: true,
     headers: {
       Accept: "application/json",

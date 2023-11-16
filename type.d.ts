@@ -13,12 +13,13 @@ enum UserRole {
 }
 
 enum Source {
+  OTHER = "OTHER",
   FACEBOOK = "FACEBOOK",
   TWITTER = "TWITTER",
   INSTAGRAM = "INSTAGRAM",
   LINKEDIN = "LINKEDIN",
   GOOGLE = "GOOGLE",
-  OTHER = "OTHER",
+  FRIEND = "FRIEND"
 }
 
 enum ProjectRole {
@@ -69,7 +70,6 @@ type Price = {
 type Organization = {
   id: string;
   name: string;
-  email: string | null;
   logo?: string | null;
   address?: string | null;
   inviteCode: string;
@@ -182,6 +182,7 @@ type Submission = {
   title: string;
   description: string;
   submissionData: string;
+  formData: string;
   geolocation?: string | null;
   creatorId: string;
   organizationId: string;
@@ -190,6 +191,7 @@ type Submission = {
   createdAt: Date;
   updatedAt: Date;
   form: Form;
+  employee: Employee;
   organization: Organization;
   project: Project;
 };
@@ -293,8 +295,6 @@ type SignUpResponse = SuccessfulSignUpResponse | FailedResponse;
 // ========================= Organisation ===========================
 interface ICreateOrganisationForm {
   name: string;
-  address: string;
-  orgEmail: string;
   logo?: string;
 }
 interface ICreateOrgResponse {

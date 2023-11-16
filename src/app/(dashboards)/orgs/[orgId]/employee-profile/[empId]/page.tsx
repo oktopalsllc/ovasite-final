@@ -70,8 +70,8 @@ function EmployeeProfle({
     <>
       <div className="grid grid-cols-1 place-content-center mx-auto max-w-sm lg:w-96 h-screen">
 
-        <form onSubmit={handleSubmit(onSubmit)} className="pt-6 bg-white p-6 shadow-md shadow-[#FF595A] rounded-md">
-          <h3 className="text-xl font-semibold mb-4">Your Current Organization Profile</h3>
+        <form onSubmit={handleSubmit(onSubmit)} className="pt-6 bg-white p-6 rounded-md">
+          <h3 className="text-xl font-semibold mb-4">Update Profile</h3>
           <div className="my-4">
             <label
               htmlFor="fullName"
@@ -82,7 +82,6 @@ function EmployeeProfle({
             <input
               id="fullName"
               type="text"
-              autoComplete="fullName"
               placeholder="Full name"
               {...register("fullName")}
             />
@@ -100,7 +99,6 @@ function EmployeeProfle({
             <input
               id="email"
               type="email"
-              autoComplete="email"
               placeholder="Email"
               {...register("email")}
             />
@@ -118,7 +116,6 @@ function EmployeeProfle({
             <input
               id="contactNumber"
               type="text"
-              autoComplete="contactNumber"
               placeholder="Contact Number"
               {...register("contactNumber")}
             />
@@ -138,7 +135,6 @@ function EmployeeProfle({
             <input
               id="address"
               type="text"
-              autoComplete="address"
               placeholder="Address"
               {...register("address")}
             />
@@ -152,7 +148,7 @@ function EmployeeProfle({
               type="submit"
               className="flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
             >
-              Update Profile
+              Save
               {isLoading && <ImSpinner2 className="ml-4 animate-spin" />}
             </button>
           </div>

@@ -48,7 +48,7 @@ function FormCards({ projectId }: { projectId: string }) {
             </div>
             : 
             <div className="grid grid-cols-1 text-center md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <h4 className="mt-14 text-2xl font-bold col-span-2">No forms yet</h4>
+              <h4 className="mt-14 text-md font-bold col-span-2">No forms yet</h4>
             </div>
           }
         </div> : <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>

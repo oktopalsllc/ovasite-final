@@ -8,7 +8,6 @@ import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -54,10 +53,10 @@ function CreateFormBtn() {
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
-          className="group border shadow-lg border-primary/20 h-[40px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-4"
+          className="group border shadow-lg border-primary/20 h-[40px] w-[150px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-4"
         >
           <BsFileEarmarkPlus className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
-          <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">Create new form</p>
+          <p className="font-bold text-md text-muted-foreground group-hover:text-primary">New form</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-white">

@@ -12,7 +12,7 @@ export default function Projects({ params }: { params: { orgId: string } }) {
       <div className="w-full mt-0">
           <Separator className="my-3" />
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl md:text-4xl font-bold col-span-2">Projects</h2>
+          <h2 className="text-2xl font-bold col-span-2">Projects</h2>
           <CreateProjectBtn orgId={orgId} />
         </div>        
         <Separator className="my-2 md:my-6" />

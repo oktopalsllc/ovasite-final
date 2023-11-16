@@ -82,9 +82,6 @@ export default function Reports({ projectId }: { projectId: string }) {
                                     <TableCell><Link href={`/orgs/${orgId}/projects/${projectId}/reports/${row.reportId}`}>{row.title}</Link></TableCell>
                                     <TableCell>{row.reportBy}</TableCell>
                                     <TableCell>
-                                        {/* {formatDistance(row.submittedAt, new Date(), {
-                                            addSuffix: true,
-                                        })} */}
                                         {convertDate(row.submittedAt)}
                                     </TableCell>
                                     <TableCell className="text-muted-foreground text-right">
@@ -96,7 +93,7 @@ export default function Reports({ projectId }: { projectId: string }) {
                     </Table>
                 </div>
                 :
-                <h1 className="text-2xl font-bold my-4">No reports created</h1>
+                <h1 className="text-md font-bold my-4">No reports created</h1>
             }
         </>
             

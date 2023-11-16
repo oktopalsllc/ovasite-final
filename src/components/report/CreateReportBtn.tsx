@@ -64,15 +64,16 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
             <DialogTrigger asChild>
                 <Button
                     variant={"outline"}
-                    className="group border shadow-lg border-primary/20 h-[40px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-4"
+                    className="group border shadow-lg border-primary/20 h-[40px] w-[150px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-4"
                 >
                     <BsFileEarmarkPlus title="Create report" className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
-                    <p className="font-bold text-lg text-muted-foreground group-hover:text-primary">Create new report</p>
+                    <p className="font-bold text-md text-muted-foreground group-hover:text-primary">New report</p>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="bg-white">
+            <DialogContent className="bg-white overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Create report</DialogTitle>
+                    <DialogDescription>Save report for editing</DialogDescription>
                 </DialogHeader>
                 <Form {...report}>
                     <form onSubmit={report.handleSubmit(onSubmit)} className="">
@@ -81,7 +82,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                             name="title"
                             render={({ field }) => (
                                 <FormItem className="mb-2">
-                                    <FormLabel>Title</FormLabel>
+                                    <FormLabel className="text-xs">Title</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
@@ -89,13 +90,13 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                                 </FormItem>
                             )}
                         />
-                        <div className="grid grid-cols-2 gap-4 mb-2">
+                        <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4 mb-2">
                             <FormField
                                 control={report.control}
                                 name="introduction"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Introduction</FormLabel>
+                                        <FormLabel className="text-xs">Introduction</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -108,7 +109,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                                 name="dataCollectionMethod"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Data Collection Methodology</FormLabel>
+                                        <FormLabel className="text-xs">Data Collection Methodology</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -118,13 +119,13 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                             />
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4 mb-2">
+                        <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4 mb-2">
                             <FormField
                                 control={report.control}
                                 name="challengeRecommendation"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Challenges and Recommendation</FormLabel>
+                                        <FormLabel className="text-xs">Challenges and Recommendation</FormLabel>
                                         <FormControl>
                                             <Textarea rows={2} {...field} />
                                         </FormControl>
@@ -137,7 +138,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                                 name="executiveSummary"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Executive Summary</FormLabel>
+                                        <FormLabel className="text-xs">Executive Summary</FormLabel>
                                         <FormControl>
                                             <Textarea rows={2} {...field} />
                                         </FormControl>
@@ -151,7 +152,7 @@ export default function CreateReportBtn({ projectId }: { projectId: string }) {
                             name="conclusion"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Conclusion</FormLabel>
+                                    <FormLabel className="text-xs">Conclusion</FormLabel>
                                     <FormControl>
                                         <Textarea rows={3} {...field} />
                                     </FormControl>

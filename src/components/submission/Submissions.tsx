@@ -1,35 +1,20 @@
-import { GetFormById, GetFormWithSubmissions } from "@/actions/form";
 import { submissionService } from "@/services/submission-service/submission.service";
-import FormLinkShare from "@/components/form/FormLinkShare";
-import VisitBtn from "@/components/form/VisitBtn";
-import React, { ReactNode, useState, useEffect } from "react";
-// import { StatsCard } from "../../page";
+import React, {  useState, useEffect } from "react";
 import { LuView } from "react-icons/lu";
-import { FaWpforms } from "react-icons/fa";
-import { HiCursorClick } from "react-icons/hi";
-import { TbArrowBounce } from "react-icons/tb";
-import { ElementsType, FormElementInstance } from "@/components/form/FormElements";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/form/ui/table";
-import { format, formatDistance } from "date-fns";
 import { Badge } from "@/components/form/ui/badge";
-import { Checkbox } from "@/components/form/ui/checkbox";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ImSpinner2 } from "react-icons/im";
 
 export default function Submissions({ projectId }: { projectId: string }) {
-    // return (
-    //     <div className="container pt-10">
-    //         <SubmissionsTable projectId={projectId} />
-    //     </div>
-    // );
     const [submissions, setSubmissions] = useState([]);
     const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
     const token = tokenString?.toString() || "";
     const hparams = useParams();
     const { orgId } = hparams;
     const [loaded, setLoaded] = useState(false);
-    // const form = await GetFormWithSubmissions(id);
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -43,9 +28,6 @@ export default function Submissions({ projectId }: { projectId: string }) {
         fetchData();
     }, [orgId, projectId, token]);
 
-    // if (!form) {
-    //     throw new Error("form not found");
-    // }
     const convertDate = (date: Date) => {
         const dateObject: Date = new Date(date);
         const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: '2-digit' };
@@ -85,7 +67,7 @@ export default function Submissions({ projectId }: { projectId: string }) {
                                     <TableRow key={index}>
                                         <TableCell><Link href={`/orgs/${orgId}/projects/${projectId}/submissions/${row.submissionId}`}>{row.title}</Link></TableCell>
                                         <TableCell>{row.formBy}</TableCell>
-                                        <TableCell className="text-muted-foreground text-right">
+                                        <TableCell className="text-muted-foreground">
                                             {convertDate(row.submittedAt)}
                                         </TableCell>
                                         <TableCell className="text-muted-foreground text-right">
@@ -97,7 +79,7 @@ export default function Submissions({ projectId }: { projectId: string }) {
                         </Table>
                     </div>
                     :
-                    <h1 className="text-2xl font-bold my-4">No submissions</h1>
+                    <h1 className="text-md font-bold my-4">No submissions</h1>
                 }
             </>
         )

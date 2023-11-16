@@ -12,8 +12,6 @@ import { ImSpinner2 } from "react-icons/im";
 
 const schema = yup.object({
   name: yup.string().required("Oranisation name is required"),
-  address: yup.string().required("Oranisation name is required"),
-  orgEmail: yup.string().required("Oranisation name is required"),
 });
 
 function CreateOrg() {
@@ -82,38 +80,6 @@ function CreateOrg() {
               required
               placeholder="Organisation name"
               {...register("name", { required: true })}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Address
-            </label>
-            <input
-              id="address"
-              type="text"
-              autoComplete="address"
-              required
-              placeholder="Address"
-              {...register("address", { required: true })}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="orgEmail"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Organisation Email
-            </label>
-            <input
-              id="orgEmail"
-              type="text"
-              autoComplete="orgEmail"
-              required
-              placeholder="Email"
-              {...register("orgEmail", { required: true })}
             />
           </div>
 
