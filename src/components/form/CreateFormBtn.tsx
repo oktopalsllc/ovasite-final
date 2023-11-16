@@ -8,7 +8,6 @@ import { Button } from "./ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -34,7 +33,6 @@ function CreateFormBtn() {
     try {
       
       const employeeId = typeof window !== "undefined" ? localStorage.getItem("employeeId") : "";
-      console.log(employeeId);
       const formId = await CreateForm(orgId.toString() || "",projectId.toString() || "", employeeId as string,values);
       toast({
         title: "Success",
@@ -55,16 +53,15 @@ function CreateFormBtn() {
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
-          className="group border border-primary/20 h-[190px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
+          className="group border shadow-lg border-primary/20 h-[40px] w-[150px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-4"
         >
-          <BsFileEarmarkPlus className="h-8 w-8 text-muted-foreground group-hover:text-primary" />
-          <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">Create new form</p>
+          <BsFileEarmarkPlus className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
+          <p className="font-bold text-md text-muted-foreground group-hover:text-primary">New form</p>
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="bg-white">
         <DialogHeader>
           <DialogTitle>Create form</DialogTitle>
-          <DialogDescription>Create a new form to start collecting responses</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
@@ -73,7 +70,7 @@ function CreateFormBtn() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -97,7 +94,7 @@ function CreateFormBtn() {
           </form>
         </Form>
         <DialogFooter>
-          <Button onClick={form.handleSubmit(onSubmit)} disabled={form.formState.isSubmitting} className="w-full mt-4">
+          <Button onClick={form.handleSubmit(onSubmit)} disabled={form.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
             {!form.formState.isSubmitting && <span>Save</span>}
             {form.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
           </Button>

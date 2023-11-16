@@ -8,6 +8,7 @@ const apiUrl = process.env.API_URL;
 export const authService = {
   signin,
   signup,
+  logout,
 };
 
 // async function signin(email: string, password: string){
@@ -71,10 +72,21 @@ async function signin(credentials: ISignInForm): Promise<SignInResponse> {
       data: response.data,
     };
   } catch (err) {
-    return {
-      success: false,
-      error: "Login failed. Please check your credentials.",
-    };
+
+    if (axios.isAxiosError(err) && err.response?.data) {
+      const errorMessage = err.response.data;
+
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    } else {
+
+      return {
+        success: false,
+        error: "Registration failed!",
+      };
+    }
   }
 }
 
@@ -86,9 +98,31 @@ async function signup(data: ISignUpForm): Promise<SignUpResponse> {
       data: response.data,
     };
   } catch (err) {
-    return {
-      success: false,
-      error: "User already exists",
-    };
+    if (axios.isAxiosError(err) && err.response?.data?.error) {
+      const errorMessage = err.response.data.error;
+
+      return {
+        success: false,
+        error: errorMessage,
+      };
+    } else {
+
+      return {
+        success: false,
+        error: "Registration failed!",
+      };
+    }
   }
+}
+
+async function logout() {
+  try {
+    const response = await axiosInstance.post("auth/logout");
+    console.log(
+      "🚀 ~ file: auth.service.ts:100 ~ logout ~ response:",
+      response
+    );
+    localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
+  } catch (err) {}
 }

@@ -13,12 +13,13 @@ enum UserRole {
 }
 
 enum Source {
+  OTHER = "OTHER",
   FACEBOOK = "FACEBOOK",
   TWITTER = "TWITTER",
   INSTAGRAM = "INSTAGRAM",
   LINKEDIN = "LINKEDIN",
   GOOGLE = "GOOGLE",
-  OTHER = "OTHER",
+  FRIEND = "FRIEND"
 }
 
 enum ProjectRole {
@@ -38,10 +39,6 @@ type User = {
   source: Source;
   passwordResetToken?: string | null;
   passwordResetAt?: Date | null;
-  stripeCustomerId?: string | null;
-  stripeSubscriptionId?: string | null;
-  stripePriceId?: string | null;
-  stripeCurrentPeriodEnd?: Date | null;
   employees: Employee[];
   organizations: Organization[];
   createdAt: Date;
@@ -78,6 +75,10 @@ type Organization = {
   inviteCode: string;
   createdAt: Date;
   updatedAt: Date;
+  stripeCustomerId?: string | null;
+  stripeSubscriptionId?: string | null;
+  stripePriceId?: string | null;
+  stripeCurrentPeriodEnd?: Date | null;
   employees: Employee[];
   forms: Form[];
   invite: Invite[];
@@ -103,6 +104,7 @@ type Employee = {
   organization: Organization;
   user: User;
   projectAssociations: EmployeeProjectAssociation[];
+  projects: Project[];
   forms: Form[];
   reports: Report[];
   submissions: Submission[];
@@ -133,11 +135,13 @@ type Project = {
   isCompleted: boolean;
   startDate: Date;
   endDate: Date;
+  creatorId: string;
   organizationId: string;
   createdAt: Date;
   updatedAt: Date;
   projectAssociations: EmployeeProjectAssociation[];
   forms: Form[];
+  creator: Employee;
   organization: Organization;
   reports: Report[];
   submissions: Submission[];
@@ -160,6 +164,8 @@ type Form = {
   formData: string;
   description: string;
   published: boolean;
+  visits: number;
+  subCount: number;
   creatorId: string;
   organizationId: string;
   projectId: string;
@@ -176,6 +182,7 @@ type Submission = {
   title: string;
   description: string;
   submissionData: string;
+  formData: string;
   geolocation?: string | null;
   creatorId: string;
   organizationId: string;
@@ -184,6 +191,7 @@ type Submission = {
   createdAt: Date;
   updatedAt: Date;
   form: Form;
+  employee: Employee;
   organization: Organization;
   project: Project;
 };
@@ -222,6 +230,18 @@ type Audit = {
 //     ProjectRole
 //   };
 
+// ========================== RESPONSES ========================
+
+interface SuccessfulEResponse {
+  success: true;
+  data: IEmployeeUpdateProfileResponse;
+}
+
+interface FailedResponse {
+  success: false;
+  error: string;
+}
+
 // ========================== AUTH ========================
 
 interface ISignInForm {
@@ -253,39 +273,29 @@ interface ISignInResponse {
   userInfo: UserInfo;
 }
 
-type SuccessfulSignInResponse = {
+interface SuccessfulSignInResponse extends SuccessfulEResponse {
   success: true;
   data: ISignInResponse;
-};
+}
 
-type FailedSignInResponse = {
-  success: false;
-  error: string;
-};
+type SignInResponse = SuccessfulSignInResponse | FailedResponse;
 
-type SignInResponse = SuccessfulSignInResponse | FailedSignInResponse;
-
-// SIGN UP
-
+// ===================== SIGN UP =====================
 interface ISignUpResponse {
   message: string;
 }
 
-type SuccessfulSignUpResponse = {
+interface SuccessfulSignUpResponse extends SuccessfulEResponse {
   success: true;
   data: ISignUpResponse;
-};
+}
 
-type FailedSignUpResponse = {
-  success: false;
-  error: string;
-};
+type SignUpResponse = SuccessfulSignUpResponse | FailedResponse;
 
-type SignUpResponse = SuccessfulSignUpResponse | FailedSignUpResponse;
-
-// Organisation
+// ========================= Organisation ===========================
 interface ICreateOrganisationForm {
   name: string;
+  logo?: string;
 }
 interface ICreateOrgResponse {
   address: string;
@@ -298,14 +308,80 @@ interface ICreateOrgResponse {
   userId: string;
 }
 
-type SuccessfulCreateOrgResponse = {
+interface SuccessfulCreateOrgResponse extends SuccessfulEResponse {
   success: true;
   data: ICreateOrgResponse;
-};
+}
 
-type FailedCreateOrgResponse = {
-  success: false;
-  error: string;
-};
+type CreateOrgResponse = SuccessfulCreateOrgResponse | FailedResponse;
 
-type CreateOrgResponse = SuccessfulCreateOrgResponse | FailedCreateOrgResponse;
+// ========================= Employee ===========================
+interface IEmployeeRole {
+  OWNER: "OWNER";
+  ADMIN: "ADMIN";
+  MEMBER: "MEMBER";
+  GUEST: "GUEST";
+}
+
+interface IEmployee {
+  fullName: string;
+  email: string;
+  contactNumber: string;
+  address: string;
+  avatar?: string;
+  role?: IEmployeeRole;
+  userId?: string;
+  organizationId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+interface IEmployeeUpdateProfile extends IEmployee {}
+
+interface IEmployeeUpdateProfileResponse {
+  id: string;
+  fullName: string;
+  email: string;
+  contactNumber: string;
+  address: string;
+  avatar: string;
+  role: string;
+  userId: string;
+  organizationId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface SuccessfulEmployeeUpdateProfileResponse extends SuccessfulEResponse {
+  data: IEmployeeUpdateProfileResponse;
+}
+
+type EmployeeUpdateProfileResponse =
+  | SuccessfulEmployeeUpdateProfileResponse
+  | FailedResponse;
+
+//  ===================== ORGANISATION ======================
+interface IOrganisation {
+  id: string;
+  name: string;
+  email: string;
+  logo: string;
+  address: string;
+  inviteCode: string;
+  createdAt: string;
+  updatedAt: string;
+  stripeCustomerId: string;
+  stripeSubscriptionId: string;
+  stripePriceId: string;
+  stripeCurrentPeriodEnd: string;
+  userId: string;
+}
+interface IUserOrgs extends IOrganisation {
+  employees: Employee[];
+}
+
+interface SuccessfulUserOrgsResponse extends SuccessfulEResponse {
+  data: IUserOrgs;
+}
+
+type UserOrgsResponse = SuccessfulUserOrgsResponse | FailedResponse;

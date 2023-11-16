@@ -143,11 +143,18 @@ async function publishForm(orgId: string, formId: string, token: string) {
 }
 
 // Update a form
-async function updateForm(orgId: string, formId: string, data: string, token: string) {
+async function updateForm(orgId: string, formId: string, data: formSchemaType, token: string) {
+  const validation = formSchema.safeParse(data);
+  if (!validation.success) {
+    throw new Error("form not valid");
+  }
+  
+  const { title, description } = data;
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/form/update/${formId}`,
     {
-      data,
+      title,
+      description
     },
     {
       withCredentials: true,
@@ -159,7 +166,7 @@ async function updateForm(orgId: string, formId: string, data: string, token: st
     }
   );
 
-  return response.data.updatedForm;
+  return response.data;
 }
 
 // Update a form data

@@ -14,12 +14,11 @@ function VisitBtn({ shareUrl }: { shareUrl: string }) {
     return null; // avoiding window not defined error
   }
 
-  // const shareLink = `${window.location.origin}/submit/${shareUrl}`;
+  const shareLink = `${window.location.origin}/submit/${shareUrl}`;
   
-  const shareLink = `http://localhost:3000/submit/${shareUrl}`;
   return (
     <Button
-      className="w-[200px]"
+      className="w-[150px] text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
       onClick={() => {
         window.open(shareLink, "_blank");
       }}

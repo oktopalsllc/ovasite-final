@@ -1,4 +1,6 @@
 import axios from "axios";
+import { projectSchema, projectSchemaType } from "@/schemas/project";
+import axiosInstance from "@/lib/axios";
 
 const apiUrl = process.env.API_URL;
 
@@ -6,7 +8,9 @@ export const projectService = {
   createProject,
   addProjectEmp,
   getProject,
+  getProjectStats,
   getProjects,
+  getOrgEmployees,
   getProjectEmps,
   getEmpProjects,
   updateProject,
@@ -16,12 +20,27 @@ export const projectService = {
   removeEmployee,
 };
 
+function toISODateString(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toISOString();
+}
+
 // Create a new project
-async function createProject(orgId: string, data: string, token: string) {
+async function createProject(orgId: string, data: projectSchemaType, token: string) {
+  const validation = projectSchema.safeParse(data);
+  if (!validation.success) {
+    throw new Error("Project not valid");
+  }
+  const {name, description, expectedDuration, status, startDate, endDate} = data;
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/project/create`,
     {
-      data,
+      name, 
+      description, 
+      expectedDuration, 
+      status, 
+      startDate: toISODateString(startDate), 
+      endDate: toISODateString(endDate)
     },
     {
       withCredentials: true,
@@ -75,17 +94,54 @@ async function getProject(orgId: string, projectId: string, token: string) {
   return response.data;
 }
 
+// Get a project stats
+async function getProjectStats(orgId: string, projectId: string, token: string){
+  const response = await axios.get(
+    `${apiUrl}/orgs/${orgId}/project/stats/${projectId}`,
+    {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.data;
+}
+
 // Get organization projects
+// async function getProjects(orgId: string, token: string) {
+//   const response = await axios.get(`${apiUrl}/orgs/${orgId}/projects`, {
+//     withCredentials: true,
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//       Authorization: "Bearer " + token,
+//     },
+//   });
+//   return response.data;
+// }
+
 async function getProjects(orgId: string, token: string) {
-  const response = await axios.get(`${apiUrl}/orgs/${orgId}/projects`, {
-    withCredentials: true,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
-  return response.data.projects;
+  const response = await axiosInstance.get(`orgs/${orgId}/projects`);
+  return response.data;
+}
+
+async function getOrgEmployees(orgId: string, projectId: string, token: string) {
+  const response = await axios.get(
+    `${apiUrl}/orgs/${orgId}/projectemployees/${projectId}`,
+    {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.data;
+  
 }
 
 // Get associated employees

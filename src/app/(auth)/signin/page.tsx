@@ -9,6 +9,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import { toast } from "@/components/form/ui/use-toast";
+import { ImSpinner2 } from "react-icons/im";
 
 const schema = yup.object({
   email: yup.string().required("Email is required"),
@@ -16,6 +18,7 @@ const schema = yup.object({
 });
 
 const Page = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -36,25 +39,34 @@ const Page = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await authService.signin(data);
 
       if (response.success) {
         const access_token = response.data.access_token;
         const userInfo = response.data.userInfo;
-        console.log("🚀 ~ file: page.tsx:44 ~ onSubmit ~ userInfo:", userInfo)
 
         localStorage.setItem("token", access_token);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
 
         if (userInfo.organizations.length == 0) {
+          setIsLoading(false);
           router.push("/orgs/create-org");
         } else {
-          router.push("/users/update-profile");
+          setIsLoading(false);
+          router.push("/orgs");
         }
       } else {
         const error = response.error;
+        setIsLoading(false);
+        toast({
+          title: "Error",
+          description: error,
+        });
       }
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   if (!useIsMounted) return;
@@ -178,9 +190,16 @@ const Page = () => {
                     <div>
                       <button
                         type="submit"
-                        className="flex w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
+                        className="flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
                       >
-                        Sign In
+                        {isLoading ? (
+                          <>
+                            Signing In{" "}
+                            <ImSpinner2 className="ml-4 animate-spin" />
+                          </>
+                        ) : (
+                          <>Sign In</>
+                        )}
                       </button>
                     </div>
                   </form>

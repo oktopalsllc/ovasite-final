@@ -1,4 +1,3 @@
-"use client";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/form/ui/card";
 import { Form } from "@prisma/client";
 import { Badge } from "@/components/form/ui/badge";
@@ -6,15 +5,12 @@ import { formatDistance } from "date-fns";
 import { Button } from "@/components/form/ui/button";
 import Link from "next/link";
 import { BiRightArrowAlt } from "react-icons/bi";
-import { FaEdit } from "react-icons/fa";
-import { useParams } from "next/navigation";
+import UpdateBtn from "../UpdateBtn";
+import { LuView } from "react-icons/lu";
+import { FaWpforms } from "react-icons/fa";
 
 function FormCard({ form }: { form: Form }) {
 
-    const hParams = useParams();
-    const { orgId, projectId } = hParams;
-    const orgValue = orgId.toString() || "";
-    const projectValue = projectId.toString() || "";
     return (
         <Card>
             <CardHeader>
@@ -29,10 +25,10 @@ function FormCard({ form }: { form: Form }) {
                     })}
                     {form.published && (
                         <span className="flex items-center gap-2">
-                            {/* <LuView className="text-muted-foreground" />
-                <span>{form.visits.toLocaleString()}</span>
-                <FaWpforms className="text-muted-foreground" />
-                <span>{form.subCount.toLocaleString()}</span> */}
+                            <LuView className="text-muted-foreground" />
+                            <span>{form.visits.toLocaleString()}</span>
+                            <FaWpforms className="text-muted-foreground" />
+                            <span>{form.subCount.toLocaleString()}</span>
                         </span>
                     )}
                 </CardDescription>
@@ -41,19 +37,22 @@ function FormCard({ form }: { form: Form }) {
                 {form.description || "No description"}
             </CardContent>
             <CardFooter>
-                {form.published && (
-                    <Button asChild className="w-full mt-2 text-md gap-4">
-                        <Link href={`/orgs/${orgValue}/projects/${projectValue}/forms/${form.id}`}>
+                {form.published && (                    
+                    <Button asChild className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4 gap-4">
+                        <Link href={`/orgs/${form.organizationId}/projects/${form.projectId}/forms/${form.id}`}>
                             View submissions <BiRightArrowAlt />
                         </Link>
                     </Button>
                 )}
                 {!form.published && (
-                    <Button asChild variant={"secondary"} className="w-full mt-2 text-md gap-4">
-                        <Link href={`/orgs/${orgValue}/projects/${projectValue}/forms/builder/${form.id}`}>
-                            Edit form <FaEdit />
-                        </Link>
-                    </Button>
+                    <div className="w-full">
+                        <UpdateBtn formObj={form} />
+                        <Button asChild variant={"secondary"} className="mt-2 w-full text-sm text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed">
+                            <Link href={`/orgs/${form.organizationId}/projects/${form.projectId}/forms/builder/${form.id}`}>
+                                Build form
+                            </Link>
+                        </Button>
+                    </div>
                 )}
             </CardFooter>
         </Card>
