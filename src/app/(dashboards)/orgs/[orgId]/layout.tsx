@@ -12,7 +12,7 @@ export default function OrgsLayout({
     <section className="flex flex-col md:flex-row bg-gray-100 h-full">
       {/* <SidebarNav activeLink={"projects"} /> */}
       <SidebarMenu />
-      <section className="w-full">
+      <section className="w-full h-[100vh]">
         <Header />
         <div className="px-6 md:px-10">{children}</div>
       </section>

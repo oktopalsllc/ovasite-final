@@ -73,12 +73,12 @@ export default function Project({ params,
             Project: {project?.name}
           </h2>
           <Separator className="my-3" />
-          <div className="grid gric-cols-6 text-center md:grid-cols-6 lg:grid-cols-6 gap-6">
+          <div className="container flex align-middle overflow-x-auto">
             {items.map((item, i) => {
               return (
                 <div
                   key={i}
-                  className={`m-2 p-2 md:text-sm lg:text-md hover:bg-gray-300 hover:text-gray-800 w-full`}
+                  className={`m-2 p-2 text-center text-xs md:text-sm lg:text-md hover:bg-gray-300 hover:text-gray-800 w-full`}
                   onClick={(i) => {
                     setActive(item.id);
                   }}>

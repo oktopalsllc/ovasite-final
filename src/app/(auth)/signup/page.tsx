@@ -1,13 +1,14 @@
+"use client";
 import React from "react";
 
 import "@/styles/styles.css";
-import PagesController from "@/components/signup/PagesController";
+import PageOne from "@/components/signup/PageOne";
 
 export default function Signup() {
 
   return (
     <>
-      <PagesController />
+      <PageOne />
     </>
   );
 }

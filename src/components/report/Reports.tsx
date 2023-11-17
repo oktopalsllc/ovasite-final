@@ -54,24 +54,24 @@ export default function Reports({ projectId }: { projectId: string }) {
 
     return (
         <div className="container pt-10">
-            <div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <CreateReportBtn projectId={projectId} />
             </div>
             <Separator className="my-6" />
             <>
             {reports.length > 0 ?
-                <div className="rounded-md border">
+                <div className="container overflow-x-auto rounded-md border">
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="uppercase">
+                                <TableHead className="uppercase text-sm truncate md:truncate">
                                     Title
                                 </TableHead>
-                                <TableHead className="uppercase">
+                                <TableHead className="uppercase text-sm">
                                     Report By
                                 </TableHead>
-                                <TableHead className="uppercase">Created on</TableHead>
-                                <TableHead className="text-muted-foreground uppercase text-right">
+                                <TableHead className="uppercase text-sm">Created on</TableHead>
+                                <TableHead className="text-muted-foreground text-sm uppercase text-right">
                                     Action
                                 </TableHead>
                             </TableRow>
@@ -79,9 +79,9 @@ export default function Reports({ projectId }: { projectId: string }) {
                         <TableBody>
                             {rows.map((row, index) => (
                                 <TableRow key={index}>
-                                    <TableCell><Link href={`/orgs/${orgId}/projects/${projectId}/reports/${row.reportId}`}>{row.title}</Link></TableCell>
-                                    <TableCell>{row.reportBy}</TableCell>
-                                    <TableCell>
+                                    <TableCell className="truncate text-sm"><Link href={`/orgs/${orgId}/projects/${projectId}/reports/${row.reportId}`}>{row.title}</Link></TableCell>
+                                    <TableCell className="truncate text-sm">{row.reportBy}</TableCell>
+                                    <TableCell className="truncate text-sm">
                                         {convertDate(row.submittedAt)}
                                     </TableCell>
                                     <TableCell className="text-muted-foreground text-right">
