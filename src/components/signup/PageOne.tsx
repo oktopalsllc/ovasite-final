@@ -19,7 +19,6 @@ const schema = yup.object({
 
 function PageOne() {
   const [isLoading, setIsLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
 
@@ -64,25 +63,13 @@ function PageOne() {
   };
 
   if (!useIsMounted) return;
-
-  // ================================================================================
-
-  const handleNext = () => {
-    setCurrentStep(currentStep + 1);
-  };
-
-  // const handleBack = () => {
-  //   setCurrentStep(currentStep - 1);
-  // };
-  //! ================================================================================
-
  
   return (
     <>
       <div >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:overflow-y-hidden h-screen relative place-content-center">
           {/* Logo */}
-          <div className="absolute top-5 left-20 pl-8 pb-10">
+          <div className="mx-auto lg:absolute lg:top-5 lg:left-20 lg:pl-8 lg:pb-10">
             <Link href="/">
               <Image alt="Logo" src="/Logo.png" width={60} height={60} />
             </Link>
@@ -90,7 +77,7 @@ function PageOne() {
 
           {/* Signup form */}
           <div className="flex flex-1 flex-col justify-center px-4 py-2 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-            <div className="mx-auto w-full max-w-sm lg:w-96">
+            <div className="mx-auto max-w-sm lg:w-96">
               <div>
                 <h1 className="title-font font-bold text-lg text-[#001233] mb-2 mt-10">
                   Create your account
@@ -192,7 +179,7 @@ function PageOne() {
                         href="/terms"
                         className="font-bold text-[#FF595A] hover:text-[#001233]"
                       >
-                        <span bg-white px-6 text-gray-900>
+                        <span className="bg-white px-6 text-gray-900">
                           {" "}
                           Terms and Conditions.
                         </span>
