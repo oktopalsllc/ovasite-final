@@ -77,7 +77,7 @@ function PageOne() {
 
           {/* Signup form */}
           <div className="flex flex-1 flex-col justify-center px-4 py-2 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
-            <div className="mx-auto w-full max-w-sm lg:w-96">
+            <div className="mx-auto max-w-sm lg:w-96">
               <div>
                 <h1 className="title-font font-bold text-lg text-[#001233] mb-2 mt-10">
                   Create your account
