@@ -1,16 +1,17 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Separator } from "@/components/form/ui/separator";
-import FormCards from "@/components/form/list/FormCards";
-import Submissions from "@/components/submission/Submissions";
-import Reports from "@/components/report/Reports";
-import Insights from "@/components/project/stats/Insights";
-import Settings from "@/components/project/Settings";
-import { useParams } from "next/navigation";
-import { ImSpinner2 } from "react-icons/im";
-import { projectService } from "@/services/project-service/project.service";
+'use client';
+import { useState, useEffect } from 'react';
+import { Separator } from '@/components/form/ui/separator';
+import FormCards from '@/components/form/list/FormCards';
+import Submissions from '@/components/submission/Submissions';
+import Reports from '@/components/report/Reports';
+import Insights from '@/components/project/stats/Insights';
+import Settings from '@/components/project/Settings';
+import { useParams } from 'next/navigation';
+import { ImSpinner2 } from 'react-icons/im';
+import { projectService } from '@/services/project-service/project.service';
 
-export default function Project({ params,
+export default function Project({
+  params,
 }: {
   params: {
     projectId: string;
@@ -18,7 +19,7 @@ export default function Project({ params,
 }) {
   const urlParams = useParams();
   const { orgId } = urlParams;
-  const orgValue = orgId.toString() || "";
+  const orgValue = orgId.toString() || '';
   const projectId = params.projectId;
   const items = [
     { id: 1, name: 'Forms' },
@@ -31,13 +32,18 @@ export default function Project({ params,
   const [active, setActive] = useState(1);
   const [loaded, setLoaded] = useState(false);
   const [project, setName] = useState<Project>();
-  const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
-  const token = tokenString?.toString() || "";
+  const tokenString =
+    typeof window !== 'undefined' ? localStorage.getItem('token') : '';
+  const token = tokenString?.toString() || '';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const project = await projectService.getProject(orgValue, projectId, token);
+        const project = await projectService.getProject(
+          orgValue,
+          projectId,
+          token
+        );
         if (project) {
           setName(project);
           setLoaded(true);
@@ -65,40 +71,47 @@ export default function Project({ params,
         return <FormCards projectId={projectId} />;
     }
   };
+
   return (
     <>
-      {loaded ?
-        <div className="container h-[100vh] pt-4">
-          <h2 className="text-2xl font-bold col-span-2">
+      {loaded ? (
+        <div className='container h-[100vh] pt-4'>
+          <h2 className='text-2xl font-bold col-span-2'>
             Project: {project?.name}
           </h2>
-          <Separator className="my-3" />
-          <div className="container flex align-middle overflow-x-auto">
+          <Separator className='my-3' />
+          <div className='container flex align-middle overflow-x-auto'>
             {items.map((item, i) => {
               return (
                 <div
                   key={i}
-                  className={`m-2 p-2 text-center text-xs md:text-sm lg:text-md hover:bg-gray-300 active:bg-gray-400 hover:text-gray-800 w-full`}
+                  className={`m-2 p-2 text-center text-xs md:text-sm lg:text-md 
+                    ${
+                      active === item.id
+                        ? 'bg-[#FF595A] text-white'
+                        : 'hover:bg-gray-300 active:bg-gray-400 hover:text-gray-800'
+                    } w-full`}
                   onClick={(i) => {
                     setActive(item.id);
-                  }}>
-                    {item.name}
+                  }}
+                >
+                  {item.name}
                 </div>
               );
             })}
           </div>
-          <Separator className="my-3" />
-          <h3 className="text-xl font-bold col-span-2">
+          <Separator className='my-3' />
+          <h3 className='text-xl font-bold col-span-2'>
             {items.find((item) => item.id === active)?.name ?? 'Default Name'}
           </h3>
-          <Separator className="my-3" />
-          <div className="flex flex-row">
-            {ActiveItem()}
-          </div>
+          <Separator className='my-3' />
+          <div className='flex flex-row'>{ActiveItem()}</div>
         </div>
-        :
-        <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
-      }
+      ) : (
+        <div className='flex mt-14 justify-center'>
+          <ImSpinner2 className='animate-spin h-12 w-12' />
+        </div>
+      )}
     </>
   );
 }
