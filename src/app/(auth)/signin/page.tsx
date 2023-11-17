@@ -110,7 +110,7 @@ const Page = () => {
             </div>
 
             {/* Login form */}
-            <div className="mx-auto w-10/12 lg:w-96">
+            <div className="mx-auto w-full max-w-sm lg:w-96">
               <div>
                 <h1 className="title-font text-center font-bold text-xl text-[#001233] mb-4 mt-10">
                   Welcome Back
@@ -197,7 +197,14 @@ const Page = () => {
                         type="submit"
                         className="flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]"
                       >
-                        Sign In
+                        {isLoading ? (
+                          <>
+                            Signing In{" "}
+                            <ImSpinner2 className="ml-4 animate-spin" />
+                          </>
+                        ) : (
+                          <>Sign In</>
+                        )}
                       </button>
                     </div>
                   </form>
