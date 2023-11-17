@@ -5,7 +5,7 @@ import FormCards from "@/components/form/list/FormCards";
 import Submissions from "@/components/submission/Submissions";
 import Reports from "@/components/report/Reports";
 import Insights from "@/components/project/stats/Insights";
-import Settings from "@/components/project/Setings";
+import Settings from "@/components/project/Settings";
 import { useParams } from "next/navigation";
 import { ImSpinner2 } from "react-icons/im";
 import { projectService } from "@/services/project-service/project.service";
