@@ -40,19 +40,19 @@ async function FormDetailPage({
   }
 
   return (
-    <div className="h-[100vh] overflow-y-auto px-4">
+    <div className="h-[100vh] overflow-y-auto ml-10 scroll-smooth scrollbar-thin">
       <div className="py-10 border-b border-muted">
         <h2 className="text-2xl font-bold col-span-2">Form</h2>
         <Separator className="my-3" />
         <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
-          <h1 className="text-4xl font-bold truncate">{form.title}</h1>
+          <h1 className="text-xl font-bold truncate">{form.title}</h1>
           <div className="flex lg:flex-row md:flex-row flex-col gap-2">
             <VisitBtn shareUrl={form.id} />
             <DeleteBtn form={form} />
           </div>
         </div>
       </div>
-      <div className="py-4 border-b border-muted">
+      <div className="px-2 py-4 border-b border-muted">
         <div className="container flex gap-2 items-center justify-between">
           <FormLinkShare shareUrl={form.id} />
         </div>
@@ -101,7 +101,7 @@ async function SubmissionsTable({ id }: { id: string }) {
     <div>
       <h1 className="text-2xl font-bold my-4">Submissions</h1>
       <div className="rounded-md border">
-        <Table className="mb-10">
+        <Table className="bg-white mb-10">
           <TableHeader>
             <TableRow>
               <TableHead className="uppercase">
@@ -157,7 +157,7 @@ function StatsCards(props: StatsCardProps) {
         helperText="Total form view"
         value={data?.visits.toLocaleString() || ""}
         loading={loading}
-        className="shadow-md shadow-blue-600"
+        className="bg-white shadow-md shadow-blue-600"
       />
 
       <StatsCard
@@ -166,7 +166,7 @@ function StatsCards(props: StatsCardProps) {
         helperText="Total responses from form"
         value={data?.submissions.toLocaleString() || ""}
         loading={loading}
-        className="shadow-md shadow-yellow-600"
+        className="bg-white shadow-md shadow-yellow-600"
       />
 
       <StatsCard
@@ -175,7 +175,7 @@ function StatsCards(props: StatsCardProps) {
         helperText="Total visist that submitted the form"
         value={data?.submissionRate.toLocaleString() + "%" || ""}
         loading={loading}
-        className="shadow-md shadow-green-600"
+        className="bg-white shadow-md shadow-green-600"
       />
 
       <StatsCard
@@ -184,7 +184,7 @@ function StatsCards(props: StatsCardProps) {
         helperText="Visits that did not submit the form"
         value={data?.bounceRate.toLocaleString() + "%" || ""}
         loading={loading}
-        className="shadow-md shadow-red-600"
+        className="bg-white shadow-md shadow-red-600"
       />
     </div>
   );

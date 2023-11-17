@@ -21,7 +21,7 @@ function FormLinkShare({ shareUrl }: { shareUrl: string }) {
   
   return (
     <div className="flex flex-grow gap-4 items-center">
-      <Input value={shareLink} readOnly />
+      <Input className="bg-white" value={shareLink} readOnly />
       <Button
         className="w-[250px] text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
         onClick={() => {

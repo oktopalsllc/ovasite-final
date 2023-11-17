@@ -61,7 +61,7 @@ export default function Reports({ projectId }: { projectId: string }) {
             <>
             {reports.length > 0 ?
                 <div className="container overflow-x-auto rounded-md border">
-                    <Table>
+                    <Table className="bg-white">
                         <TableHeader>
                             <TableRow>
                                 <TableHead className="uppercase text-sm truncate md:truncate">

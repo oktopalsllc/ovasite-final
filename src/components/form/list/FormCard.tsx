@@ -12,7 +12,7 @@ import { FaWpforms } from "react-icons/fa";
 function FormCard({ form }: { form: Form }) {
 
     return (
-        <Card>
+        <Card className="bg-white">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between">
                     <span className="truncate font-bold">{form.title}</span>

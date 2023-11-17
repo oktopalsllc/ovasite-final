@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
-import { formService } from "@/services/form-service/form.service";
-import { Form } from "@prisma/client";
-import { toast } from "./ui/use-toast";
+import { Button } from "../form/ui/button";
+import { reportService } from "@/services/report-service/report.service";
+import { toast } from "../form/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { ImSpinner2 } from "react-icons/im";
 import { useTransition } from "react";
 import { FaSpinner } from "react-icons/fa";
 import {
@@ -19,11 +17,24 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./ui/alert-dialog";
+} from "../form/ui/alert-dialog";
 
-function DeleteBtn({ form }: { form: Form }) {
+type Report = {
+  id: string;
+  title: string;
+  reportData: string;
+  creatorId: string;
+  organizationId: string;
+  projectId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  employee: Employee;
+  organization: Organization;
+  project: Project;
+};
+
+function DeleteBtn({ report }: { report: Report }) {
   const router = useRouter();
-  const [loaded, setLoaded] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [loading, startTransition] = useTransition();
 
@@ -38,14 +49,14 @@ function DeleteBtn({ form }: { form: Form }) {
   async function handleDelete() {
     try {
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
-      const deleteForm = await formService.deleteForm(form.organizationId, form.id, token as string);
-      const { message, status, deletedForm } = deleteForm;
+      const deleted = await reportService.deleteReport(report.organizationId, report.id, token as string);
+      const { message, status, deletedReport } = deleted;
       if (status) {
         toast({
           title: "Success",
           description: message,
         });
-        router.push(`/orgs/${deletedForm.organizationId}/projects/${deletedForm.projectId}`);
+        router.push(`/orgs/${deletedReport.organizationId}/projects/${deletedReport.projectId}`);
       }
       else {
         toast({
@@ -71,7 +82,7 @@ function DeleteBtn({ form }: { form: Form }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          className="lg:w-[150px] w-full text-white bg-peach_primary hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed"
+          className="lg:w-[100px] md:w-[100px] w-full text-white bg-peach_primary hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed"
 
         >
           Delete
@@ -79,9 +90,9 @@ function DeleteBtn({ form }: { form: Form }) {
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-white">
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to delete this form?</AlertDialogTitle>
+          <AlertDialogTitle>Are you sure you want to delete this report?</AlertDialogTitle>
           <AlertDialogDescription className="text-red-500">
-            This action cannot be undone. After deleting this form, all submissions relating to it will be deleted. <br />
+            This action cannot be undone, export to csv/pdf before deleting. <br />
             <br />
 
           </AlertDialogDescription>

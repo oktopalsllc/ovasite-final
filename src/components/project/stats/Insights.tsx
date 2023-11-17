@@ -87,7 +87,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Total forms created"
                 value={data?.visits.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-blue-600"
+                className="bg-white shadow-md shadow-blue-600"
             />
             <StatsCard
                 title="Total Visits"
@@ -95,7 +95,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Total form visits of all forms"
                 value={data?.visits.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-[#001333]"
+                className="bg-white shadow-md shadow-[#001333]"
             />
 
             <StatsCard
@@ -104,7 +104,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Total submissions of all forms"
                 value={data?.subCount.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-yellow-600"
+                className="bg-white shadow-md shadow-yellow-600"
             />
 
             <StatsCard
@@ -113,7 +113,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Visits that result in form submission"
                 value={data?.submissionRate.toLocaleString() + "%" || ""}
                 loading={loading}
-                className="shadow-md shadow-green-600"
+                className="bg-white shadow-md shadow-green-600"
             />
 
             <StatsCard
@@ -122,7 +122,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Form visits that leaves without feedback"
                 value={data?.bounceRate.toLocaleString() + "%" || ""}
                 loading={loading}
-                className="shadow-md shadow-red-600"
+                className="bg-white shadow-md shadow-red-600"
             />
 
             <StatsCard
@@ -131,7 +131,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Reports created about the project"
                 value={data?.reports.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-[#3f3cbb]"
+                className="bg-white shadow-md shadow-[#3f3cbb]"
             />
         </div>
     );

@@ -49,7 +49,7 @@ export default function Submissions({ projectId }: { projectId: string }) {
             <>
                 {submissions.length > 0 ?
                     <div className="container overflow-x-auto rounded-md border">
-                        <Table>
+                        <Table className="bg-white">
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="uppercase">
