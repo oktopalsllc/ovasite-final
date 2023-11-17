@@ -19,9 +19,9 @@ export default function OrgsLayout({
     //     <Footer />
     //   </section>
     // </section>
-    <section className="bg-gray-100 h-full w-full">
+    <section className="bg-gray-100 h-[100vh] w-full">
         <Header />
-        <div className="px-6 md:px-10">{children}</div>
+        <div className="px-20 md:px-10">{children}</div>
         <Footer />
       </section>
   );

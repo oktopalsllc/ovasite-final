@@ -68,7 +68,7 @@ export default function Project({ params,
   return (
     <>
       {loaded ?
-        <div className="container pt-4">
+        <div className="container h-[100vh] pt-4">
           <h2 className="text-2xl font-bold col-span-2">
             Project: {project?.name}
           </h2>
@@ -78,11 +78,11 @@ export default function Project({ params,
               return (
                 <div
                   key={i}
-                  className={`m-2 p-2 text-center text-xs md:text-sm lg:text-md hover:bg-gray-300 hover:text-gray-800 w-full`}
+                  className={`m-2 p-2 text-center text-xs md:text-sm lg:text-md hover:bg-gray-300 active:bg-gray-400 hover:text-gray-800 w-full`}
                   onClick={(i) => {
                     setActive(item.id);
                   }}>
-                  {item.name}
+                    {item.name}
                 </div>
               );
             })}
