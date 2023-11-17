@@ -4,7 +4,6 @@ import { Suspense } from 'react';
 import { Separator } from '@/components/form/ui/separator';
 import CreateProjectBtn from '@/components/project/CreateProjectBtn';
 import ProjectCards from '@/components/project/list/Projects';
-import SearchNavBar from '@/components/orgs/SearchNavBar';
 import { FaSearch, FaBell } from 'react-icons/fa';
 import { CiMenuBurger } from 'react-icons/ci';
 
@@ -44,5 +43,5 @@ export default function Projects({ params }: { params: { orgId: string } }) {
 }
 
 function ProjectCardSkeleton() {
-  return <Skeleton className='border-2 border-primary-/20 h-[190px] w-full' />;
+  return <Skeleton className='border-2 border-primary-/20 h-[300px] w-full' />;
 }
