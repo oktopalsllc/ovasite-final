@@ -178,12 +178,12 @@ async function SubmissionsTable({ id }: { id: string }) {
         variant: "destructive",
       });
     }
-    finally {
-      // Remove the query parameter
-      const url = new URL(window.location.href);
-      url.searchParams.delete('downloading');
-      window.history.pushState({}, '', url);
-    }
+    // finally {
+    //   // Remove the query parameter
+    //   const url = new URL(window.location.href);
+    //   url.searchParams.delete('downloading');
+    //   window.history.pushState({}, '', url);
+    // }
   };
 
   // const isDownloading = new URLSearchParams(window.location.search).has('downloading');
