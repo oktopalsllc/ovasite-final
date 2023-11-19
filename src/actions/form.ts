@@ -120,6 +120,29 @@ export async function PublishForm(id: string) {
   });
 }
 
+export async function CloseForm(id: string) {
+  const closeForm = await prisma.form.update({
+    data: {
+      closed: true,
+    },
+    where: {
+      id,
+    },
+  });
+  if (!closeForm) return false;
+  await createAuditLog(
+    closeForm.creatorId, 
+    ip.address() || null, 
+    closeForm.organizationId, 
+    "close", 
+    "Form", 
+    "", 
+    JSON.stringify(closeForm), 
+    closeForm.id.toString()
+  );
+  return true;
+}
+
 export async function GetFormContentByUrl(formId: string) {
   return await prisma.form.update({
     select: {
