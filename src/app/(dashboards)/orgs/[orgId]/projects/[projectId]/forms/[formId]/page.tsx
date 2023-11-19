@@ -27,6 +27,7 @@ import CloseFormBtn from "@/components/form/CloseFormBtn";
 import { FormElementInstance } from "@/components/form/FormElements";
 import { FaSpinner } from "react-icons/fa";
 import { toast } from "@/components/form/ui/use-toast";
+import DownloadButton from "@/components/form/DownloadBtn";
 
 async function FormDetailPage({
   params,
@@ -105,12 +106,12 @@ async function SubmissionsTable({ id }: { id: string }) {
     });
   });
 
-  function handleCSVDownloadInitiate() {
-    // Append a query parameter to indicate loading
-    window.location.href = `${window.location.pathname}?downloading=true`;
-  }
+  // function handleCSVDownloadInitiate() {
+  //   // Append a query parameter to indicate loading
+  //   window.location.href = `${window.location.pathname}?downloading=true`;
+  // }
 
-  const handleCSVDownload = () => {
+  const handleCSVDownload = async () => {
     try {
       if (!form) {
         toast({
@@ -185,10 +186,10 @@ async function SubmissionsTable({ id }: { id: string }) {
     }
   };
 
-  const isDownloading = new URLSearchParams(window.location.search).has('downloading');
-  if (isDownloading) {
-    handleCSVDownload();
-  }
+  // const isDownloading = new URLSearchParams(window.location.search).has('downloading');
+  // if (isDownloading) {
+  //   handleCSVDownload();
+  // }
 
 
   return (
@@ -197,10 +198,11 @@ async function SubmissionsTable({ id }: { id: string }) {
         <h1 className="text-2xl font-bold col-span-2">
           Submissions
         </h1>
-        <button className="w-[150px] outline-black hover:bg-green-400 hover:cursor-pointer hover:border-dashed p-2 bg-green-500 text-sm rounded-md text-white"
+        {/* <button className="w-[150px] outline-black hover:bg-green-400 hover:cursor-pointer hover:border-dashed p-2 bg-green-500 text-sm rounded-md text-white"
           onClick={handleCSVDownloadInitiate}>
           {isDownloading ? <FaSpinner className="animate-spin" /> : "Download CSV"}
-        </button>
+        </button> */}
+        <DownloadButton handleCSVDownload={handleCSVDownload} />  
       </div>
       <div className="rounded-md border">
         <Table className="bg-white mb-10">
