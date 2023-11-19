@@ -68,7 +68,7 @@ function CloseFormBtn({ form }: { form: Form }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          className="lg:w-[150px] w-full text-white bg-peach_primary hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed"
+          className="lg:w-[150px] w-full text-white bg-yellow-500 hover:bg-yellow-300 hover:cursor-pointer hover:border-dashed"
         >
           Close Form
         </Button>

@@ -25,6 +25,7 @@ import { Badge } from "@/components/form/ui/badge";
 import { Separator } from "@/components/form/ui/separator";
 import DeleteBtn from "@/components/form/DeleteBtn";
 import Link from "next/link";
+import CloseFormBtn from "@/components/form/CloseFormBtn";
 
 async function FormDetailPage({
   params,
@@ -47,15 +48,22 @@ async function FormDetailPage({
         <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
           <h1 className="text-xl font-bold truncate">{form.title}</h1>
           <div className="flex lg:flex-row md:flex-row flex-col gap-2">
-            <VisitBtn shareUrl={form.id} />
+            {!form.closed &&  
+              <>
+                <VisitBtn shareUrl={form.id} />
+                <CloseFormBtn form={form} />
+              </>
+            }            
             <DeleteBtn form={form} />
           </div>
         </div>
       </div>
       <div className="px-2 py-4 border-b border-muted">
-        <div className="container flex gap-2 items-center justify-between">
-          <FormLinkShare shareUrl={form.id} />
-        </div>
+        {!form.closed && 
+          <div className="container flex gap-2 items-center justify-between">
+            <FormLinkShare shareUrl={form.id} />
+          </div>
+        }
       </div>
       <div className="container pt-4">
         <Suspense fallback={<StatsCards loading={true} />}>
