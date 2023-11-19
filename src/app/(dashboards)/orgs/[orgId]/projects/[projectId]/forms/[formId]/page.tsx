@@ -9,8 +9,6 @@ import React, { ReactNode, Suspense } from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
 } from "@/components/form/ui/card";
@@ -20,12 +18,15 @@ import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/form/ui/table";
-import { format, formatDistance } from "date-fns";
+import { formatDistance } from "date-fns";
 import { Badge } from "@/components/form/ui/badge";
 import { Separator } from "@/components/form/ui/separator";
 import DeleteBtn from "@/components/form/DeleteBtn";
 import Link from "next/link";
 import CloseFormBtn from "@/components/form/CloseFormBtn";
+import { FormElementInstance } from "@/components/form/FormElements";
+import { FaSpinner } from "react-icons/fa";
+import { toast } from "@/components/form/ui/use-toast";
 
 async function FormDetailPage({
   params,
@@ -48,18 +49,20 @@ async function FormDetailPage({
         <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
           <h1 className="text-xl font-bold truncate">{form.title}</h1>
           <div className="flex lg:flex-row md:flex-row flex-col gap-2">
-            {!form.closed &&  
+            {!form.closed &&
               <>
                 <VisitBtn shareUrl={form.id} />
                 <CloseFormBtn form={form} />
               </>
-            }            
+            }
             <DeleteBtn form={form} />
           </div>
         </div>
+        <Separator className="my-3" />
+        <h1 className="text-lg font-bold truncate">Created by: {form.employee?.fullName || form.creatorId}</h1>
       </div>
       <div className="px-2 py-4 border-b border-muted">
-        {!form.closed && 
+        {!form.closed &&
           <div className="container flex gap-2 items-center justify-between">
             <FormLinkShare shareUrl={form.id} />
           </div>
@@ -80,11 +83,9 @@ async function FormDetailPage({
 
 export default FormDetailPage;
 
-
 type Row = { [key: string]: string | Date } & {
   title: string;
   submissionId: string;
-  submittedBy: string;
   submittedAt: Date;
 };
 
@@ -100,23 +101,113 @@ async function SubmissionsTable({ id }: { id: string }) {
     rows.push({
       title: submission.title,
       submissionId: submission.id,
-      submittedBy: form.employee?.fullName || submission.creatorId,
       submittedAt: submission.createdAt,
     });
   });
 
+  function handleCSVDownloadInitiate() {
+    // Append a query parameter to indicate loading
+    window.location.href = `${window.location.pathname}?downloading=true`;
+  }
+
+  const handleCSVDownload = () => {
+    try {
+      if (!form) {
+        toast({
+          title: "Error",
+          description: "Something went wrong, please try again later",
+          variant: "destructive",
+        });
+        return;
+      }
+      const formElements = JSON.parse(form.formData || '[]') as FormElementInstance[];
+
+      const convertDate = (date: Date) => {
+        const dateObject: Date = new Date(date);
+        const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: '2-digit' };
+        const customFormat = dateObject.toLocaleDateString('en-US', options);
+        return customFormat;
+      };
+
+      // Function to escape and quote the field
+      const escapeField = (field: any) => {
+        if (field === null || field === undefined) return '""';
+        const escaped = field.toString().replace(/"/g, '""');
+        return `"${escaped}"`;
+      };
+
+      // Headers for CSV file
+      const headers = ["Title", "Form By", "Submitted On", "Location", "Description", ...formElements.map(e => e.extraAttributes?.label || '')];
+
+      // Mapping over each submission to create a row
+      const csvRows = form.submissions.map(submission => {
+        const content = JSON.parse(submission.submissionData);
+        const geolocation = JSON.parse(submission.geolocation || '{}');
+        const dataRow = [
+          submission.title,
+          form.employee?.fullName || form.creatorId,
+          convertDate(submission.createdAt),
+          geolocation.display_name || "",
+          submission.description,
+          ...formElements.map(e => escapeField(content[e.id] || ''))
+        ];
+        return dataRow;
+      });
+
+      // Combining headers and rows
+      const csvContent = [
+        headers,
+        ...csvRows
+      ].map(row => row.map(escapeField).join(",")).join("\n");
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "Submissions.csv");
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    catch (e) {
+      toast({
+        title: "Error",
+        description: "Something went wrong, please try again later",
+        variant: "destructive",
+      });
+    }
+    finally {
+      // Remove the query parameter
+      const url = new URL(window.location.href);
+      url.searchParams.delete('downloading');
+      window.history.pushState({}, '', url);
+    }
+  };
+
+  const isDownloading = new URLSearchParams(window.location.search).has('downloading');
+  if (isDownloading) {
+    handleCSVDownload();
+  }
+
+
   return (
     <div>
-      <h1 className="text-2xl font-bold my-4">Submissions</h1>
+      <div className="flex lg:flex-row md:flex-row gap-4 flex-col justify-between my-4 container">
+        <h1 className="text-2xl font-bold col-span-2">
+          Submissions
+        </h1>
+        <button className="w-[150px] outline-black hover:bg-green-400 hover:cursor-pointer hover:border-dashed p-2 bg-green-500 text-sm rounded-md text-white"
+          onClick={handleCSVDownloadInitiate}>
+          {isDownloading ? <FaSpinner className="animate-spin" /> : "Download CSV"}
+        </button>
+      </div>
       <div className="rounded-md border">
         <Table className="bg-white mb-10">
           <TableHeader>
             <TableRow>
               <TableHead className="uppercase">
                 Title
-              </TableHead>
-              <TableHead className="uppercase">
-                Form By
               </TableHead>
               <TableHead className="uppercase">Submitted on</TableHead>
               <TableHead className="text-muted-foreground text-right uppercase">Action</TableHead>
@@ -126,7 +217,6 @@ async function SubmissionsTable({ id }: { id: string }) {
             {rows.map((row, index) => (
               <TableRow key={index}>
                 <TableCell><Link href={`orgs/${form.organizationId}/projects/${id}/submissions/${row.submissionId}`}>{row.title}</Link></TableCell>
-                <TableCell>{row.submittedBy}</TableCell>
                 <TableCell className="text-muted-foreground">
                   {formatDistance(row.submittedAt, new Date(), {
                     addSuffix: true,

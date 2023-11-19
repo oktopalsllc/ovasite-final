@@ -95,6 +95,7 @@ export async function GetFormById(formId: string) {
     where: {
       id: formId,
     },
+    include:{ employee : true }
   });
 }
 

@@ -56,7 +56,6 @@ export default function Submission({ params }: { params: { id: string } }) {
 
     if (submission) {
         const geoLocation = JSON.parse(submission.geolocation || '[]');
-        console.log(geoLocation);
         const formElements = JSON.parse(submission.formData || '[]') as FormElementInstance[];
         const rows: {
             id: string;
