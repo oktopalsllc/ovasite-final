@@ -4,6 +4,7 @@ import {
   GetFormWithSubmissions
 } from "@/actions/form";
 import FormLinkShare from "@/components/form/FormLinkShare";
+import FormPreviewShare from "@/components/form/FormPreviewShare";
 import VisitBtn from "@/components/form/VisitBtn";
 import React, { ReactNode, Suspense } from "react";
 import {
@@ -28,6 +29,8 @@ import { FormElementInstance } from "@/components/form/FormElements";
 import { FaSpinner } from "react-icons/fa";
 import { toast } from "@/components/form/ui/use-toast";
 import DownloadButton from "@/components/form/DownloadBtn";
+import BackBtn from "@/components/shared/BackBtn";
+import PreviewBtn from "@/components/form/PreviewBtn";
 
 async function FormDetailPage({
   params,
@@ -45,29 +48,38 @@ async function FormDetailPage({
   return (
     <div className="h-[100vh] overflow-y-auto ml-10 scroll-smooth scrollbar-thin">
       <div className="py-10 border-b border-muted">
-        <h2 className="text-2xl font-bold col-span-2">Form</h2>
-        <Separator className="my-3" />
-        <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
-          <h1 className="text-xl font-bold truncate">{form.title}</h1>
-          <div className="flex lg:flex-row md:flex-row flex-col gap-2">
-            {!form.closed &&
-              <>
-                <VisitBtn shareUrl={form.id} />
-                <CloseFormBtn form={form} />
-              </>
-            }
-            <DeleteBtn form={form} />
-          </div>
+        <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+          <h1 className="text-2xl font-bold col-span-2">Form</h1>
+          <BackBtn />
         </div>
         <Separator className="my-3" />
-        <h1 className="text-lg font-bold truncate">Created by: {form.employee?.fullName || form.creatorId}</h1>
+        <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
+          <h2 className="text-xl font-bold truncate">{form.title}</h2>
+          <h2 className="text-lg font-bold truncate">Created by: {form.employee?.fullName || form.creatorId}</h2>
+        </div>
       </div>
-      <div className="px-2 py-4 border-b border-muted">
-        {!form.closed &&
+      {!form.closed &&
+        <div className="px-2 py-4 border-b border-muted">
           <div className="container flex gap-2 items-center justify-between">
             <FormLinkShare shareUrl={form.id} />
+
+            <div className="flex lg:flex-row md:flex-row flex-col gap-2">
+              <VisitBtn shareUrl={form.id} />
+              <CloseFormBtn form={form} />
+              <DeleteBtn form={form} />
+            </div>
           </div>
-        }
+        </div>
+      }      
+      <Separator className="my-3" />
+      <div className="px-2 py-4 border-b border-muted">
+        <div className="container flex gap-2 items-center justify-between">
+          <FormPreviewShare form={form} />
+          <PreviewBtn form={form}/>
+          {form.closed &&
+            <DeleteBtn form={form} />
+          }
+        </div>
       </div>
       <div className="container pt-4">
         <Suspense fallback={<StatsCards loading={true} />}>

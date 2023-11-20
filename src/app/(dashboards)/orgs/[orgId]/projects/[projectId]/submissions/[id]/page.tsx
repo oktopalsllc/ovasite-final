@@ -1,39 +1,28 @@
 "use client";
 import { submissionService } from "@/services/submission-service/submission.service";
-import FormLinkShare from "@/components/form/FormLinkShare";
-import VisitBtn from "@/components/form/VisitBtn";
 import React, { ReactNode, useState, useEffect } from "react";
-import { LuView } from "react-icons/lu";
-import { FaWpforms } from "react-icons/fa";
-import { HiCursorClick } from "react-icons/hi";
-import { TbArrowBounce } from "react-icons/tb";
 import { ElementsType, FormElementInstance } from "@/components/form/FormElements";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/form/ui/table";
-import { format, formatDistance } from "date-fns";
+import { format} from "date-fns";
 import { Badge } from "@/components/form/ui/badge";
 import { Checkbox } from "@/components/form/ui/checkbox";
-import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
+import { useParams } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import { toast } from "@/components/form/ui/use-toast";
 import DeleteBtn from "@/components/submission/DeleteBtn";
 import { ImSpinner2 } from "react-icons/im";
 import { Separator } from "@/components/form/ui/separator";
+import BackBtn from "@/components/shared/BackBtn";
 
 export default function Submission({ params }: { params: { id: string } }) {
     const { id } = params;
     const [submission, setSubmission] = useState<Submission>();
     const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
     const token = tokenString?.toString() || "";
-    const router = useRouter();
     const hparams = useParams();
     const { orgId } = hparams;
     const [loaded, setLoaded] = useState(false);
     const [csvLoad, setCsvLoaded] = useState(false);
-
-    function handleBack() {
-        router.back();
-    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -142,10 +131,7 @@ export default function Submission({ params }: { params: { id: string } }) {
                     <h1 className="text-2xl font-bold col-span-2">
                         Submission
                     </h1>
-                    <button className=" w-[80px] outline-black hover:bg-blue-300 hover:cursor-pointer hover:border-dashed p-2 bg-blue-500 text-sm rounded-md text-white"
-                        onClick={handleBack}>
-                        Back
-                    </button>
+                    <BackBtn />
                 </div>
                 <Separator className="my-3" />
                 <h2 className="text-lg font-medium my-4">Title: <span className="font-light">{submission.title}</span></h2>

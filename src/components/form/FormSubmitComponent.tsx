@@ -140,13 +140,7 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
     <>
       {loading ?
         <>
-          {formClosed ?
-            <div className="flex justify-center w-full h-full items-center p-8">
-              <div className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-xl shadow-peach_primary rounded">
-                <h1 className="text-2xl font-bold">Form closed</h1>
-                <p className="text-muted-foreground">This form has closed and is no longer taking any responses.</p>
-              </div>
-            </div> : 
+          
             <div className="flex bg-white justify-center w-full h-full items-center p-8">
               <div
                 key={renderKey}
@@ -181,7 +175,6 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
                 </Button>
               </div>
             </div>
-          }
         </> : <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
       }
     </>

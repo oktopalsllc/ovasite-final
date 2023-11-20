@@ -1,13 +1,14 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { toast } from "@/components/form/ui/use-toast";
 import { reportService } from "@/services/report-service/report.service";
 import { FaSpinner } from "react-icons/fa";
 import { Separator } from "@/components/form/ui/separator";
 import { ImSpinner2 } from "react-icons/im";
 import DeleteBtn from "@/components/report/DeleteBtn";
+import BackBtn from "@/components/shared/BackBtn";
 
 const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
 const token = tokenString?.toString() || "";
@@ -28,7 +29,6 @@ type Report = {
 
 export default function Report({ params }: { params: { id: string } }) {
     const { id } = params;
-    const router = useRouter();
     const [title, setTitle] = useState("");
     const [reportDate, setReportDate] = useState("")
     const [updatedDate, setUpdatedDate] = useState("");
@@ -183,12 +183,6 @@ export default function Report({ params }: { params: { id: string } }) {
         setCsvLoading(false);
     };
 
-
-
-    function handleBack() {
-        router.back();
-    }
-
     return (
         <div className="h-[100vh] w-3/4 overflow-y-auto px-10 mb-10">
             {loaded ? <>
@@ -197,10 +191,7 @@ export default function Report({ params }: { params: { id: string } }) {
                         <h1 className="text-2xl font-bold col-span-2">
                             Report
                         </h1>
-                        <button className=" w-[80px] outline-black hover:bg-blue-300 hover:cursor-pointer hover:border-dashed p-2 bg-blue-500 text-sm rounded-md text-white"
-                            onClick={handleBack}>
-                            Back
-                        </button>
+                        <BackBtn />
                     </div>
                     <Separator className="my-3" />
                     <div className="flex flex-col gap-5">

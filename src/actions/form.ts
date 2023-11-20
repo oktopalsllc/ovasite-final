@@ -143,10 +143,18 @@ export async function CloseForm(id: string) {
 }
 
 export async function GetFormContentByUrl(formId: string) {
-  return await prisma.form.update({
+  return await prisma.form.findUnique({
     select: {
       formData: true,
     },
+    where: {
+      id: formId,
+    },
+  });
+}
+
+export async function UpdateFormVisits(formId: string) {
+  return await prisma.form.update({
     data: {
       visits: {
         increment: 1,
