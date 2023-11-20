@@ -188,8 +188,7 @@ function ColCell({ type, value }: { type: ElementsType; value: string }) {
             node = <Badge variant={"outline"}>{format(date, "dd/MM/yyyy")}</Badge>;
             break;
         case "CheckboxField":
-            const checked = value === "true";
-            node = <Checkbox checked={checked} disabled />;
+            node = value === "true" ? "Yes" : "No";
             break;
     }
 
