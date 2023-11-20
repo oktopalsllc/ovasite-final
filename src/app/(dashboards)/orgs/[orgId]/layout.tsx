@@ -1,8 +1,8 @@
-"use client";
-import Header from "@/components/orgs/Header";
-import SidebarMenu from "@/components/orgs/SidebarMenu";
-import { SidebarNav } from "@/components/orgs/SidebarNav";
-import Footer from "@/components/orgs/Footer";
+'use client';
+import Header from '@/components/orgs/Header';
+import SidebarMenu from '@/components/orgs/SidebarMenu';
+import { SidebarNav } from '@/components/orgs/SidebarNav';
+import Footer from '@/components/orgs/Footer';
 
 export default function OrgsLayout({
   children,
@@ -19,10 +19,12 @@ export default function OrgsLayout({
     //     <Footer />
     //   </section>
     // </section>
-    <section className="bg-gray-100 h-[100vh] w-full">
-        <Header />
-        <div className="px-20 md:px-10">{children}</div>
-        <Footer />
-      </section>
+    <section className=''>
+      <Header />
+      <div className='px-5 lg:px-12 bg-gray-100 h-[100vh] w-full'>
+        {children}
+      </div>
+      <Footer />
+    </section>
   );
 }
