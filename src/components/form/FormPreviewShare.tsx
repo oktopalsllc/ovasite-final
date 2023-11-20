@@ -5,8 +5,9 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { ImShare } from "react-icons/im";
 import { toast } from "./ui/use-toast";
+import { Form } from "@prisma/client";
 
-function FormLinkShare({ shareUrl }: { shareUrl: string }) {
+function FormPreviewShare({ form }: { form: Form }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ function FormLinkShare({ shareUrl }: { shareUrl: string }) {
     return null; // avoiding window not defined error
   }
 
-  const shareLink = `${window.location.origin}/submit/${shareUrl}`;
+  const shareLink = `${window.location.origin}/orgs/${form.organizationId}/projects/${form.projectId}/forms/preview/${form.id}`;
   
   return (
     <div className="flex flex-grow gap-4 items-center">
@@ -33,10 +34,10 @@ function FormLinkShare({ shareUrl }: { shareUrl: string }) {
         }}
       >
         <ImShare className="mr-2 h-4 w-4" />
-        Share link
+        Preview link
       </Button>
     </div>
   );
 }
 
-export default FormLinkShare;
+export default FormPreviewShare;

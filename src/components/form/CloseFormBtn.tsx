@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { formService } from "@/services/form-service/form.service";
+import { CloseForm } from "@/actions/form";
 import { Form } from "@prisma/client";
 import { toast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -20,7 +21,7 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 
-function DeleteBtn({ form }: { form: Form }) {
+function CloseFormBtn({ form }: { form: Form }) {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [loading, startTransition] = useTransition();
@@ -33,17 +34,15 @@ function DeleteBtn({ form }: { form: Form }) {
     return null; // avoiding window not defined error
   }
 
-  async function handleDelete() {
+  async function handleClose() {
     try {
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
-      const deleteForm = await formService.deleteForm(form.organizationId, form.id, token as string);
-      const { message, status, deletedForm } = deleteForm;
-      if (status) {
+      const closeForm = await CloseForm(form.id);
+      if (closeForm) {
         toast({
           title: "Success",
-          description: message,
+          description: "Form closed",
         });
-        router.push(`/orgs/${deletedForm.organizationId}/projects/${deletedForm.projectId}`);
+        window.location.reload();
       }
       else {
         toast({
@@ -69,17 +68,16 @@ function DeleteBtn({ form }: { form: Form }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          className="lg:w-[150px] w-full text-white bg-peach_primary hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed"
-
+          className="lg:w-[150px] w-full text-white bg-yellow-500 hover:bg-yellow-300 hover:cursor-pointer hover:border-dashed"
         >
-          Delete
+          Close Form
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-white">
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to delete this form?</AlertDialogTitle>
+          <AlertDialogTitle>Are you sure you want to close this form?</AlertDialogTitle>
           <AlertDialogDescription className="text-red-500">
-            This action cannot be undone. After deleting this form, all submissions relating to it will be deleted. <br />
+            This action cannot be undone. After closing this form, submissions cannot be collected with it anymore. <br />
             <br />
 
           </AlertDialogDescription>
@@ -91,7 +89,7 @@ function DeleteBtn({ form }: { form: Form }) {
             disabled={loading}
             onClick={(e) => {
               e.preventDefault();
-              startTransition(handleDelete);
+              startTransition(handleClose);
             }}
           >
             Proceed {loading && <FaSpinner className="animate-spin" />}
@@ -102,5 +100,5 @@ function DeleteBtn({ form }: { form: Form }) {
   );
 }
 
-export default DeleteBtn;
+export default CloseFormBtn;
 

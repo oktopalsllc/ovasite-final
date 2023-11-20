@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { Form } from "@prisma/client";
 
-function VisitBtn({ shareUrl }: { shareUrl: string }) {
+function PreviewBtn({ form }: { form:Form }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -14,7 +15,7 @@ function VisitBtn({ shareUrl }: { shareUrl: string }) {
     return null; // avoiding window not defined error
   }
 
-  const shareLink = `${window.location.origin}/submit/${shareUrl}`;
+  const shareLink = `${window.location.origin}/orgs/${form.organizationId}/projects/${form.projectId}/forms/preview/${form.id}`;
   
   return (
     <Button
@@ -23,9 +24,9 @@ function VisitBtn({ shareUrl }: { shareUrl: string }) {
         window.open(shareLink, "_blank");
       }}
     >
-      Visit
+      Preview
     </Button>
   );
 }
 
-export default VisitBtn;
+export default PreviewBtn;

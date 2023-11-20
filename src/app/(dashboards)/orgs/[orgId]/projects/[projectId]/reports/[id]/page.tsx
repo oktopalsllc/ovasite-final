@@ -1,18 +1,34 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import jsPDF from "jspdf";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { toast } from "@/components/form/ui/use-toast";
 import { reportService } from "@/services/report-service/report.service";
-import { ImSpinner2 } from "react-icons/im";
+import { FaSpinner } from "react-icons/fa";
 import { Separator } from "@/components/form/ui/separator";
+import { ImSpinner2 } from "react-icons/im";
+import DeleteBtn from "@/components/report/DeleteBtn";
+import BackBtn from "@/components/shared/BackBtn";
 
 const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
 const token = tokenString?.toString() || "";
 
+type Report = {
+    id: string;
+    title: string;
+    reportData: string;
+    creatorId: string;
+    organizationId: string;
+    projectId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    employee: Employee;
+    organization: Organization;
+    project: Project;
+  };
+
 export default function Report({ params }: { params: { id: string } }) {
     const { id } = params;
-    const router = useRouter();
     const [title, setTitle] = useState("");
     const [reportDate, setReportDate] = useState("")
     const [updatedDate, setUpdatedDate] = useState("");
@@ -24,6 +40,7 @@ export default function Report({ params }: { params: { id: string } }) {
     const [conclusion, setConclusion] = useState("");
     const [challenge, setChallenge] = useState("");
     const [reportId, setReportId] = useState("");
+    const [report, setReport] = useState<Report>();
     const [orgName, setOrgName] = useState("");
     const [loaded, setLoaded] = useState(false);
     const [projectName, setProjectName] = useState("");
@@ -33,7 +50,6 @@ export default function Report({ params }: { params: { id: string } }) {
     const [btnLoad, setLoading] = useState(false);
     const [pdfLoad, setPdfLoading] = useState(false);
     const [csvLoad, setCsvLoading] = useState(false);
-    const [deleteLoad, setDeleteLoading] = useState(false);
 
     const convertDate = (date: string) => {
         const dateObject: Date = new Date(date);
@@ -48,6 +64,7 @@ export default function Report({ params }: { params: { id: string } }) {
                 const report = await reportService.getReport(orgValue, id, token);
 
                 if (report) {
+                    setReport(report);
                     const reportData = JSON.parse(report.reportData);
                     setTitle(report.title);
                     setReportDate(report.createdAt.toString());
@@ -140,40 +157,6 @@ export default function Report({ params }: { params: { id: string } }) {
         }
     }
 
-    const handleDelete = async () => {
-        try {            
-            setDeleteLoading(true);
-            const response = await reportService.deleteReport(orgValue, reportId, token);
-            const { message, status } = response;
-            if (status) {
-                toast({
-                    title: "Success",
-                    description: message,
-                });
-                setDeleteLoading(false);
-                router.back();
-            }
-            else {
-                toast({
-                    title: "Error",
-                    description: "Something went wrong, please try again later",
-                    variant: "destructive",
-                });                
-                setDeleteLoading(false);
-                return;
-            }
-        }
-        catch (error) {
-            console.error(error); toast({
-                title: "Error",
-                description: "Something went wrong, please try again later",
-                variant: "destructive",
-            });                
-            setDeleteLoading(false);
-            return;
-        }
-    }
-
     const handleCSVDownload = () => {
         setCsvLoading(true);
         // Function to escape and enclose each field in double quotes
@@ -200,24 +183,15 @@ export default function Report({ params }: { params: { id: string } }) {
         setCsvLoading(false);
     };
 
-
-
-    function handleBack() {
-        router.back();
-    }
-
     return (
-        <div className="h-[100vh] bg-white overflow-y-auto px-10 mb-10">
+        <div className="h-[100vh] w-3/4 overflow-y-auto px-10 mb-10">
             {loaded ? <>
                 <div className="py-10 border-b border-muted">
                     <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
                         <h1 className="text-2xl font-bold col-span-2">
                             Report
                         </h1>
-                        <button className=" w-[80px] outline-black hover:bg-blue-300 hover:cursor-pointer hover:border-dashed p-2 bg-blue-500 text-sm rounded-md text-white"
-                            onClick={handleBack}>
-                            Back
-                        </button>
+                        <BackBtn />
                     </div>
                     <Separator className="my-3" />
                     <div className="flex flex-col gap-5">
@@ -235,7 +209,7 @@ export default function Report({ params }: { params: { id: string } }) {
 
                 <Separator className="my-3" />
 
-                <div className="bg-white ">
+                <div>
                     <div className="">
                         <h1 className="font-semibold">Title</h1>
                         <input
@@ -317,29 +291,23 @@ export default function Report({ params }: { params: { id: string } }) {
                         <button className="flex justify-center outline-black text-center text-sm lg:w-[100px] md:w-[100px] w-full p-2 hover:bg-green-300 bg-green-500 hover:cursor-pointer hover:border-dashed rounded-md text-white"
                             onClick={handleUpdate}>
                             {btnLoad ? <>
-                                <ImSpinner2 className="mt-1 animate-spin" /></> : <>Update</>}
+                                <FaSpinner className="mt-1 animate-spin" /></> : <>Update</>}
                         </button>
                         <button
                             onClick={handleDownload}
                             className="flex justify-center bg-blue-500 text-center text-sm lg:w-[100px] md:w-[100px] w-full hover:bg-blue-300 hover:cursor-pointer hover:border-dashed text-white p-2 rounded-md"
                         >
                             {pdfLoad ? <>
-                                <ImSpinner2 className="mt-1 animate-spin" /></> : <>PDF</>}
+                                <FaSpinner className="mt-1 animate-spin" /></> : <>PDF</>}
                         </button>
                         <button
                             onClick={handleCSVDownload}
                             className="flex justify-center bg-yellow-500 text-center text-sm lg:w-[100px] md:w-[100px] w-full hover:bg-yellow-300 hover:cursor-pointer hover:border-dashed text-white p-2 rounded-md"
                         >
                             {csvLoad ? <>
-                                <ImSpinner2 className="mt-1 animate-spin" /></> : <>CSV</>}
+                                <FaSpinner className="mt-1 animate-spin" /></> : <>CSV</>}
                         </button>
-                        <button
-                            onClick={handleDelete}
-                            className="flex justify-center bg-red-500 text-center text-sm lg:w-[100px] md:w-[100px] w-full hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed text-white p-2 rounded-md"
-                        >
-                            {deleteLoad ? <>
-                                <ImSpinner2 className="mt-1 animate-spin" /></> : <>Delete</>}
-                        </button>
+                        {report && <DeleteBtn report={report} />}
                     </div>
                 </div>
             </> : <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
