@@ -8,6 +8,7 @@ import Insights from '@/components/project/stats/Insights';
 import Settings from '@/components/project/Settings';
 import { useParams } from 'next/navigation';
 import { ImSpinner2 } from 'react-icons/im';
+import BackBtn from "@/components/shared/BackBtn";
 import { projectService } from '@/services/project-service/project.service';
 
 export default function Project({
@@ -75,10 +76,13 @@ export default function Project({
   return (
     <>
       {loaded ? (
-        <div className='container h-[100vh] pt-4'>
-          <h2 className='text-2xl font-bold col-span-2'>
-            Project: {project?.name}
-          </h2>
+        <div className='container overflow-y-auto h-[100vh] pt-4'>
+          <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+            <h2 className='text-2xl font-bold col-span-2'>
+              Project: {project?.name}
+            </h2>
+            <BackBtn />
+          </div>
           <Separator className='my-3' />
           <div className='container flex align-middle overflow-x-auto'>
             {items.map((item, i) => {
@@ -86,10 +90,9 @@ export default function Project({
                 <div
                   key={i}
                   className={`m-2 p-2 text-center text-xs md:text-sm lg:text-md 
-                    ${
-                      active === item.id
-                        ? 'bg-[#FF595A] text-white'
-                        : 'hover:bg-gray-300 active:bg-gray-400 hover:text-gray-800'
+                    ${active === item.id
+                      ? 'bg-gray-600 text-white'
+                      : 'hover:bg-gray-300 hover:cursor-pointer active:bg-gray-400 hover:text-gray-800'
                     } w-full`}
                   onClick={(i) => {
                     setActive(item.id);

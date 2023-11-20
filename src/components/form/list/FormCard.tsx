@@ -16,7 +16,7 @@ function FormCard({ form }: { form: Form }) {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between">
                     <span className="truncate font-bold">{form.title}</span>
-                    {form.published && <Badge>Published</Badge>}
+                    {form.published && <>{form.closed ? <Badge className="text-red-500">Closed</Badge>: <Badge>Published</Badge>}</>}
                     {!form.published && <Badge variant={"destructive"}>Draft</Badge>}
                 </CardTitle>
                 <CardDescription className="flex items-center justify-between text-muted-foreground text-sm">

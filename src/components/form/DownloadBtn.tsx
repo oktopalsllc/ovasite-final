@@ -76,7 +76,7 @@ const DownloadButton = ({ id }: { id: string }) => {
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            setIsLoading(true);
+            setIsLoading(false);
         }
         catch (e) {
             toast({
@@ -87,17 +87,11 @@ const DownloadButton = ({ id }: { id: string }) => {
             setIsLoading(false);
             return;
         }
-        // finally {
-        //   // Remove the query parameter
-        //   const url = new URL(window.location.href);
-        //   url.searchParams.delete('downloading');
-        //   window.history.pushState({}, '', url);
-        // }
     };
 
     return (
         <button
-            className="w-[150px] outline-black hover:bg-green-400 hover:cursor-pointer hover:border-dashed p-2 bg-green-500 text-sm rounded-md text-white"
+            className="w-[150px] flex justify-center outline-black hover:bg-green-400 hover:cursor-pointer hover:border-dashed p-2 bg-green-500 text-sm rounded-md text-white"
             onClick={handleCSVDownload}
             disabled={isLoading}>
             {isLoading ? <FaSpinner className="animate-spin" /> : 'Download CSV'}
