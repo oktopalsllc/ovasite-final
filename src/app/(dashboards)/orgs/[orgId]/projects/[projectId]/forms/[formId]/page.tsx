@@ -66,9 +66,9 @@ async function FormDetailPage({
               <DeleteBtn form={form} />
             </div>
           </div>
+          <Separator className="my-3" />
         </div>
       }      
-      <Separator className="my-3" />
       <div className="px-2 py-4 border-b border-muted">
         <div className="container flex gap-2 items-center justify-between">
           <FormPreviewShare form={form} />
