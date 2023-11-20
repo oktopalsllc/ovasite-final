@@ -202,7 +202,7 @@ async function SubmissionsTable({ id }: { id: string }) {
           onClick={handleCSVDownloadInitiate}>
           {isDownloading ? <FaSpinner className="animate-spin" /> : "Download CSV"}
         </button> */}
-        <DownloadButton handleCSVDownload={handleCSVDownload} />  
+        {form.submissions.length > 0 && <DownloadButton id={id} />}
       </div>
       <div className="rounded-md border">
         <Table className="bg-white mb-10">
