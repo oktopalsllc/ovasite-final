@@ -80,7 +80,7 @@ function StatsCards(props: StatsCardProps) {
                 title="Total Forms"
                 icon={<FaWpforms className="text-blue-600" />}
                 helperText="Total forms created"
-                value={data?.visits.toLocaleString() || ""}
+                value={data?.forms.toLocaleString() || ""}
                 loading={loading}
                 className="bg-white shadow-md shadow-blue-600"
             />
