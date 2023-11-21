@@ -53,8 +53,11 @@ export default function Reports({ projectId }: { projectId: string }) {
     }
 
     return (
-        <div className="container pt-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="container">
+            <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+            <h2 className='text-xl font-bold col-span-2'>
+              Reports
+            </h2>
                 <CreateReportBtn projectId={projectId} />
             </div>
             <Separator className="my-6" />
@@ -102,7 +105,7 @@ export default function Reports({ projectId }: { projectId: string }) {
     )
     }
     else{
-        return <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
+        return <div className="w-full flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
     }
 };
 

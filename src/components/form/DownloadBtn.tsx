@@ -2,13 +2,10 @@
 import React, { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import {
-    GetFormById,
-    GetFormStats,
     GetFormWithSubmissions
 } from "@/actions/form";
 import { toast } from "@/components/form/ui/use-toast";
 import { FormElementInstance } from "@/components/form/FormElements";
-// import { Form } from '@prisma/client';
 
 const DownloadButton = ({ id }: { id: string }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -79,6 +76,7 @@ const DownloadButton = ({ id }: { id: string }) => {
             setIsLoading(false);
         }
         catch (e) {
+            console.log(e);
             toast({
                 title: "Error",
                 description: "Something went wrong, please try again later",

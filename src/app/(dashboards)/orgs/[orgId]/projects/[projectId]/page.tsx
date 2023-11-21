@@ -67,7 +67,7 @@ export default function Project({
       case 4:
         return <Insights projectId={projectId} />;
       case 5:
-        return <Settings project={project} />;
+        return <Settings projectId={projectId} orgId={orgValue} />;
       default:
         return <FormCards projectId={projectId} />;
     }
@@ -105,7 +105,6 @@ export default function Project({
           </div>
           <Separator className='my-3' />
           <h3 className='text-xl font-bold col-span-2'>
-            {items.find((item) => item.id === active)?.name ?? 'Default Name'}
           </h3>
           <Separator className='my-3' />
           <div className='flex flex-row'>{ActiveItem()}</div>

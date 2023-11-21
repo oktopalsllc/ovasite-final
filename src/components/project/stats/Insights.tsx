@@ -16,6 +16,10 @@ export default function Insights({ projectId }: { projectId: string }) {
 
     return (
         <div className="container">
+            <h2 className='text-xl font-bold col-span-2'>
+                Insights
+            </h2>
+            <Separator className="my-3" />
             <Suspense fallback={<StatsCards loading={true} />}>
                 <CardStatsWrapper projectId={projectId} />
             </Suspense>
@@ -35,14 +39,14 @@ function CardStatsWrapper({ projectId }: { projectId: string }) {
     const token = tokenString?.toString() || "";
     useEffect(() => {
         const fetchData = async () => {
-            try{
+            try {
                 const stats = await projectService.getProjectStats(orgValue, projectId, token);
                 if (stats) {
                     setStats(stats);
                     setLoaded(true)
                 }
             }
-            catch(err){
+            catch (err) {
                 console.error(err);
             }
         }
@@ -53,7 +57,7 @@ function CardStatsWrapper({ projectId }: { projectId: string }) {
             {loaded ?
                 <StatsCards loading={false} data={stats} />
                 :
-                <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
+                <div className="w-full flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }
         </>
     );
@@ -79,7 +83,7 @@ function StatsCards(props: StatsCardProps) {
             <StatsCard
                 title="Total Forms"
                 icon={<FaWpforms className="text-blue-600" />}
-                helperText="Total forms created"
+                helperText="Total forms published in this project"
                 value={data?.forms.toLocaleString() || ""}
                 loading={loading}
                 className="bg-white shadow-md shadow-blue-600"

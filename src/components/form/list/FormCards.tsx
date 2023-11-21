@@ -29,11 +29,16 @@ function FormCards({ projectId }: { projectId: string }) {
   return (
     <>
       {loaded ? (
-        <div>
-          <CreateFormBtn />
+        <div className='w-full'>
+          <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+            <h2 className='text-xl font-bold col-span-2'>
+              Forms
+            </h2>
+            <CreateFormBtn />
+          </div>
           <Separator className='my-6' />
           {forms.length > 0 ? (
-            <div className='grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            <div className='px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
               <Suspense
                 fallback={[1, 2, 3, 4].map((el) => (
                   <FormCardSkeleton key={el} />
@@ -53,7 +58,7 @@ function FormCards({ projectId }: { projectId: string }) {
           )}
         </div>
       ) : (
-        <div className='flex mt-14 justify-center'>
+        <div className='w-full flex mt-14 justify-center'>
           <ImSpinner2 className='animate-spin h-12 w-12' />
         </div>
       )}

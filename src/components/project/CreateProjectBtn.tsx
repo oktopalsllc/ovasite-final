@@ -87,19 +87,6 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
                 </FormItem>
               )}
             />
-            <FormField
-              control={project.control}
-              name="expectedDuration"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Expected Duration</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Example: 2 weeks / 6 months / 3 years" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={project.control}
@@ -116,12 +103,12 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
               />
               <FormField
                 control={project.control}
-                name="endDate"
+                name="expectedDuration"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>End Date</FormLabel>
+                    <FormLabel>Expected Duration</FormLabel>
                     <FormControl>
-                      <Input type="date" {...field} />
+                      <Input placeholder="Example: 2 weeks / 6 months / 3 years" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
