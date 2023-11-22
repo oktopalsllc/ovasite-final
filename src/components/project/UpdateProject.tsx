@@ -202,6 +202,7 @@ export default function UpdateProject({ id, orgId }: { id: string; orgId: string
                         <CardFooter>
                             {projectData.isCompleted && (
                                 <div className="w-full flex flex-row justify-center gap-2 mt-2">
+                                    <DownloadBtn id={id} orgId={orgId} />
                                     <DeleteBtn id={id} orgId={orgId} />
                                 </div>
                             )}
