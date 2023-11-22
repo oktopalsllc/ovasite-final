@@ -43,9 +43,9 @@ function Header() {
               <div className='absolute z-10 mt-2 bg-white border rounded p-4 w-[250px] sh shadow-2xl top-6 left-10'>
                 <Link
                   href='/settings'
-                  className='flex items-center px-4 bg- py-2 text-sm text-white bg-[#FF595A] rounded'
+                  className='flex items-center px-4 bg- py-2 text-sm text-white opacity-60 bg-[#001333] rounded'
                 >
-                  <SiInkdrop className='mr-2 text-[#001333]' /> Organisation
+                  <SiInkdrop className='mr-2 text-[#fff]' /> Organization
                 </Link>
                 <Link
                   href='/settings'

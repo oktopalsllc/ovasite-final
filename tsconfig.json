@@ -24,12 +24,14 @@
     }
   },
   "include": [
-    "next-env.d.ts", 
-    "**/*.js", 
-    "**/*.jsx", 
-    "**/*.ts", 
-    "**/*.tsx", 
-    ".next/types/**/*.ts"
+    "next-env.d.ts",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/types/app/settings/page.jsx",
+    ".next/types/app/settings/employees/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
