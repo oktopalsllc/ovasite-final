@@ -13,11 +13,11 @@ function Header() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <div className='px-4 pt-2 mx-auto sm:max-w-full md:max-w-full lg:max-w-full md:px-24 lg:px-8 bg-white'>
+    <div className='px-4 py-5 mx-auto sm:max-w-full md:max-w-full lg:max-w-full md:px-24 lg:px-10 bg-white'>
       <div className='relative flex items-center justify-between'>
         <div className='flex items-center'>
           <Link
-            href='#'
+            href='/'
             aria-label='Ovasite'
             title='Ovasite'
             className='inline-flex items-center mr-8'
@@ -68,11 +68,11 @@ function Header() {
                 <div className='border-t border-gray-200 mt-4'>
                   {' '}
                   <Link
-                    href='/new-workspace'
+                    href='/orgs/create-org'
                     className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                   >
                     <FaPlusSquare className='mr-2 text-[#001333]' /> New
-                    Workspace
+                    Organization
                   </Link>
                 </div>
               </div>

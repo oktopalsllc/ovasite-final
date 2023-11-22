@@ -59,7 +59,7 @@ function ProjectCard2({ project }: { project: Project }) {
         <div className='p-5'>
           <div className='flex justify-between mb-4 items-center'>
             <p className='mb-2 text-xs font-semibold text-gray-600 uppercase'>
-              {convertDate(project.startDate)} - {convertDate(project.endDate)}
+              {convertDate(project.createdAt)} - {project.expectedDuration}
             </p>{' '}
             <div className='relative'>
               <div className={`${showDropdown ? 'block' : 'hidden'}`}>

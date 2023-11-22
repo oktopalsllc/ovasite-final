@@ -131,7 +131,7 @@ function FormBuilder({ form }: { form: Form }) {
             )}
           </div>
         </nav>
-        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-[100vh] bg-white">
+        <div className="flex w-full flex-grow items-center justify-center relative bg-gray-100">
           <Designer />
         </div>
       </main>
