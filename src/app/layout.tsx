@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/form/providers/ThemeProvider";
 import DesignerContextProvider from "@/components/form/context/DesignerContext";
 import NextTopLoader from "nextjs-toploader";
 import { constructMetadata } from '@/lib/utils';
+import "reflect-metadata"
 
 const inter = Inter({ subsets: ['latin'] })
 

@@ -14,7 +14,11 @@ const nextConfig = {
         // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
         // CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
         // WEBHOOK_SECRET: process.env.WEBHOOK_SECRET
-    }
+    },
+    webpack(config) {
+      config.externals = [...config.externals, 'hnswlib-node'];  // by adding this line, solved the import
+      return config;
+    },
 }
 
 module.exports = nextConfig
