@@ -3,10 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
-import { FaSearch, FaBell } from 'react-icons/fa';
+import { SiInkdrop } from 'react-icons/si';
+import { LuBadgePlus } from 'react-icons/lu';
+import { FaCog, FaUsers, FaPlusSquare, FaBell } from 'react-icons/fa';
+import { RiArrowDropUpLine, RiArrowDropDownLine } from 'react-icons/ri';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <div className='px-4 pt-2 mx-auto sm:max-w-full md:max-w-full lg:max-w-full md:px-24 lg:px-8 bg-white'>
@@ -18,38 +22,84 @@ function Header() {
             title='Ovasite'
             className='inline-flex items-center mr-8'
           >
-            <Image alt='Logo' src='/Logo.png' width={40} height={40} />
+            <Image alt='Logo' src='/Logo.png' width={20} height={20} />
           </Link>
 
-          <div className='flex items-center hidden space-x-8 lg:flex'>
-            <Link
-              href='#'
-              className='font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400'
+          {/* ✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨ */}
+          <div className='relative flex items-center hidden lg:flex'>
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className='font-medium tracking-wide text-gray-700 transition-colors duration-200 flex items-center'
             >
-              Organization
-            </Link>
+              Organization{' '}
+              {dropdownOpen ? (
+                <RiArrowDropUpLine className=' text-[#001333] h-6 w-6 ' />
+              ) : (
+                <RiArrowDropDownLine className=' text-[#001333] h-6 w-6 ' />
+              )}
+            </button>
+
+            {dropdownOpen && (
+              <div className='absolute z-10 mt-2 bg-white border rounded p-4 w-[250px] sh shadow-2xl top-6 left-10'>
+                <Link
+                  href='/settings'
+                  className='flex items-center px-4 bg- py-2 text-sm text-white bg-[#FF595A] rounded'
+                >
+                  <SiInkdrop className='mr-2 text-[#001333]' /> Organisation
+                </Link>
+                <Link
+                  href='/settings'
+                  className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                >
+                  <FaCog className='mr-2 text-[#001333]' /> Settings
+                </Link>
+                <Link
+                  href='/settings'
+                  className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                >
+                  <LuBadgePlus className='mr-2 text-[#001333]' /> Upgrade
+                </Link>
+                <Link
+                  href='/manage-users'
+                  className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                >
+                  <FaUsers className='mr-2 text-[#001333]' /> Manage Users
+                </Link>
+                <div className='border-t border-gray-200 mt-4'>
+                  {' '}
+                  <Link
+                    href='/new-workspace'
+                    className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
+                  >
+                    <FaPlusSquare className='mr-2 text-[#001333]' /> New
+                    Workspace
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
+          {/* ✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨ */}
         </div>
 
         <div className='flex items-center hidden space-x-8 lg:flex'>
           <FaBell className='text-xl text-gray-800' />
           <Link
             href='#'
-            className='font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400'
+            className='font-medium tracking-wide text-gray-700 transition-colors duration-200'
           >
             User
           </Link>
 
           <Link
             href='#'
-            className='inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded-full shadow-md   focus:shadow-outline focus:outline-none'
+            className='inline-flex items-center justify-center h-6 w-6 font-medium tracking-wide text-white transition duration-200 rounded-full shadow-md   focus:shadow-outline focus:outline-none bg-[#ddd]'
           ></Link>
         </div>
         <div className='lg:hidden'>
           <button
             aria-label='Open Menu'
             title='Open Menu'
-            className='p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50'
+            className='p-2 -mr-1 transition duration-200 rounded focus:outline-none focus:shadow-outline'
             onClick={() => setIsMenuOpen(true)}
           >
             <GiHamburgerMenu className='w-5 text-gray-600' />

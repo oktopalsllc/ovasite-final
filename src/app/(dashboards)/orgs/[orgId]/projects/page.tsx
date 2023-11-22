@@ -15,7 +15,7 @@ export default function Projects({ params }: { params: { orgId: string } }) {
         <Separator className='my-3' />
         <div className='flex items-center justify-between'>
           {/* ========================================== */}
-          <div className='flex items-center w-5/6 md:w-5/6 lg:w-5/6'>
+          <div className='flex items-center w-5/6 md:w-5/6 lg:w-4/6'>
             <input
               type='search'
               className='w-full px-4 py-1 text-gray-80 rounded-lg focus:outline-none'
