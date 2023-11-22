@@ -1,4 +1,11 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/form/ui/card";
+import { 
+    Card, 
+    CardContent, 
+    CardDescription, 
+    CardFooter, 
+    CardHeader, 
+    CardTitle
+ } from "@/components/form/ui/card";
 import { Form } from "@prisma/client";
 import { Badge } from "@/components/form/ui/badge";
 import { formatDistance } from "date-fns";
@@ -16,8 +23,8 @@ function FormCard({ form }: { form: Form }) {
             <CardHeader>
                 <CardTitle className="flex items-center gap-2 justify-between">
                     <span className="truncate font-bold">{form.title}</span>
-                    {form.published && <>{form.closed ? <Badge className="text-red-500">Closed</Badge>: <Badge>Published</Badge>}</>}
-                    {!form.published && <Badge variant={"destructive"}>Draft</Badge>}
+                    {form.published && <>{form.closed ? <Badge className="text-red-500">Closed</Badge>: <Badge className="text-green-500">Published</Badge>}</>}
+                    {!form.published && <Badge variant={"destructive"} className="text-yellow-600">Draft</Badge>}
                 </CardTitle>
                 <CardDescription className="flex items-center justify-between text-muted-foreground text-sm">
                     {formatDistance(form.createdAt, new Date(), {
@@ -45,9 +52,9 @@ function FormCard({ form }: { form: Form }) {
                     </Button>
                 )}
                 {!form.published && (
-                    <div className="w-full">
+                    <div className="w-full flex flex-row justify-center gap-2 mt-2">
                         <UpdateBtn formObj={form} />
-                        <Button asChild variant={"secondary"} className="mt-2 w-full text-sm text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed">
+                        <Button asChild variant={"secondary"} className=" w-full text-sm text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed">
                             <Link href={`/orgs/${form.organizationId}/projects/${form.projectId}/forms/builder/${form.id}`}>
                                 Build form
                             </Link>

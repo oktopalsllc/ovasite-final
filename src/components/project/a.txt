@@ -1,0 +1,32 @@
+<Form {...project}>
+    <form onSubmit={project.handleSubmit(handleRoleUpdateSubmit)} className="space-y-2">
+        <FormField name="role">
+            <FormControl>
+                <Select
+                    onValueChange={(value) => {
+                        project.setValue("role", value, { shouldValidate: true });
+                    }}
+                >
+                    <SelectTrigger aria-label="Role">
+                        <SelectValue placeholder="Select a role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup className="bg-white">
+                            {roleOptions.map((role) => (
+                                <SelectItem key={role.value} value={role.value}>
+                                    {role.label}
+                                </SelectItem>
+                            ))}
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+            </FormControl>
+        </FormField>
+    </form>
+</Form>
+<DialogFooter>
+    <Button onClick={project.handleSubmit(handleRoleUpdateSubmit)} disabled={project.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
+        {!project.formState.isSubmitting && <span>Update</span>}
+        {project.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
+    </Button>
+</DialogFooter>
