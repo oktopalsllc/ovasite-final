@@ -39,7 +39,7 @@ async function ProjectCards({ orgId }: { orgId: string }) {
           )}
         </>
       ) : (
-        <div className='grid place-content-center'>
+        <div className='container w-full flex mt-14 justify-center'>
           <ImSpinner2 className='animate-spin h-12 w-12' />
         </div>
       )}

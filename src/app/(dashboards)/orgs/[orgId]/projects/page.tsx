@@ -10,9 +10,9 @@ import { CiMenuBurger } from 'react-icons/ci';
 export default function Projects({ params }: { params: { orgId: string } }) {
   const { orgId } = params;
   return (
-    <div className=''>
+    <div className='overflow-y-auto h-[100vh]'>
       <div className='w-full mt-0'>
-        <Separator className='my-3' />
+        <Separator className='py-3' />
         <div className='flex items-center justify-between'>
           {/* ========================================== */}
           <div className='flex items-center w-4/6 md:w-4/6 lg:w-4/6'>

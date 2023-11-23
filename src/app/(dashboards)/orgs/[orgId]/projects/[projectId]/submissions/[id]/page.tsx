@@ -126,7 +126,7 @@ export default function Submission({ params }: { params: { id: string } }) {
         };
         
         return (
-            <div className="px-10 ml-20 w-3/4 mt-10">
+            <div className=" container overflow-y-auto justify-center h-[100vh] px-10 ml-5 w-full pt-10">
                 <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
                     <h1 className="text-2xl font-bold col-span-2">
                         Submission

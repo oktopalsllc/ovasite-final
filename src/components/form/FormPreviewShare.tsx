@@ -34,7 +34,7 @@ function FormPreviewShare({ form }: { form: Form }) {
         }}
       >
         <ImShare className="mr-2 h-4 w-4" />
-        Preview link
+        Share preview
       </Button>
     </div>
   );

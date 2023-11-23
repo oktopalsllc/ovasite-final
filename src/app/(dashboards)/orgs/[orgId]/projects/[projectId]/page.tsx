@@ -110,7 +110,7 @@ export default function Project({
           <div className='flex flex-row'>{ActiveItem()}</div>
         </div>
       ) : (
-        <div className='flex mt-14 justify-center'>
+        <div className='flex pt-14 justify-center'>
           <ImSpinner2 className='animate-spin h-12 w-12' />
         </div>
       )}
