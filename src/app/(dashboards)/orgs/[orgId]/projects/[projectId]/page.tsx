@@ -76,7 +76,7 @@ export default function Project({
   return (
     <>
       {loaded ? (
-        <div className='container overflow-y-auto h-[100vh] pt-4'>
+        <div className='container w-full justify-center overflow-y-auto h-[100vh] pt-4'>
           <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
             <h2 className='text-2xl font-bold col-span-2'>
               Project: {project?.name}
