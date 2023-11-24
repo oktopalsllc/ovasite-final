@@ -19,12 +19,12 @@ const OrganizationSettingsPage = () => {
       <div className='flex justify-between items-start mt-32'>
         {/* Links */}
         <div className='py-4'>
-          <Link
+          {/* <Link
             href='#'
             className='text-[#001333] hover:text-[#FF595A] block hover:border-b-2 text-xl'
           >
             Transfer ownership of Organization
-          </Link>
+          </Link> */}
 
           <Link
             href='#'
