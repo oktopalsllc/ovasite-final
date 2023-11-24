@@ -11,16 +11,16 @@ const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Features', href: '/features' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Contact Us', href: '/contact' }
+    // { name: 'Pricing', href: '/pricing' },
+    // { name: 'Contact Us', href: '/contact' }
 ];
 
 const smNavigation = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Features', href: '/features' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'Contact Us', href: '/contact' },
+    // { name: 'Pricing', href: '/pricing' },
+    // { name: 'Contact Us', href: '/contact' },
     { name: 'Signin', href: '/signin' },
     { name: 'Get Started', href: '/signup' }
 ];

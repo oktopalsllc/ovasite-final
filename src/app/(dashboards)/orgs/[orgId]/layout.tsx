@@ -22,7 +22,7 @@ export default function OrgsLayout({
     // </section>
     <section className=''>
       <Header />
-      <div className='px-5 lg:px-12 bg-gray-100 h-[100vh] w-full'>
+      <div className='px-5 lg:px-12 bg-gray-100 min-h-[100vh] w-full overflow-x-hidden'>
         {children}      
       </div>
       <ScrollToTop />

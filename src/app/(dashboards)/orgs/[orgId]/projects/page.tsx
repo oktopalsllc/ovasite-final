@@ -10,7 +10,7 @@ import { CiMenuBurger } from 'react-icons/ci';
 export default function Projects({ params }: { params: { orgId: string } }) {
   const { orgId } = params;
   return (
-    <div className='overflow-y-auto h-[100vh]'>
+    <div className=''>
       <div className='w-full mt-0'>
         <Separator className='py-3' />
         <div className='flex items-center justify-between'>

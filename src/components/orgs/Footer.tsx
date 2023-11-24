@@ -20,6 +20,12 @@ export default function Footer() {
                             href="/"
                             className="pb-2 transition duration-150 ease-in-out hover:text-[#FF595A]"
                         >
+                            Home
+                        </Link>
+                        <Link
+                            href="/about"
+                            className="pb-2 transition duration-150 ease-in-out hover:text-[#FF595A]"
+                        >
                             About
                         </Link>
                         <Link
@@ -28,7 +34,7 @@ export default function Footer() {
                         >
                             Features
                         </Link>
-                        <Link
+                        {/* <Link
                             href="/pricing"
                             className="pb-2 transition duration-150 ease-in-out hover:text-[#FF595A]"
                         >
@@ -39,7 +45,7 @@ export default function Footer() {
                             className="pb-1 transition duration-150 ease-in-out hover:text-[#FF595A]"
                         >
                             Contact Us
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
                 <div className="col-span-1 lg:col-span-2 text-gray-800">

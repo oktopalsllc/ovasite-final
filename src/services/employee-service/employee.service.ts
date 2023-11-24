@@ -26,17 +26,41 @@ export async function getCurrentEmployee(orgId: string, userId: string) {
 }
 
 export async function getOrgEmployees(orgId: string, token: string) {
-  const response = await axios.get(
-    `${apiUrl}/orgs/${orgId}/employees`,
-    {
-      withCredentials: true,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
+  const response = await axios.get(`${apiUrl}/orgs/${orgId}/employees`, {
+    withCredentials: true,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
   return response.data;
+}
+
+export async function checkInvite(inviteCode: string){
+  const invite = await prisma.invite.findFirst({
+    where: { token: inviteCode },
+  });
+
+  if (!invite || invite.expirationDate < new Date()) {
+    return false;
+  }
+
+  return true;
+}
+
+export async function userExists(inviteCode: string) {
+  const invite = await prisma.invite.findFirst({
+    where: { token: inviteCode },
+  });
+
+  const user = await prisma.user.findUnique({
+    where: { email: invite?.email.toLowerCase()},
+  });
+
+  if (!user) {
+    return false;
+  }
   
+  return true;
 }
