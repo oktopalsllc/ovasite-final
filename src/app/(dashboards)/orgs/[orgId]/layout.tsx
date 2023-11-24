@@ -3,6 +3,7 @@ import Header from '@/components/orgs/Header';
 import SidebarMenu from '@/components/orgs/SidebarMenu';
 import { SidebarNav } from '@/components/orgs/SidebarNav';
 import Footer from '@/components/orgs/Footer';
+import ScrollToTop from '@/components/shared/ScrollToTop';
 
 export default function OrgsLayout({
   children,
@@ -21,9 +22,10 @@ export default function OrgsLayout({
     // </section>
     <section className=''>
       <Header />
-      <div className='px-5 lg:px-12 bg-gray-100 h-[100vh] w-full'>
-        {children}
+      <div className='px-5 lg:px-12 bg-gray-100 min-h-[100vh] w-full overflow-x-hidden'>
+        {children}      
       </div>
+      <ScrollToTop />
       <Footer />
     </section>
   );

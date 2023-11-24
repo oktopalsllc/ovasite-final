@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export const Content = () => {
   return (
-    <div className="w-10/12 lg:w-9/12 mx-auto md:mt-[750px]">
+    <div className="w-10/12 lg:w-9/12 lg:mt-[600px] mx-auto md:mt-[750px]">
       <div id="features">
         <div>
           <h1 id="topbtn">Features</h1>
@@ -18,7 +18,7 @@ export const Content = () => {
         <div id="fea2">
           <p className="text-base md:text-lg font-normal leading-6 md:leading-9 mt-4 md:mt-8">
             Experience revolutionary features for gathering, analyzing, and
-            utilizing data. From adaptable forms to real-time insights, OvaSite
+            utilizing data. From adaptable forms to real-time insights, Ovasite
             empowers you
           </p>
         </div>
@@ -43,8 +43,8 @@ export const Content = () => {
               Real-time Data Entry and Updating
             </h4>
             <p className="text-base md:text-lg leading-[24px] mt-3 md:mt-6">
-              OvaSite facilitates real-time data entry and updating to ensure
-              the most current information is available for analysis
+              Ovasite facilitates real-time data entry and updating to ensure
+              the most current information is available for use
             </p>
           </div>
         </div>
@@ -60,18 +60,15 @@ export const Content = () => {
             </p>
           </div>
         </div>
-
-        <div className="bg-[#AF584C33] min-h-[300px] md:min-h-[430px] rounded-2xl bg-[url('/Group.svg')] bg-no-repeat bg-right-bottom p-6 lg:p-14 bg-[length:30%_30%] lg:bg-auto">
+        <div className="bg-[#AF584C33] min-h-[300px] md:min-h-[430px] rounded-2xl bg-[url('/Location.svg')] bg-no-repeat bg-right-bottom p-6 lg:p-14 bg-[length:30%_30%] lg:bg-auto">
           <div className="mt-4">
-            <h4 className="text-xl md:text-2xl leading-9 font-bold">Works Offline</h4>
+            <h4 className="text-xl md:text-2xl leading-9 font-bold">Location Tracking</h4>
             <p className="text-base md:text-lg leading-[24px] mt-3 md:mt-6">
-              You can collect data even without an internet connection. Data
-              collected offline, is automatically uploaded once your device is
-              connected to the internet.
+              Get location of your form submision in real-time with Ovasite&apos;s location
+              tracking feature.
             </p>
           </div>
         </div>
-
       </div>
     </div>
   );

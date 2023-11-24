@@ -43,7 +43,7 @@ async function FormDetailPage({
   }
 
   return (
-    <div className="h-[100vh] overflow-y-auto ml-10 scroll-smooth px-2 scrollbar-thin">
+    <div className=" px-2">
       <div className="py-10 border-b border-muted">
         <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
           <h1 className="text-2xl font-bold col-span-2">Form</h1>
