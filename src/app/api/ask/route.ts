@@ -16,11 +16,8 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 
 import { config } from "dotenv";
 import { Document } from "langchain/document";
-import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { Pinecone } from "@pinecone-database/pinecone";
-import { FaissStore } from "langchain/vectorstores/faiss";
 import { PromptTemplate } from "langchain/prompts";
-import { HumanMessage } from "langchain/schema";
+import { RunnableSequence } from "langchain/schema/runnable";
 import { BytesOutputParser } from "langchain/schema/output_parser";
 import { formatDocumentsAsString } from "@/utils/documentHelpers";
 
@@ -29,14 +26,13 @@ config();
 const formatMessage = (message: VercelChatMessage) => {
   return `${message.role}: ${message.content}`;
 };
-const TEMPLATE = 
-`Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+const TEMPLATE = `Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 ----------
 CONTEXT: {context}
 ----------
-CHAT HISTORY: {chat_history}
+CHAT HISTORY: {chatHistory}
 ----------
-User: {input}
+User: {question}
 ----------
 AI:`;
 
@@ -45,18 +41,11 @@ export async function POST(req: NextRequest) {
   const messages = body.messages ?? [];
   const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
   const currentMessageContent = messages[messages.length - 1].content;
-  console.log(
-    "🚀 ~ file: route.ts:52 ~ POST ~ currentMessageContent:",
-    currentMessageContent
-  );
 
   const prompt = PromptTemplate.fromTemplate(TEMPLATE);
 
-  // Read data useing directory loader
+  // Read data using directory loader
   const loader = new DirectoryLoader("./docs", {
-    // ".json": (path) => new JSONLoader(path),
-    // ".txt": (path) => new TextLoader(path),
-    // ".pdf": (path) => new PDFLoader(path),
     ".csv": (path) => new CSVLoader(path, { separator: "," }),
   });
 
@@ -88,16 +77,33 @@ export async function POST(req: NextRequest) {
 
   const model = new OpenAI({
     openAIApiKey: process.env.OPENAI_API_KEY,
+    temperature: 0,
     streaming: true,
   });
 
   console.log("Querying...");
-  
   const outputParser = new BytesOutputParser();
-  const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
-
+  const chain = RunnableSequence.from([
+    {
+      question: (input: { question: string; chatHistory?: string }) =>
+        input.question,
+      chatHistory: (input: { question: string; chatHistory?: string }) =>
+        input.chatHistory ?? "",
+      context: async (input: { question: string; chatHistory?: string }) => {
+        const relevantDocs = await retriever.getRelevantDocuments(
+          input.question
+        );
+        const serialized = formatDocumentsAsString(relevantDocs);
+        return serialized;
+      },
+    },
+    prompt,
+    model,
+    outputParser,
+  ]);
   const stream = await chain.stream({
-    query: currentMessageContent,
+    chatHistory: formattedPreviousMessages.join("\n"),
+    question: currentMessageContent,
   });
 
   return new StreamingTextResponse(stream);

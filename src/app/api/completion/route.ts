@@ -4,6 +4,7 @@ import { Message as VercelChatMessage, StreamingTextResponse } from 'ai';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { BytesOutputParser } from 'langchain/schema/output_parser';
 import { PromptTemplate } from 'langchain/prompts';
+import { RunnableSequence } from "langchain/schema/runnable";
  
 export const runtime = 'edge';
  
@@ -32,7 +33,37 @@ AI:`;
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const messages = body.messages ?? [];
-  console.log("🚀 ~ file: route.ts:35 ~ POST ~ messages:", messages)
   const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
-  console.log("🚀 ~ file: route.ts:37 ~ POST ~ formattedPreviousMessages:", formattedPreviousMessages)
+  const currentMessageContent = messages[messages.length - 1].content;
+ 
+  const prompt = PromptTemplate.fromTemplate(TEMPLATE);
+  /**
+   * See a full list of supported models at:
+   * https://js.langchain.com/docs/modules/model_io/models/
+   */
+  const model = new ChatOpenAI({
+    temperature: 0.8,
+  });
+ 
+  /**
+   * Chat models stream message chunks rather than bytes, so this
+   * output parser handles serialization and encoding.
+   */
+  const outputParser = new BytesOutputParser();
+ 
+  /*
+   * Can also initialize as:
+   *
+   * import { RunnableSequence } from "langchain/schema/runnable";
+   * const chain = RunnableSequence.from([prompt, model, outputParser]);
+   */
+  // const chain = prompt.pipe(model).pipe(outputParser);
+  const chain = RunnableSequence.from([prompt, model, outputParser]);
+ 
+  const stream = await chain.stream({
+    chat_history: formattedPreviousMessages.join('\n'),
+    input: currentMessageContent,
+  });
+ 
+  return new StreamingTextResponse(stream);
 }
