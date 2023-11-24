@@ -135,7 +135,7 @@ function Header() {
                           </>
                         }
                         <Link
-                          href={`/orgs/${id}/employee-profile/${emp.id}`}
+                          href={`/orgs/${id}/employees/${emp.id}`}
                           className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                         >
                           <FaCog className='mr-2 text-[#001333]' /> Profile Settings
@@ -200,7 +200,7 @@ function Header() {
                     />
                   </Link>
                 </> : <Link
-                  href={`/user/${userInfo.id}`}
+                  href={`/users/${userInfo.id}`}
                   className='inline-flex items-center justify-center h-6 w-6 font-medium tracking-wide text-white transition duration-200 rounded-full shadow-md   focus:shadow-outline focus:outline-none bg-[#ddd]'
                 >
 
