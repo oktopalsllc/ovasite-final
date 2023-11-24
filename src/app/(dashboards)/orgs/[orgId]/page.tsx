@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { FaChevronLeft } from 'react-icons/fa';
-import Employees from '@/components/Settings/Employees';
-import OrgSettings from '@/components/Settings/Settings';
+import Employees from '@/components/orgs/Settings/Employees';
+import OrgSettings from '@/components/orgs/Settings/Settings';
 // import Employees from '@/components/Settings/Employees';
 // import Employees from '@/components/Settings/Employees';
 
