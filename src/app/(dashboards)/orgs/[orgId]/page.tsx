@@ -6,7 +6,8 @@ import OrgSettings from '@/components/Settings/Settings';
 // import Employees from '@/components/Settings/Employees';
 // import Employees from '@/components/Settings/Employees';
 
-export default function Settings() {
+export default function Settings({params}: {params: {orgId: string}}) {
+  const {orgId} = params;
   const [activeTab, setActiveTab] = useState('Profile');
 
   const tabs = [
