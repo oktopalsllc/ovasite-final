@@ -135,13 +135,10 @@ export async function getUserOrgs(): Promise<UserOrgsResponse> {
   } catch (err) {
     return {
       success: false,
-      error: "Unable to get uer orgs",
+      error: "Unable to get user orgs",
     };
   }
 }
-
-
-
 
 export async function updateEmployeeProfiledata(
   data: IEmployeeUpdateProfile,

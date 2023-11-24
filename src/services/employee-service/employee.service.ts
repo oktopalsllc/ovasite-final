@@ -64,3 +64,46 @@ export async function userExists(inviteCode: string) {
   
   return true;
 }
+
+export async function getCurrentOrg(orgId: string) {
+  const org = await prisma.organization.findUnique({
+    where: {
+      id: orgId,
+    },
+    select: {
+      id: true,
+      name: true,
+    }
+  });
+  return org;
+}
+
+export async function currentEmployee(orgId: string, userId: string) {
+  const employee = await prisma.employee.findFirst({
+    where: {
+      userId: userId,
+      organizationId: orgId,
+    },
+    select: {
+      id: true,
+      fullName: true,
+      role: true,
+      avatar:true
+    }
+  });
+  return employee;
+}
+
+export async function getUserOrgs(userId:string){
+  const userOrgs = await prisma.organization.findMany({
+    where: {
+       employees: { some: { userId: userId } } ,
+    },
+    select: {
+      id: true,
+      name: true,
+      logo: true,
+    }
+  });
+  return userOrgs;
+}
