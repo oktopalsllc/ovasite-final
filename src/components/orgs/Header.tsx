@@ -11,7 +11,6 @@ import { RiArrowDropUpLine, RiArrowDropDownLine } from 'react-icons/ri';
 import { useParams } from 'next/navigation';
 import { getCurrentOrg, currentEmployee, getUserOrgs } from '@/services/employee-service/employee.service';
 import { ImSpinner2 } from 'react-icons/im';
-import BackBtn from "@/components/shared/BackBtn";
 
 function Header() {
   const params = useParams();
@@ -207,7 +206,6 @@ function Header() {
 
                 </Link>
                 }
-                <BackBtn />
             </>
             : <ImSpinner2 className='h-6 w-6 animate-spin' />
           }

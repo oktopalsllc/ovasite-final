@@ -156,7 +156,6 @@ function EmployeeProfle({
               Save
               {isLoading && <ImSpinner2 className="ml-4 animate-spin" />}
             </button>
-            <BackBtn/>
           </div>
         </form>
       </div>
