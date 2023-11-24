@@ -11,6 +11,7 @@ import { RiArrowDropUpLine, RiArrowDropDownLine } from 'react-icons/ri';
 import { useParams } from 'next/navigation';
 import { getCurrentOrg, currentEmployee, getUserOrgs } from '@/services/employee-service/employee.service';
 import { ImSpinner2 } from 'react-icons/im';
+import BackBtn from "@/components/shared/BackBtn";
 
 function Header() {
   const params = useParams();
@@ -204,7 +205,9 @@ function Header() {
                   className='inline-flex items-center justify-center h-6 w-6 font-medium tracking-wide text-white transition duration-200 rounded-full shadow-md   focus:shadow-outline focus:outline-none bg-[#ddd]'
                 >
 
-                </Link>}
+                </Link>
+                }
+                <BackBtn />
             </>
             : <ImSpinner2 className='h-6 w-6 animate-spin' />
           }

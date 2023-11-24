@@ -15,7 +15,7 @@ export default function Projects({ params }: { params: { orgId: string } }) {
         <Separator className='py-3' />
         <div className='flex items-center justify-between'>
           {/* ========================================== */}
-          <div className='flex items-center w-4/6 md:w-4/6 lg:w-4/6'>
+          {/* <div className='flex items-center w-4/6 md:w-4/6 lg:w-4/6'>
             <input
               type='search'
               className='w-full px-4 py-1 text-gray-80 rounded-lg focus:outline-none'
@@ -23,7 +23,8 @@ export default function Projects({ params }: { params: { orgId: string } }) {
             />
           </div>
           <CiMenuBurger className='text-xl text-gray-800' />
-          <FaBell className='text-xl text-gray-800' />
+          <FaBell className='text-xl text-gray-800' /> */}
+          <span className='text-xl font-extrabold leading-5'>Projects</span>
           {/* ========================================== */}
           <CreateProjectBtn orgId={orgId} />
         </div>

@@ -62,7 +62,7 @@ function ProjectCard2({ project }: { project: Project }) {
               {convertDate(project.createdAt)} - {project.expectedDuration}
             </p>{' '}
             <div className='relative'>
-              <div className={`${showDropdown ? 'block' : 'hidden'}`}>
+              {/* <div className={`${showDropdown ? 'block' : 'hidden'}`}>
                 <DropdownMenu project={project} />
               </div>
               <div
@@ -70,7 +70,7 @@ function ProjectCard2({ project }: { project: Project }) {
                 className='px-1 py-2 cursor-pointer rounded-md'
               >
                 <HiDotsVertical />
-              </div>
+              </div> */}
             </div>
             {/* ============================================= */}
           </div>

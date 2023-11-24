@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { getCurrentEmployee } from "@/services/employee-service/employee.service";
 import { toast } from "@/components/form/ui/use-toast";
 import { ImSpinner2 } from "react-icons/im";
+import BackBtn from "@/components/shared/BackBtn";
 
 const schema = yup.object({
   fullName: yup.string().required("Full Name name is required"),
@@ -52,7 +53,8 @@ function EmployeeProfle({
 
       if (response.success) {
         setIsLoading(false);
-        router.back();
+
+        window.location.reload();
       } else {
         const error = response.error;
         setIsLoading(false);
@@ -71,7 +73,10 @@ function EmployeeProfle({
       <div className="grid grid-cols-1 place-content-center mx-auto max-w-sm lg:w-96 h-screen">
 
         <form onSubmit={handleSubmit(onSubmit)} className="pt-6 bg-white p-6 rounded-md">
-          <h3 className="text-xl font-semibold mb-4">Update Profile</h3>
+          <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+            <h3 className="text-xl font-semibold mb-4">Update Profile</h3>
+            <BackBtn/>
+          </div>
           <div className="my-4">
             <label
               htmlFor="fullName"
@@ -151,6 +156,7 @@ function EmployeeProfle({
               Save
               {isLoading && <ImSpinner2 className="ml-4 animate-spin" />}
             </button>
+            <BackBtn/>
           </div>
         </form>
       </div>
