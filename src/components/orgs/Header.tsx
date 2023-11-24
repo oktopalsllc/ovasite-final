@@ -159,6 +159,7 @@ function Header() {
                       <Link
                         key={org.id}
                         href={`/orgs/${org.id}/projects`}
+                        replace={true}
                         className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                       >
                         <SiInkdrop className='mr-2 text-[#fff]' /> {org.name}
