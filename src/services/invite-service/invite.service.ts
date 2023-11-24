@@ -44,7 +44,7 @@ async function joinOrg(inviteCode: string, data: object) {
     console.log(err);
     return {
       success: false,
-      error: "Unable to update employee profile",
+      error: "Unable to complete action at this time.",
     };
   }
 }
