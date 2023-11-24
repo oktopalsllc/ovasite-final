@@ -9,7 +9,7 @@ export const inviteService = {
 
 async function sendInvite(orgId: string, data: object, token: string) {
   const response = await axios.post(
-    `${apiUrl}/orgs/${orgId}/generate-invite-link`,
+    `${apiUrl}/invites/${orgId}/generate-invite-link`,
     {
       ...data,
     },
@@ -28,7 +28,7 @@ async function sendInvite(orgId: string, data: object, token: string) {
 async function joinOrg(inviteCode: string, data: object) {
   try {
     const response = await axios.post(
-      `${apiUrl}/join/${inviteCode}`,
+      `${apiUrl}/invites/join/${inviteCode}`,
       {
         ...data,
       },
