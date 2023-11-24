@@ -1,3 +1,3 @@
-export async function Settings(){
+export async function Employees(){
     return <>damn</>
 }
