@@ -13,7 +13,7 @@ export default function Steps(){
         </div>
         <br />
         <div id="width">
-          <div className="mt-4 mb-2 md:text-3xl leading-[60px] font-bold">
+          <div className="text-xl mt-4 mb-2 md:text-3xl leading-[60px] font-bold">
             <p>How we carry out our operations</p>
           </div>
           <div>

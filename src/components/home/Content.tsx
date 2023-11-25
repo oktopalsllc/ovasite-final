@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export const Content = () => {
   return (
-    <div className="w-10/12 lg:w-9/12 lg:mt-[600px] mx-auto md:mt-[750px]">
+    <div className="w-10/12 lg:w-9/12 lg:mt-[500px] mt-[40px] mx-auto md:mt-[750px]">
       <div id="features">
         <div>
           <h1 id="topbtn">Features</h1>

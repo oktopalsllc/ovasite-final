@@ -11,8 +11,8 @@ export default function Hero() {
                 <div className="w-full h-full lg:mt-20 md:bg-[url('/hero-bg-r.svg')] bg-no-repeat bg-[length:60%_60%] md:bg-auto bg-right-bottom bg-none"></div>
             </div>
             <div className="px-10 top-0 left-0 absolute">
-                <div className="w-3/4 h-full mx-auto mt-2 pt-36">
-                    <div className="text-2xl leading-9 font-extrabold lg:text-[45px] lg:leading-[70px] lg:font-extrabold text-center">
+                <div className="w-3/4 h-full mx-auto mt-2 pt-20">
+                    <div className="text-2xl leading-9 pt-10 font-extrabold lg:text-[45px] lg:leading-[70px] lg:font-extrabold text-center">
                         <h1>Your all-in-one platform for data</h1>
                         <h1>
                             <span className="text-[#FF595A]">collection, </span>
@@ -28,7 +28,7 @@ export default function Hero() {
                             progress.
                         </p>
                     </div>
-                    <div className="text-center text-white lg:mt-8 mt-4 flex justify-center pb-2 lg:pb-0 gap-4">
+                    <div className="text-center text-white mt-4 flex justify-center pb-2 lg:pb-0 gap-4">
                         <Link
                             href="/signup"
                             className="items-center bg-[#FF595A] border-0 py-2 px-10 lg:px-6 focus:outline-none hover:bg-[#fe5000] rounded font-bold text-white text-sm text-center"
