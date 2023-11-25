@@ -209,7 +209,7 @@ export default function ProjectEmployee({ id, orgId }: { id: string, orgId: stri
             return (
                 <div className="w-full flex mt-14 justify-center mb-20">
                     <div className="container overflow-x-auto w-3/4 ">
-                        <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+                        <div className="flex lg:flex-row flex-col md:flex-row gap-4 justify-between container">
                             <h4 className='text-lg font-bold col-span-2'>
                                 Attached Employees
                             </h4>

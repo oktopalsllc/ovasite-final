@@ -107,7 +107,7 @@ export default function Project({
           <h3 className='text-xl font-bold col-span-2'>
           </h3>
           <Separator className='my-3' />
-          <div className='flex flex-row'>{ActiveItem()}</div>
+          <div className='flex flex-row mb-10'>{ActiveItem()}</div>
         </div>
       ) : (
         <div className='flex pt-14 justify-center'>

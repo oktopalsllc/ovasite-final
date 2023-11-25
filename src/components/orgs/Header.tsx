@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
@@ -19,7 +20,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const user = typeof window !== 'undefined' ? localStorage.getItem('userInfo') : "";
-  const userInfo = JSON.parse(user as string);
+  const userInfo = user ? JSON.parse(user) : null; 
   const userId = userInfo?.id as string;
   const [org, setOrg] = useState<any>({});
   const [userOrgs, setUserOrgs] = useState<any>([]);
