@@ -15,7 +15,6 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-    DialogDescription
 } from "../form/ui/dialog";
 import {
     Form,
@@ -25,7 +24,6 @@ import {
     FormLabel,
     FormMessage
 } from "../form/ui/form";
-import { Input } from "../form/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/form/ui/table";
 import { Badge } from "@/components/form/ui/badge";
 import { Separator } from "../form/ui/separator";
@@ -49,9 +47,7 @@ import {
     SelectValue,
     SelectTrigger,
     SelectContent,
-    SelectLabel,
     SelectItem,
-    SelectSeparator
 } from "../form/ui/select";
 
 interface employeeField {
@@ -385,7 +381,7 @@ export default function ProjectEmployee({ id, orgId }: { id: string, orgId: stri
                                             </Badge>
                                             <AlertDialog>
                                                 <AlertDialogTrigger asChild>
-                                                    <Badge title="Update Role" variant={"outline"}>
+                                                    <Badge title="Remove Employee" variant={"outline"}>
                                                         <FaTrash className="text-peach_primary bg-white rounded-md hover:cursor-pointer w-10 h-4" />
                                                     </Badge>
                                                 </AlertDialogTrigger>

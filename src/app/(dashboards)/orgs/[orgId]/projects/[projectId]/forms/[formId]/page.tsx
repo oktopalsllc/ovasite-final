@@ -114,7 +114,7 @@ async function SubmissionsTable({ id }: { id: string }) {
 
 
   return (
-    <div>
+    <div className="mb-10">
       <div className="flex lg:flex-row md:flex-row gap-4 flex-col justify-between my-4 container">
         <h1 className="text-2xl font-bold col-span-2">
           Submissions
@@ -122,7 +122,7 @@ async function SubmissionsTable({ id }: { id: string }) {
         {form.submissions.length > 0 && <DownloadButton id={id} />}
       </div>
       <div className="rounded-md border">
-        <Table className="bg-white mb-10">
+        <Table className="bg-white">
           <TableHeader>
             <TableRow>
               <TableHead className="uppercase">

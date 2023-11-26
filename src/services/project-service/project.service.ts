@@ -1,19 +1,19 @@
 import axios from "axios";
-import { 
-  projectSchema, 
+import {
+  projectSchema,
   projectUpdate,
   projectStatus,
   projectSchemaType,
-  projectUpdateType, 
+  projectUpdateType,
   projectStatusType,
 } from "@/schemas/project";
 
 import axiosInstance from "@/lib/axios";
-import { 
+import {
   projectEmpType,
   projectRole,
-  projectRoleType, }
-   from "@/schemas/projectEmp";
+  projectRoleType,
+} from "@/schemas/projectEmp";
 
 const apiUrl = process.env.API_URL;
 
@@ -44,21 +44,26 @@ function toISODate(date: Date): string {
 }
 
 // Create a new project
-async function createProject(orgId: string, data: projectSchemaType, token: string) {
+async function createProject(
+  orgId: string,
+  data: projectSchemaType,
+  token: string
+) {
   const validation = projectSchema.safeParse(data);
   if (!validation.success) {
     throw new Error("Project not valid");
   }
-  const {name, description, expectedDuration, status, startDate, endDate} = data;
+  const { name, description, expectedDuration, status, startDate, endDate } =
+    data;
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/project/create`,
     {
-      name, 
-      description, 
-      expectedDuration, 
-      status, 
-      startDate: toISODateString(startDate), 
-      endDate: toISODate(endDate)
+      name,
+      description,
+      expectedDuration,
+      status,
+      startDate: toISODateString(startDate),
+      endDate: toISODate(endDate),
     },
     {
       withCredentials: true,
@@ -77,14 +82,14 @@ async function addProjectEmp(
   orgId: string,
   projectId: string,
   data: projectEmpType,
-  token:string
+  token: string
 ) {
-  const {employeeId, role} = data;
+  const { employeeId, role } = data;
   const response = await axios.post(
     `${apiUrl}/orgs/${orgId}/project/adduser/${projectId}`,
     {
       employeeId,
-      role
+      role,
     },
     {
       withCredentials: true,
@@ -115,7 +120,11 @@ async function getProject(orgId: string, projectId: string, token: string) {
 }
 
 // Get a project stats
-async function getProjectStats(orgId: string, projectId: string, token: string){
+async function getProjectStats(
+  orgId: string,
+  projectId: string,
+  token: string
+) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/project/stats/${projectId}`,
     {
@@ -149,7 +158,11 @@ async function getProjects(orgId: string, token: string) {
 }
 
 // Get associated project employees
-async function getOrgEmployees(orgId: string, projectId: string, token: string) {
+async function getOrgEmployees(
+  orgId: string,
+  projectId: string,
+  token: string
+) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/projectemployees/${projectId}`,
     {
@@ -162,7 +175,6 @@ async function getOrgEmployees(orgId: string, projectId: string, token: string) 
     }
   );
   return response.data;
-  
 }
 
 // Get associated employees
@@ -208,15 +220,15 @@ async function updateProject(
   if (!validation.success) {
     throw new Error("Project not valid");
   }
-  const {name, description, expectedDuration, startDate} = data;
+  const { name, description, expectedDuration, startDate } = data;
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/project/update/${projectId}`,
     {
-      name, 
-      description, 
-      expectedDuration, 
-      startDate: toISODateString(startDate), 
-      endDate: toISODate(new Date())
+      name,
+      description,
+      expectedDuration,
+      startDate: toISODateString(startDate),
+      endDate: toISODate(new Date()),
     },
     {
       withCredentials: true,
@@ -241,12 +253,12 @@ async function updateStatus(
   if (!validation.success) {
     throw new Error("Project not valid");
   }
-  const {status} = data;
+  const { status } = data;
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/project/status/${projectId}`,
     {
       status,
-      endDate: toISODate(new Date())
+      endDate: toISODate(new Date()),
     },
     {
       withCredentials: true,
@@ -264,13 +276,13 @@ async function updateStatus(
 async function editEmpRole(
   orgId: string,
   projectId: string,
-  data: object, 
+  data: object,
   token: string
 ) {
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}/updateprojectrole/${projectId}`,
     {
-      ...data
+      ...data,
     },
     {
       withCredentials: true,
@@ -326,7 +338,7 @@ async function exportProject(orgId: string, projectId: string, token: string) {
   const response = await axios.get(
     `${apiUrl}/orgs/${orgId}/project/export/${projectId}`,
     {
-      responseType: 'blob', // important to handle the file stream
+      responseType: "blob", // important to handle the file stream
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -336,4 +348,3 @@ async function exportProject(orgId: string, projectId: string, token: string) {
   );
   return response.data;
 }
-

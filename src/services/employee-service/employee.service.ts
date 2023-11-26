@@ -107,3 +107,89 @@ export async function getUserOrgs(userId:string){
   });
   return userOrgs;
 }
+
+export async function getEmployees(orgId:string){
+  const employees = await prisma.employee.findMany({
+    where: {
+      organizationId: orgId,
+    },
+    select: {
+      id: true,
+      fullName: true,
+      email: true,
+      role: true,
+      avatar:true,
+      contactNumber: true,
+      address: true,
+      createdAt: true,
+      updatedAt: true
+    },
+    orderBy: {
+      createdAt: "desc",
+    }
+  });
+  return employees;
+}
+
+export async function changeRole(orgId: string, data: object, token: string) {
+  const response = await axios.patch(`${apiUrl}/orgs/${orgId}/employees/change-role`, 
+    {
+      ...data
+    },
+    {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.data;
+}
+
+export async function deleteEmployee(orgId: string, employeeId: string, token: string) {
+  const response = await axios.delete(`${apiUrl}/orgs/${orgId}/employees/${employeeId}`, 
+    {
+      withCredentials: true,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+  return response.data;
+}
+
+
+export async function getOrgInvites(orgId: string){
+  const invites = await prisma.invite.findMany({
+    where: {
+      organizationId: orgId
+    },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      expirationDate: true,
+      createdAt: true
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+  return invites;
+}
+
+export async function deleteInvite(inviteId: string){
+  const invite = await prisma.invite.delete({
+    where: {
+      id: inviteId
+    }
+  });
+  if(invite) {
+    return true;
+  }
+  return false;
+}

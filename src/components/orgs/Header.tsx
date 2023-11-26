@@ -113,14 +113,14 @@ function Header() {
                   <>
                     {loadUser ?
                       <>
-                        {/* {emp.role === 'ADMIN' || emp.role === 'OWNER' &&
-                          <> */}
-                            {/* <Link
+                        {emp.role === 'ADMIN' || emp.role === 'OWNER' &&
+                          <>
+                            <Link
                               href={`/orgs/${id}`}
                               className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
                             >
                               <FaCog className='mr-2 text-[#001333]' />Organization Settings
-                            </Link> */}
+                            </Link>
                             {/* <Link
                                 href={`/orgs/${id}`}
                                 className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'
@@ -133,8 +133,8 @@ function Header() {
                               >
                                 <FaUsers className='mr-2 text-[#001333]' /> Manage Users
                               </Link> */}
-                          {/* </>
-                        } */}
+                          </>
+                        }
                         <Link
                           href={`/orgs/${id}/employees/${emp.id}`}
                           className='flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100'

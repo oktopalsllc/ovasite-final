@@ -1,13 +1,18 @@
+import prisma from "@/lib/prisma";
 import axios from "axios";
+import {
+  inviteSchema,
+  inviteSchemaType,
+} from "@/schemas/employee";
 
 const apiUrl = process.env.API_URL;
 
 export const inviteService = {
   sendInvite,
-  joinOrg,
+  joinOrg
 };
 
-async function sendInvite(orgId: string, data: object, token: string) {
+async function sendInvite(orgId: string, data: inviteSchemaType, token: string) {
   const response = await axios.post(
     `${apiUrl}/invites/${orgId}/generate-invite-link`,
     {

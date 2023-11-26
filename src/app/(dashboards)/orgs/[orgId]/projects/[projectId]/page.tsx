@@ -79,9 +79,15 @@ export default function Project({
         <div className='container w-full justify-center pt-4'>
           <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
             <h2 className='text-2xl font-bold col-span-2'>
-              Project: {project?.name}              
+              Project           
             </h2>
             <BackBtn />
+          </div>
+          <Separator className='my-3' />
+          <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+            <h2 className='text-xl font-bold col-span-2'>
+              {project?.name}              
+            </h2>
           </div>
           <Separator className='my-3' />
           <div className='container flex align-middle overflow-x-auto'>
