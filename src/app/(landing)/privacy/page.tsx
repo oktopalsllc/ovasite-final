@@ -1,10 +1,9 @@
 "use client";
-// import "../styles/privacy.css";
 import Link from "next/link";
 
 export default function PrivacyPolicy() {
   return (
-    <main className="px-10 pb-10 mt-10 w-[90%] mx-auto border border-[#ddd]">
+    <main className="px-10 pb-10 pt-10 mb-10 w-[90%] mx-auto border border-[#ddd]">
       {/* header */}
       <div className="">
         <h1 className="py-16 text-2xl w-full text-center">
@@ -32,7 +31,7 @@ export default function PrivacyPolicy() {
       {/* table of contents */}
       <div>
         <h1 className=" font-bold mt-10 mb-2">Table of Contents</h1>
-        <ul className="underline text-blue-500 ">
+        <ul className="underline text-blue-500 ml-8 ">
           <li>
             <Link href="#type_of_data" className="decoration-blue-700">
               What type of data do we control and process?
@@ -96,7 +95,7 @@ export default function PrivacyPolicy() {
       <div id="data_use">
         <h3 className="font-bold mt-6 mb-2">How do we use your data?</h3>
         <p className=" text-gray-700 font-bold">Ovasite is:</p>
-        <ul>
+        <ul className="ml-8 mb-3">
           <li>
             <p>
               A data controller of very limited data about site visitors and
@@ -138,7 +137,7 @@ export default function PrivacyPolicy() {
           This data privacy policy distinguishes between data that is controlled
           by Ovasite and data that is processed by Ovasite.
         </p>
-        <ul>
+        <ul className="ml-8 mb-3">
           <li className="">
             <p>
               <h4 className="my-2 text-gray-700 font-bold">
@@ -208,7 +207,7 @@ export default function PrivacyPolicy() {
           and services (&quot;Services&quot;).
         </p>
 
-        <ul>
+        <ul className="ml-8 mb-3">
           <li>
             If you&#39;re using our Services for an organization, you&#39;re
             agreeing to this Privacy Policy on behalf of that organization.
@@ -422,7 +421,7 @@ export default function PrivacyPolicy() {
           collected, used, and shared. You have the rights to:
         </p>
 
-        <ul className="">
+        <ul className="ml-8 mb-3">
           <li>Know more about our privacy practices.</li>
           <li>Object to our privacy practices or provide feedback.</li>
           <li>Rectify your personal information.</li>

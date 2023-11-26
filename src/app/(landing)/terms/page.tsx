@@ -1,12 +1,11 @@
 "use client";
-// import '../styles/privacy.css'
 import Link from "next/link";
 
 export default function Terms() {
   return (
-    <main className="px-10 pb-10 mt-10 w-[90%] mx-auto border border-[#ddd]">
+    <main className="px-10 pb-10 pt-10 mb-10 w-[90%] mx-auto border border-[#ddd]">
       <div>
-        <h1 className="py-16 text-2xl w-full text-center">Terms of Service</h1>
+        <h1 className="py-16 text-2xl w-full text-center">Terms of Use and Service</h1>
         <div className="w-[80%] h-[1px] bg-[#ddd] mx-auto "></div>
 
         <p className="italic mt-12 mb-3">Updated November 15, 2023</p>
@@ -26,9 +25,9 @@ export default function Terms() {
           </span>
         </p>
 
-        <ul className="c18 lst-kix_mm9osrrygxlg-0 start">
-          <li className="c12 li-bullet-0">
-            <span className="c5">
+        <ul className="ml-8 mb-3">
+          <li>
+            <span>
               If you are using our Services on behalf of a third party, you
               hereby agree to these Terms on such third party&#39;s behalf, and
               you hereby confirm that you have authority to bind such third
@@ -37,8 +36,8 @@ export default function Terms() {
           </li>
         </ul>
 
-        <p className="c25">
-          <span className="c5">
+        <p>
+          <span>
             IF YOU DO NOT AGREE TO BE BOUND TO THESE TERMS AND THE OTHER
             POLICIES, AGREEMENTS AND DOCUMENTS REFERENCED HEREIN, YOU SHOULD NOT
             USE OUR SERVICES.
@@ -49,7 +48,7 @@ export default function Terms() {
       {/* table of contents */}
       <div>
         <h1 className=" font-bold mt-10 mb-2">Table of Contents</h1>
-        <ul className="underline text-blue-500 ">
+        <ul className="underline text-blue-500 ml-8 mb-3">
           <li>
             <Link href="#your_data">Your Data</Link>
           </li>
@@ -297,46 +296,46 @@ export default function Terms() {
             following:
           </span>
         </p>
-        <ul className="c18 lst-kix_kxwcxflbh5b8-0 start">
-          <li className="c12 li-bullet-0">
-            <span className="c5">Your physical or electronic signature.</span>
+        <ul className="ml-8 mb-3">
+          <li >
+            <span >Your physical or electronic signature.</span>
           </li>
-          <li className="c12 li-bullet-0">
-            <span className="c5">
+          <li >
+            <span >
               Identification of the copyrighted work you believe to have been
               infringed or, if the claim involves multiple works on the
               Services, a representative list of such works.
             </span>
           </li>
-          <li className="c12 li-bullet-0">
-            <span className="c5">
+          <li >
+            <span >
               Adequate information by which we can contact you (including your
               name, postal address, telephone number, and, if available, email
               address).
             </span>
           </li>
-          <li className="c12 li-bullet-0">
-            <span className="c5">
+          <li >
+            <span >
               A statement that you have a good faith belief that use of the
               copyrighted material is not authorized by the copyright owner, its
               agent, or the law.
             </span>
           </li>
-          <li className="c12 li-bullet-0">
-            <span className="c5">
+          <li >
+            <span >
               A statement that the information in the written notice is
               accurate.
             </span>
           </li>
-          <li className="c12 li-bullet-0">
-            <span className="c5">
+          <li >
+            <span >
               A statement, under penalty of perjury, that you are authorized to
               act on behalf of the copyright owner.
             </span>
           </li>
         </ul>
-        <p className="c14">
-          <span className="c5">
+        <p >
+          <span>
             Our designated copyright agent to receive DMCA Notices is:
             <br />
             <br />
@@ -346,8 +345,8 @@ export default function Terms() {
             <br />
           </span>
         </p>
-        <p className="c25">
-          <span className="c5">
+        <p >
+          <span >
             If you fail to comply with all of the requirements of Section
             512(c)(3) of the DMCA, your DMCA Notice may not be effective. Please
             be aware that if you knowingly materially misrepresent that material
@@ -361,21 +360,21 @@ export default function Terms() {
       {/* billing */}
       <div id="billing">
         <h3 className="font-bold mt-6 mb-2">Billing</h3>
-        <p className="c14">
-          <span className="c5">
+        <p >
+          <span >
             Subscription: Ovasite Services come in several Subscriptions. The
             cost and details of these Subscriptions can be found on
             Ovasite&#39;s home page.
           </span>
         </p>
-        <p className="c14">
-          <span className="c5">
+        <p >
+          <span >
             Subscription Term: You access our Services on a periodic basis,
             called a Subscription Term.
           </span>
         </p>
-        <p className="c14">
-          <span className="c5">
+        <p >
+          <span >
             Recurring Billing: By starting your Subscription Term, you authorize
             us to charge a periodic fee at the then-current rate, and any other
             charges you incure in connection with your use of the Services. The
@@ -386,8 +385,8 @@ export default function Terms() {
             Subscription length.
           </span>
         </p>
-        <p className="c14">
-          <span className="c5">
+        <p >
+          <span >
             Cancellation: You may cancel a Subscription anytime. Upon canceling
             the Subscription, you will immediately lose access to your Ovasite
             account, including access to forms, submissions, and other data. You
@@ -395,8 +394,8 @@ export default function Terms() {
             which we have provided our product and/or services.
           </span>
         </p>
-        <p className="c14">
-          <span className="c5">
+        <p >
+          <span >
             Refunds: If you cancel within 14 days of a payment, you may request
             a refund of that payment. After 14 days, payments are
             non-refundable.
@@ -776,7 +775,7 @@ export default function Terms() {
             client software and websites (&quot;Services&quot;).
           </span>
         </p>
-        <ul className="c18 lst-kix_orahujbxz1mm-0 start">
+        <ul className="ml-8 mb-3">
           <li className="c12 li-bullet-0">
             <span className="c5">
               If Customer is using Ovasite&#39;s Services on behalf of a third
