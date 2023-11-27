@@ -21,10 +21,10 @@ function FormPreviewShare({ form }: { form: Form }) {
   const shareLink = `${window.location.origin}/orgs/${form.organizationId}/projects/${form.projectId}/forms/preview/${form.id}`;
   
   return (
-    <div className="flex flex-grow gap-4 items-center">
+    <div className="flex w-full lg:flex-row flex-col flex-grow gap-4 items-center">
       <Input className="bg-white" value={shareLink} readOnly />
       <Button
-        className="w-[250px] text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
+        className="lg:w-[250px] w-full text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
         onClick={() => {
           navigator.clipboard.writeText(shareLink);
           toast({
@@ -34,7 +34,7 @@ function FormPreviewShare({ form }: { form: Form }) {
         }}
       >
         <ImShare className="mr-2 h-4 w-4" />
-        Preview link
+        Share preview
       </Button>
     </div>
   );

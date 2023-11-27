@@ -212,7 +212,7 @@ export default function UpdateProject({ id, orgId }: { id: string; orgId: string
                                         <DialogTrigger asChild>
                                             <Button
                                                 variant={"outline"}
-                                                className="border border-primary/20 lg:w-[200px] w-full bg-green-500 text-white items-center hover:bg-green-400 hover:cursor-pointer hover:border-dashed"
+                                                className="border border-primary/20 lg:w-[200px] w-full bg-[#001333] text-white items-center hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
                                             >
                                                 Update
                                             </Button>
@@ -346,6 +346,7 @@ export default function UpdateProject({ id, orgId }: { id: string; orgId: string
                                             </DialogFooter>
                                         </DialogContent>
                                     </Dialog>
+                                    <DownloadBtn id={id} orgId={orgId} />
                                     <DeleteBtn id={id} orgId={orgId} />
                                 </div>
                             )}

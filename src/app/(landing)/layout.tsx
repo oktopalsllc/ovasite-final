@@ -1,16 +1,19 @@
 
-import Header from '@/components/landing/header';
-import Footer from '@/components/landing/footer';
+// import Footer from '@/components/landing/Footer';
+import Footer from '@/components/orgs/Footer';
+import ScrollToTop from '@/components/landing/ScrollToTop';
+import Navbar from '@/components/landing/Navbar';
 export default function LandingLayout({
-  children, 
+  children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <section> 
-      <Header/>
+    <section>
+      <Navbar />
       {children}
-      <Footer/>
+      <ScrollToTop />
+      <Footer />
     </section>
   )
 }

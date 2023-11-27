@@ -70,6 +70,7 @@ interface projectStats {
     reports: number,
     forms: number
 }
+
 interface StatsCardProps {
     data?: Awaited<projectStats>;
     loading: boolean;

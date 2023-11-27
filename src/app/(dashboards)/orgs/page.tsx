@@ -28,7 +28,6 @@ export default function Orgs() {
                         const employeeId = await getCurrentEmployee(orgsId, userId);
                         localStorage.setItem("employeeId", employeeId as string);
                         router.push(`/orgs/${orgId}/projects`);
-                        setLoaded(true);
                     }
                     else {
                         setLoaded(false);

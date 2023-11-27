@@ -82,9 +82,23 @@ export async function GetForms(projectId: string) {
     where: {
       projectId,
     },
+    include: {
+      project: true,
+    },
     orderBy: {
       createdAt: "desc",
     },
+  });
+}
+
+export async function GetFormProject(projectId: string){
+  return await prisma.project.findUnique({
+    where:{
+      id: projectId
+    },
+    select:{
+      isCompleted: true
+    }
   });
 }
 

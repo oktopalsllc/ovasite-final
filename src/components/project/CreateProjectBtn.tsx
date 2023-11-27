@@ -73,10 +73,10 @@ function CreateProjectBtn({ orgId }: { orgId: string }) {
       <DialogTrigger asChild>
         <Button
           variant={'outline'}
-          className='group border shadow-lg border-primary/20 h-[40px] w-auto bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-2'
+          className='group border shadow-lg border-primary/20 p-4 bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-2'
         >
           <BsFileEarmarkPlus className='h-5 w-5 text-muted-foreground group-hover:text-primary' />
-          <p className='font-bold text-xs text-muted-foreground group-hover:text-primary hidden sm:block'>
+          <p className='font-bold text-xs text-muted-foreground group-hover:text-primary hidden md:block'>
             New project
           </p>
         </Button>

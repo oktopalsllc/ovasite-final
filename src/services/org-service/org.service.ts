@@ -75,11 +75,11 @@ export async function getOrgOwners(token: string) {
 }
 
 // Update organization
-export async function updateOrg(orgId: string, data: string, token: string) {
+export async function updateOrg(orgId: string, data: object, token: string) {
   const response = await axios.patch(
     `${apiUrl}/orgs/${orgId}`,
     {
-      data,
+      ...data,
     },
     {
       withCredentials: true,
@@ -135,13 +135,10 @@ export async function getUserOrgs(): Promise<UserOrgsResponse> {
   } catch (err) {
     return {
       success: false,
-      error: "Unable to get uer orgs",
+      error: "Unable to get user orgs",
     };
   }
 }
-
-
-
 
 export async function updateEmployeeProfiledata(
   data: IEmployeeUpdateProfile,

@@ -43,7 +43,7 @@ async function FormDetailPage({
   }
 
   return (
-    <div className="h-[100vh] overflow-y-auto ml-10 scroll-smooth scrollbar-thin">
+    <div className=" px-2">
       <div className="py-10 border-b border-muted">
         <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
           <h1 className="text-2xl font-bold col-span-2">Form</h1>
@@ -57,20 +57,17 @@ async function FormDetailPage({
       </div>
       {!form.closed &&
         <div className="px-2 py-4 border-b border-muted">
-          <div className="container flex gap-2 items-center justify-between">
+          <div className="container flex lg:flex-row md:flex-row flex-col gap-2 items-center justify-between">
             <FormLinkShare shareUrl={form.id} />
-
-            <div className="flex lg:flex-row md:flex-row flex-col gap-2">
               <VisitBtn shareUrl={form.id} />
               <CloseFormBtn form={form} />
               <DeleteBtn form={form} />
-            </div>
           </div>
           <Separator className="my-3" />
         </div>
       }      
       <div className="px-2 py-4 border-b border-muted">
-        <div className="container flex gap-2 items-center justify-between">
+        <div className="container flex lg:flex-row flex-col gap-2 items-center justify-between">
           <FormPreviewShare form={form} />
           <PreviewBtn form={form}/>
           {form.closed &&
@@ -117,7 +114,7 @@ async function SubmissionsTable({ id }: { id: string }) {
 
 
   return (
-    <div>
+    <div className="mb-10">
       <div className="flex lg:flex-row md:flex-row gap-4 flex-col justify-between my-4 container">
         <h1 className="text-2xl font-bold col-span-2">
           Submissions
@@ -125,7 +122,7 @@ async function SubmissionsTable({ id }: { id: string }) {
         {form.submissions.length > 0 && <DownloadButton id={id} />}
       </div>
       <div className="rounded-md border">
-        <Table className="bg-white mb-10">
+        <Table className="bg-white">
           <TableHeader>
             <TableRow>
               <TableHead className="uppercase">

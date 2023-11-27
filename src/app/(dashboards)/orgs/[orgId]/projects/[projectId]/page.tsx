@@ -76,12 +76,18 @@ export default function Project({
   return (
     <>
       {loaded ? (
-        <div className='container overflow-y-auto h-[100vh] pt-4'>
+        <div className='container w-full justify-center pt-4'>
           <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
             <h2 className='text-2xl font-bold col-span-2'>
-              Project: {project?.name}
+              Project           
             </h2>
             <BackBtn />
+          </div>
+          <Separator className='my-3' />
+          <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+            <h2 className='text-xl font-bold col-span-2'>
+              {project?.name}              
+            </h2>
           </div>
           <Separator className='my-3' />
           <div className='container flex align-middle overflow-x-auto'>
@@ -107,10 +113,10 @@ export default function Project({
           <h3 className='text-xl font-bold col-span-2'>
           </h3>
           <Separator className='my-3' />
-          <div className='flex flex-row'>{ActiveItem()}</div>
+          <div className='flex flex-row mb-10'>{ActiveItem()}</div>
         </div>
       ) : (
-        <div className='flex mt-14 justify-center'>
+        <div className='flex pt-14 justify-center'>
           <ImSpinner2 className='animate-spin h-12 w-12' />
         </div>
       )}

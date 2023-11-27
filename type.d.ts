@@ -223,12 +223,15 @@ type Audit = {
   rowId: string;
 };
 
-//    {
-//     EmployeeRole,
-//     UserRole,
-//     Source,
-//     ProjectRole
-//   };
+type Feedback = {
+  id: string;
+  name: string;
+  email: string;
+  rating? : string;
+  title: string;
+  comment: string;
+  createdAt: Date;
+}
 
 // ========================== RESPONSES ========================
 

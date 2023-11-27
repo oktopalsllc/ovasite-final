@@ -223,6 +223,16 @@ model Audit {
   rowId     String
 }
 
+model Feedback {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  rating    String?
+  title     String
+  comment   String
+  createdAt DateTime @default(now())
+}
+
 enum EmployeeRole {
   OWNER
   ADMIN

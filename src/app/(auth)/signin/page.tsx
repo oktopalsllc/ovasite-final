@@ -190,7 +190,7 @@ const Page = () => {
 
                       <div className='text-sm leading-6 mb-5'>
                         <Link
-                          href='/ForgotPassword'
+                          href='/forgot-password'
                           className='font-semibold text-[#001233] hover:text-[#FF595A]'
                         >
                           Forgot password?
@@ -201,7 +201,7 @@ const Page = () => {
                     <div>
                       <button
                         type='submit'
-                        className='flex items-center w-full justify-center rounded-md bg-[#001333] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#FF595A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]'
+                        className='flex items-center w-full justify-center rounded-md bg-[#FF595A] px-3 py-1.5 text-sm font-bold leading-6 text-[white] shadow-sm hover:bg-[#fe5000] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#001233]'
                       >
                         {isLoading ? (
                           <>

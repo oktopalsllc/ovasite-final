@@ -184,7 +184,7 @@ export default function Report({ params }: { params: { id: string } }) {
     };
 
     return (
-        <div className="h-[100vh] w-3/4 overflow-y-auto px-10 mb-10">
+        <div className="w-full px-10 pb-10">
             {loaded ? <>
                 <div className="py-10 border-b border-muted">
                     <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">

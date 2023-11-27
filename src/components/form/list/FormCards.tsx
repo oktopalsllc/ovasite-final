@@ -1,5 +1,5 @@
 import {
-  // GetFormStats,
+  GetFormProject,
   GetForms,
 } from '@/actions/form';
 import { Suspense, useEffect, useState } from 'react';
@@ -10,15 +10,21 @@ import CreateFormBtn from '../CreateFormBtn';
 import { Skeleton } from '../ui/skeleton';
 import FormCard from './FormCard';
 
+
 function FormCards({ projectId }: { projectId: string }) {
   const [forms, setForms] = useState<Form[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [project, setProject] = useState({} as any);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const fetchedForms = await GetForms(projectId);
-        setForms(fetchedForms);
-        setLoaded(true);
+        const fetchedProject = await GetFormProject(projectId);
+        if(fetchedForms && fetchedProject) {
+          setProject(fetchedProject);
+          setForms(fetchedForms);
+          setLoaded(true);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -34,7 +40,7 @@ function FormCards({ projectId }: { projectId: string }) {
             <h2 className='text-xl font-bold col-span-2'>
               Forms
             </h2>
-            <CreateFormBtn />
+            {!project.isCompleted && <CreateFormBtn />}
           </div>
           <Separator className='my-6' />
           {forms.length > 0 ? (
@@ -50,11 +56,9 @@ function FormCards({ projectId }: { projectId: string }) {
               </Suspense>
             </div>
           ) : (
-            <div className='grid grid-cols-1 items-center justify-center text-center md:grid-cols-2 lg:grid-cols-3 gap-6'>
-              <h4 className='mt-14 text-md font-bold col-span-2'>
-                No forms yet
-              </h4>
-            </div>
+            <h4 className='mt-14 text-md font-bold col-span-2'>
+              No forms yet
+            </h4>
           )}
         </div>
       ) : (
