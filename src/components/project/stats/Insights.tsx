@@ -186,7 +186,7 @@ function Chat({ projectId }: { projectId: string }) {
     return (
         <>
             {loaded ?
-                <div className="flex flex-col py-4">
+                <div className="flex flex-col py-4 hidden">
                     <h2 className="text-lg font-bold">Chat with AI about your form submissions</h2>
                     <div className='mb-10'>
                         <p className='text-md font-bold mt-5'> Select a form</p>
@@ -247,7 +247,7 @@ function Chat({ projectId }: { projectId: string }) {
                     </>
                 </div>
                 :
-                <div className="w-full flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
+                <div className="w-full flex mt-14 justify-center hidden"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }
         </>
     );
