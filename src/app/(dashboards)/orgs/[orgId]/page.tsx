@@ -86,11 +86,11 @@ export default function OrgPage({ params }: { params: { orgId: string } }) {
       <div className='flex flex-col w-full h-[100vh] lg:flex-row'>
         <div className='lg:w-1/6 w-full lg:bg-gray-200 py-8 lg:pl-8 pr-0'>
           {loadUser ?
-            <ul className='lg:pt-8 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-hidden'>
+            <ul className='lg:pt-8 flex flex-row gap-1 lg:gap-0 lg:flex-col overflow-x-auto lg:overflow-x-hidden'>
               {tabs.map((tab) => (
                 <li
                   key={tab}
-                  className={`p-2 pb-2 cursor-pointer hover:cursor-pointer hover:bg-gray-400 lg:py-2 lg:my-2 ${activeTab === tab
+                  className={`p-2 pb-2 cursor-pointer hover:cursor-pointer hover:bg-gray-400 hover:lg:rounded-l-lg mb-4 lg:my-2 ${activeTab === tab
                     ? 'bg-[#001333] text-center lg:rounded-l-lg text-white lg:text-lg lg:pl-12 lg:pr-6 lg:py-4 mb-4 lg:mb-0'
                     : ''
                     }`}
