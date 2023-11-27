@@ -84,10 +84,7 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center gap-2">
                     <span className="text-gray-800">Crafted by&nbsp;</span>
-                    <Link href="https://oktopals.com" target='_blank' aria-label="Oktopals Link" className='text-[#FF595A] hover:text-[#fe5000] title-font font-bold text-xl'>
-
-                        Oktopals
-                    </Link>
+                    Geniuses
                 </div>
             </div>
         </footer>
