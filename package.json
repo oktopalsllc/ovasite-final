@@ -63,6 +63,7 @@
     "clsx": "2.0.0",
     "cmdk": "0.2.0",
     "country-state-city": "^3.2.0",
+    "csv-parser": "^3.0.0",
     "d3-dsv": "^2.0.0",
     "date-fns": "^2.30.0",
     "debug": "^4.3.4",

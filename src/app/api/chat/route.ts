@@ -23,6 +23,7 @@ import { PromptTemplate } from "langchain/prompts";
 import { HumanMessage } from "langchain/schema";
 import { BytesOutputParser } from "langchain/schema/output_parser";
 import { formatDocumentsAsString } from "@/utils/documentHelpers";
+import fs from "fs";
 
 config();
 
@@ -39,6 +40,17 @@ CHAT HISTORY: {chat_history}
 User: {input}
 ----------
 AI:`;
+
+// 8. Define a function to normalize the content of the documents
+function normalizeDocuments(docs: any) {
+  return docs.map((doc: any) => {
+    if (typeof doc.pageContent === "string") {
+      return doc.pageContent;
+    } else if (Array.isArray(doc.pageContent)) {
+      return doc.pageContent.join("\n");
+    }
+  });
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -77,14 +89,40 @@ export async function POST(req: NextRequest) {
 
   const splitDocs = await textSplitter.createDocuments(csvContent);
 
-  const vectorStore = await HNSWLib.fromDocuments(
-    splitDocs,
-    new OpenAIEmbeddings()
-  );
-  const retriever = vectorStore.asRetriever();
+  const VECTOR_STORE_PATH = "Documents.index";
+  let vectorStore;
+
+  // 13. Check if an existing vector store is available
+  console.log("Checking for existing vector store...");
+  if (fs.existsSync(VECTOR_STORE_PATH)) {
+    // 14. Load the existing vector store
+    console.log("Loading existing vector store...");
+    vectorStore = await HNSWLib.load(
+      VECTOR_STORE_PATH,
+      new OpenAIEmbeddings()
+    );
+    console.log("Vector store loaded.");
+  } else {
+    // 15. Create a new vector store if one does not exist
+    console.log("Creating new vector store...");
+    const textSplitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 1000,
+    });
+    const normalizedDocs = normalizeDocuments(docs);
+    const splitDocs = await textSplitter.createDocuments(normalizedDocs);
+
+    // 16. Generate the vector store from the documents
+    vectorStore = await HNSWLib.fromDocuments(
+      splitDocs,
+      new OpenAIEmbeddings()
+    );
+    // 17. Save the vector store to the specified path
+    await vectorStore.save(VECTOR_STORE_PATH);
+
+    console.log("Vector store created.");
+  }
 
   await vectorStore.save("MyVectore.index");
-  console.log(`Vector store created`);
 
   const model = new OpenAI({
     openAIApiKey: process.env.OPENAI_API_KEY,
@@ -96,9 +134,10 @@ export async function POST(req: NextRequest) {
   const outputParser = new BytesOutputParser();
   const chain = RetrievalQAChain.fromLLM(model, vectorStore.asRetriever());
 
-  const stream = await chain.stream({
+  const stream = await chain.invoke({
     query: currentMessageContent,
   });
+  console.log("🚀 ~ file: route.ts:102 ~ POST ~ stream:", stream.text)
 
-  return new StreamingTextResponse(stream);
+  return new StreamingTextResponse(stream.text);
 }
