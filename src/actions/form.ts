@@ -91,6 +91,33 @@ export async function GetForms(projectId: string) {
   });
 }
 
+export async function GetAIForms(projectId: string) {
+  return await prisma.form.findMany({
+    where: {
+      projectId,
+      published: true,
+    },
+    include: {
+      submissions: {
+        select: {
+          submissionData: true,
+          geolocation: true,
+          createdAt: true,
+        }
+      },
+      employee:{
+        select:{
+          id: true,
+          fullName: true
+        }
+      }
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
 export async function GetFormProject(projectId: string){
   return await prisma.project.findUnique({
     where:{

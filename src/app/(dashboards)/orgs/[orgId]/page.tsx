@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 import Employees from '@/components/orgs/Settings/Employees';
 import Settings from '@/components/orgs/Settings/Settings';
 import Insights from '@/components/orgs/Settings/Insights';
+import Audits from '@/components/orgs/Settings/Audits';
 import Projects from '@/components/orgs/Settings/Projects';
 import Invites from '@/components/orgs/Settings/Invites';
 import BackBtn from '@/components/shared/BackBtn';

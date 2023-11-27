@@ -64,18 +64,8 @@ export async function POST(req: NextRequest) {
 
   const prompt = PromptTemplate.fromTemplate(TEMPLATE);
 
-  // Read data using directory loader
-  const loader = new DirectoryLoader("./docs", {
-    // ".json": (path) => new JSONLoader(path),
-    // ".txt": (path) => new TextLoader(path),
-    // ".pdf": (path) => new PDFLoader(path),
-    ".csv": (path) => new CSVLoader(path, { separator: "," }),
-  });
-
-  // See contents of docs that are being being loaded
-  const docs = await loader.load();
-  // console.log(docs);
-  const csvContent = docs.map((doc: Document) => doc.pageContent);
+  
+  const csvContent: string = body?.csvContent; 
   // console.log(`Page Content ---> ${csvContent}`);
 
   const textSplitter = new RecursiveCharacterTextSplitter({
@@ -86,8 +76,6 @@ export async function POST(req: NextRequest) {
   console.log("Text Splitting......");
   console.log(`Chunk size  ----> ${textSplitter.chunkSize}`);
   console.log(`Chunk Overlap  ----> ${textSplitter.chunkOverlap}`);
-
-  const splitDocs = await textSplitter.createDocuments(csvContent);
 
   const VECTOR_STORE_PATH = "Documents.index";
   let vectorStore;
@@ -108,7 +96,7 @@ export async function POST(req: NextRequest) {
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
     });
-    const normalizedDocs = normalizeDocuments(docs);
+    const normalizedDocs = normalizeDocuments(csvContent);
     const splitDocs = await textSplitter.createDocuments(normalizedDocs);
 
     // 16. Generate the vector store from the documents

@@ -12,7 +12,7 @@ export default function Chat() {
       {messages.map((m) => (
         <div key={m.id}>
           {m.role === "user" ? (
-            <div className="font-bold marker:my-5">User:</div> 
+            <div className="font-bold marker:my-5">User:</div>
           ) : (
             <div className="font-bold marker:my-5">AI:</div>
           )}
@@ -25,6 +25,7 @@ export default function Chat() {
           <div className="flex justify-between items-center w-full">
             <label>
               <input
+                title="input"
                 className="w-full max-w-md border border-gray-300 rounded shadow-xl p-2"
                 value={input}
                 onChange={handleInputChange}

@@ -5,8 +5,6 @@ import axios from "axios";
 
 const prisma = new PrismaClient();
 const apiUrl = process.env.API_URL;
-// export const employeeService = {
-// };
 
 export async function getCurrentEmployee(orgId: string, userId: string) {
   if (!userId) {
@@ -163,7 +161,6 @@ export async function deleteEmployee(orgId: string, employeeId: string, token: s
   );
   return response.data;
 }
-
 
 export async function getOrgInvites(orgId: string){
   const invites = await prisma.invite.findMany({

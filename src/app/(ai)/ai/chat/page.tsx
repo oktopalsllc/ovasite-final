@@ -24,6 +24,7 @@ export default function Chat() {
             <div className="flex-grow">
               <label>
                 <input
+                  title="input"
                   className="border w-full border-gray-300 rounded shadow-xl p-2"
                   value={input}
                   onChange={handleInputChange}

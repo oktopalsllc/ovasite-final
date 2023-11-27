@@ -56,7 +56,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const messages = body.messages ?? [];
   const formattedPreviousMessages = messages.slice(0, -1).map(formatMessage);
-  const currentMessageContent = messages[messages.length - 1].content;
+  // const messageWithFormTitle = messages[messages.length - 1];
+  const currentMessageContent = messages[messages.length - 1];
   console.log(
     "🚀 ~ file: route.ts:52 ~ POST ~ currentMessageContent:",
     currentMessageContent
@@ -64,18 +65,9 @@ export async function POST(req: NextRequest) {
 
   const prompt = PromptTemplate.fromTemplate(TEMPLATE);
 
-  // Read data using directory loader
-  const loader = new DirectoryLoader("./docs", {
-    // ".json": (path) => new JSONLoader(path),
-    // ".txt": (path) => new TextLoader(path),
-    // ".pdf": (path) => new PDFLoader(path),
-    ".csv": (path) => new CSVLoader(path, { separator: "," }),
-  });
-
-  // See contents of docs that are being being loaded
-  const docs = await loader.load();
-  // console.log(docs);
-  const csvContent = docs.map((doc: Document) => doc.pageContent);
+  
+  const csvContent: string = body.csvContent; 
+  console.log("🚀 ~ file: route.ts:70 ~ POST ~ csvContent:", csvContent);
   // console.log(`Page Content ---> ${csvContent}`);
 
   const textSplitter = new RecursiveCharacterTextSplitter({
@@ -86,8 +78,6 @@ export async function POST(req: NextRequest) {
   console.log("Text Splitting......");
   console.log(`Chunk size  ----> ${textSplitter.chunkSize}`);
   console.log(`Chunk Overlap  ----> ${textSplitter.chunkOverlap}`);
-
-  const splitDocs = await textSplitter.createDocuments(csvContent);
 
   const VECTOR_STORE_PATH = "Documents.index";
   let vectorStore;
@@ -108,8 +98,10 @@ export async function POST(req: NextRequest) {
     const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 1000,
     });
-    const normalizedDocs = normalizeDocuments(docs);
+    const normalizedDocs = normalizeDocuments(csvContent);
+    console.log("🚀 ~ file: route.ts:101 ~ POST ~ normalizedDocs:", normalizedDocs)
     const splitDocs = await textSplitter.createDocuments(normalizedDocs);
+    console.log("🚀 ~ file: route.ts:102 ~ POST ~ splitDocs:", splitDocs)
 
     // 16. Generate the vector store from the documents
     vectorStore = await HNSWLib.fromDocuments(

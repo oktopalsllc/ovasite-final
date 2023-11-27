@@ -71,13 +71,14 @@ export default function ProjectEmployee({ id, orgId }: { id: string, orgId: stri
     const [newEmployees, setNewEmployees] = useState<orgEmployeesField[]>([]);
     const [selectedEmployee, setSelectedEmployee] = useState<employeeField | null>(null);
     const [loading, startTransition] = useTransition();
+
     const project = useForm<projectEmpType>({
         resolver: zodResolver(projectEmp),
     });
+    
     const empProject = useForm<projectRoleType>({
         resolver: zodResolver(projectRole),
     });
-
 
     function convertISOToInputDate(isoString: string): string {
         const date = new Date(isoString);
