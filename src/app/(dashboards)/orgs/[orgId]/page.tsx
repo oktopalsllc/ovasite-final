@@ -2,12 +2,17 @@
 'use client';
 import { useState, useCallback, useEffect } from 'react';
 import Employees from '@/components/orgs/Settings/Employees';
-import OrgSettings from '@/components/orgs/Settings/Settings';
+import Settings from '@/components/orgs/Settings/Settings';
+import Insights from '@/components/orgs/Settings/Insights';
+import Projects from '@/components/orgs/Settings/Projects';
 import Invites from '@/components/orgs/Settings/Invites';
 import BackBtn from '@/components/shared/BackBtn';
 import {
-  currentEmployee
+  currentEmployee,
+  getCurrentOrg
 } from '@/services/employee-service/employee.service';
+import { Separator } from "@/components/form/ui/separator";
+import { ImSpinner2 } from 'react-icons/im';
 
 export default function OrgPage({ params }: { params: { orgId: string } }) {
   const { orgId } = params;
@@ -34,34 +39,18 @@ export default function OrgPage({ params }: { params: { orgId: string } }) {
     }
   }, [orgId, userId]);
 
-  // useEffect(() => {
-  //   getEmployee();
-  // }, [getEmployee]);
-
-  // let tabs: string[] = [];
-
-  // if (loadUser) {
-  //   if (emp.role === 'OWNER' || emp.role === 'ADMIN') {
-  //     tabs = ['Employees', 'Invites', 'Projects', 'Settings'];
-  //   } else {
-  //     tabs = ['Employees', 'Invites', 'Projects'];
-  //   }
-  //   setLoaded(true);
-  // }
-
   useEffect(() => {
-    // Ensure we have the user information before triggering any actions
     if (loadUser) {
       if (emp.role === 'OWNER' || emp.role === 'ADMIN') {
-        setTabs(['Employees', 'Invites', 'Projects', 'Settings']);
+        setTabs(['Employees', 'Invites', 'Projects', 'Insights', 'Profile']);
       } else {
-        setTabs(['Employees', 'Invites', 'Projects']);
+        setTabs(['Employees', 'Invites', 'Projects', 'Insights']);
       }
-      setLoaded(true); // Set loaded state when necessary
+      setLoaded(true);
     } else {
-      getEmployee(); // Fetch employee information when user data is not yet loaded
+      getEmployee();
     }
-  }, [loadUser, emp.role, getEmployee]); // Depend on relevant variables
+  }, [loadUser, emp.role, getEmployee]);
 
   const items = [
     { id: 1, name: 'Employees' },
@@ -86,35 +75,62 @@ export default function OrgPage({ params }: { params: { orgId: string } }) {
   };
 
   return (
-    <div className='h-screen flex'>
-      <div className='w-1/6 bg-gray-200 py-8 pl-8 pr-0'>
+    <div className='min-h-[100vh] flex flex-col'>
+      <div className='w-full pt-5 flex flex-row justify-between'>
+        <h2 className='text-2xl font-bold col-span-2'>
+          Settings
+        </h2>
         <BackBtn />
-        <ul className='lg:pt-8'>
-          {tabs.map((tab) => (
-            <li
-              key={tab}
-              className={`p-2 cursor-pointer ${activeTab === tab
-                ? 'bg-[#001333] rounded-l-lg text-white text-lg pl-12 pr-6 py-6'
-                : ''
-                }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </li>
-          ))}
-        </ul>
       </div>
-      <div className='w-5/6 p-2'>
-        {activeTab === 'Employees' && (
-          <div>
-            <Employees orgId={orgId} emp={emp} />
-          </div>
-        )}
-        {activeTab === 'Invites' && (
-          <div>
-            <Invites orgId={orgId} />
-          </div>
-        )}
+      <Separator className="my-3" />
+      <div className='flex flex-col w-full h-[100vh] lg:flex-row'>
+        <div className='lg:w-1/6 w-full lg:bg-gray-200 py-8 lg:pl-8 pr-0'>
+          {loadUser ?
+            <ul className='lg:pt-8 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-hidden'>
+              {tabs.map((tab) => (
+                <li
+                  key={tab}
+                  className={`p-2 pb-2 cursor-pointer hover:cursor-pointer hover:bg-gray-400 lg:py-2 lg:my-2 ${activeTab === tab
+                    ? 'bg-[#001333] text-center lg:rounded-l-lg text-white lg:text-lg lg:pl-12 lg:pr-6 lg:py-4 mb-4 lg:mb-0'
+                    : ''
+                    }`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab}
+                </li>
+              ))}
+            </ul>
+            :
+            <div className="w-full flex justify-center"><ImSpinner2 className="animate-spin" /></div>
+          }
+        </div>
+        <div className='lg:w-5/6 w-full p-2 px-10'>
+          {activeTab === 'Employees' && (
+            <div>
+              <Employees orgId={orgId} emp={emp} />
+            </div>
+          )}
+          {activeTab === 'Invites' && (
+            <div>
+              <Invites orgId={orgId} />
+            </div>
+          )}
+          {activeTab === 'Projects' && (
+            <div>
+              <Projects orgId={orgId} />
+            </div>
+          )}
+          {activeTab === 'Insights' && (
+            <div>
+              <Insights orgId={orgId} />
+            </div>
+          )}
+          {activeTab === 'Profile' && (
+            <div>
+              <Settings orgId={orgId} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

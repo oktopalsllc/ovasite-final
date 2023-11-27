@@ -68,7 +68,7 @@ function CreateOrg() {
         <form onSubmit={handleSubmit(onSubmit)} className="pt-6">
           <div className="mb-4">
             <label
-              htmlFor="email"
+              htmlFor="name"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Organisation Name

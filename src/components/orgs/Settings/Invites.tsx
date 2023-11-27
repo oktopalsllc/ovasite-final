@@ -175,99 +175,100 @@ export default function Invites({ orgId }: { orgId: string }) {
     ];
 
     return (
-        <>
+        <div className="container">
+            <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+                <h2 className='text-xl font-bold col-span-2'>
+                    Pending Invites
+                </h2>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button
+                            variant={"outline"}
+                            className="group border shadow-lg border-primary/20 h-[40px] w-[150px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-2"
+                        >
+                            <p className="font-bold text-md text-muted-foreground group-hover:text-primary">Send Invite</p>
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-white">
+                        <DialogHeader>
+                            <DialogTitle>Invite an Employee</DialogTitle>
+                        </DialogHeader>
+                        <Form {...invitation}>
+                            <form onSubmit={invitation.handleSubmit(onSubmit)} className="space-y-2">
+                                <FormField
+                                    control={invitation.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem className="mb-2">
+                                            <FormLabel>Email</FormLabel>
+                                            <FormControl>
+                                                <Input type='email' {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={invitation.control}
+                                    name="role"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Select Role</FormLabel>
+                                            <FormControl>
+                                                <Select
+                                                    onValueChange={(value) => {
+                                                        invitation.setValue("role", value);
+                                                    }}
+                                                >
+                                                    <SelectTrigger aria-label="Role">
+                                                        <SelectValue placeholder="Select a role" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup
+                                                            className="bg-white">
+                                                            {roleOptions.map((role) => (
+                                                                <SelectItem key={role.value} value={role.value}>
+                                                                    {role.label}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                            </form>
+                        </Form>
+                        <DialogFooter>
+                            <Button onClick={invitation.handleSubmit(onSubmit)} disabled={invitation.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
+                                {!invitation.formState.isSubmitting && <span>Send</span>}
+                                {invitation.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+            </div>
+            <Separator className="my-6" />
             {loaded ?
-                <div className="container">
-                    <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
-                        <h2 className='text-xl font-bold col-span-2'>
-                            Pending Invites
-                        </h2>
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button
-                                    variant={"outline"}
-                                    className="group border shadow-lg border-primary/20 h-[40px] w-[150px] bg-[#001333] text-white items-center justify-center flex flex-row hover:bg-[#7f8185]  hover:cursor-pointer hover:border-dashed gap-2"
-                                >
-                                    <p className="font-bold text-md text-muted-foreground group-hover:text-primary">Send Invite</p>
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-white">
-                                <DialogHeader>
-                                    <DialogTitle>Invite an Employee</DialogTitle>
-                                </DialogHeader>
-                                <Form {...invitation}>
-                                    <form onSubmit={invitation.handleSubmit(onSubmit)} className="space-y-2">
-                                        <FormField
-                                            control={invitation.control}
-                                            name="email"
-                                            render={({ field }) => (
-                                                <FormItem className="mb-2">
-                                                    <FormLabel>Email</FormLabel>
-                                                    <FormControl>
-                                                        <Input type='email' {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={invitation.control}
-                                            name="role"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Select Role</FormLabel>
-                                                    <FormControl>
-                                                        <Select
-                                                            onValueChange={(value) => {
-                                                                invitation.setValue("role", value);
-                                                            }}
-                                                        >
-                                                            <SelectTrigger aria-label="Role">
-                                                                <SelectValue placeholder="Select a role" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectGroup
-                                                                    className="bg-white">
-                                                                    {roleOptions.map((role) => (
-                                                                        <SelectItem key={role.value} value={role.value}>
-                                                                            {role.label}
-                                                                        </SelectItem>
-                                                                    ))}
-                                                                </SelectGroup>
-                                                            </SelectContent>
-                                                        </Select>
-                                                    </FormControl>
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </form>
-                                </Form>
-                                <DialogFooter>
-                                    <Button onClick={invitation.handleSubmit(onSubmit)} disabled={invitation.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
-                                        {!invitation.formState.isSubmitting && <span>Send</span>}
-                                        {invitation.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
-                                    </Button>
-                                </DialogFooter>
-                            </DialogContent>
-                        </Dialog>
-                    </div>
-                    <Separator className="my-6" />
+                <>
+
                     {invites.length > 0 ?
                         <div className="container overflow-x-auto rounded-md border">
                             <Table className="bg-white">
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead className="uppercase text-sm truncate md:truncate">
+                                        <TableHead className="font-bold uppercase text-sm truncate md:truncate">
                                             Email
                                         </TableHead>
-                                        <TableHead className="uppercase text-sm">
+                                        <TableHead className="font-bold uppercase text-sm">
                                             Role
-                                        </TableHead><TableHead className="uppercase text-sm">
+                                        </TableHead><TableHead className="font-bold uppercase text-sm">
                                             Sent On
-                                        </TableHead><TableHead className="uppercase text-sm">
+                                        </TableHead><TableHead className="font-bold uppercase text-sm">
                                             Expiry Date
                                         </TableHead>
-                                        <TableHead className="text-muted-foreground text-sm uppercase text-right">
+                                        <TableHead className="font-bold text-muted-foreground text-sm uppercase text-right">
                                             Action
                                         </TableHead>
                                     </TableRow>
@@ -326,11 +327,11 @@ export default function Invites({ orgId }: { orgId: string }) {
                             <h3 className="text-md font-bold my-4">No pending invites</h3>
                         </>
                     }
-                </div>
+                </>
                 :
 
                 <div className="w-full flex mt-14 justify-center mb-20"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }
-        </>
+        </div>
     );
 }

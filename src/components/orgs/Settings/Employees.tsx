@@ -2,7 +2,6 @@
 "use cLient";
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  currentEmployee,
   getOrgEmployees,
   changeRole,
   deleteEmployee
@@ -20,7 +19,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogDescription
 } from "@/components/form/ui/dialog";
 import {
   Form,
@@ -132,7 +130,7 @@ const EmployeeManagement = ({ orgId, emp }: { orgId: string, emp: any }) => {
           role: value.role
         }
         const changedRole = await changeRole(orgId, data, token as string);
-        const {status} = changedRole;
+        const { status } = changedRole;
         if (status) {
           getAllEmployees();
           setSelectedEmployee(null);
@@ -186,172 +184,166 @@ const EmployeeManagement = ({ orgId, emp }: { orgId: string, emp: any }) => {
     }
   }
   return (
-    <>
+    <div className="container w-full overflow-x-auto ">
       {loaded ?
         <>
+          <h2 className='text-xl font-bold col-span-2'>
+            Employees
+          </h2>
+          <Separator className="my-6" />
           {employees.length > 0 ?
-            <div className="container w-full overflow-x-auto ">
-              <h2 className='text-xl font-bold col-span-2'>
-                Employees
-              </h2>
-              <Separator className="my-6" />
-              <Table className="bg-white rounded-md border">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="uppercase font-bold">
-                      Name
-                    </TableHead>
-                    <TableHead className="uppercase font-bold">
-                      Role
-                    </TableHead>
-                    <TableHead className="uppercase font-bold">Added on</TableHead>
-                    <TableHead className="uppercase font-bold">Last Modified</TableHead>
-                    <TableHead className="font-bold -mr-2text-muted-foreground text-right uppercase">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {employees.map((employee, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{employee.employeeName || employee.employeeId}</TableCell>
-                      <TableCell>{employee.role}</TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {employee.createdAt}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        {employee.updatedAt}
-                      </TableCell>
-                      <TableCell className="text-muted-foreground text-right flex flex-row justify-end gap-1">
+            <Table className="bg-white rounded-md border">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="uppercase font-bold">
+                    Name
+                  </TableHead>
+                  <TableHead className="uppercase font-bold">
+                    Role
+                  </TableHead>
+                  <TableHead className="uppercase font-bold">Added on</TableHead>
+                  <TableHead className="uppercase font-bold">Last Modified</TableHead>
+                  <TableHead className="font-bold -mr-2text-muted-foreground text-center uppercase">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {employees.map((employee, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{employee.employeeName || employee.employeeId}</TableCell>
+                    <TableCell>{employee.role}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {employee.createdAt}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {employee.updatedAt}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground text-right flex lg:flex-row flex-col justify-end gap-1">
                       <Badge title="View Details" variant={"outline"}>
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <LuView
-                                className="text-blue-600 bg-white rounded-md hover:cursor-pointer w-10 h-4"
-                                onClick={() => {
-                                  setSelectedEmployee(employee);
-                                }}
-                              />
-                            </DialogTrigger>
-                            <DialogContent className="bg-white">
-                              <DialogHeader>
-                                <DialogTitle>Bio of {selectedEmployee?.employeeName || selectedEmployee?.employeeId}</DialogTitle>
-                              </DialogHeader>
-                              {selectedEmployee?.avatar ? <Image src={selectedEmployee.avatar} alt="avatar" width={200} height={200} className="rounded-md" /> : <></>}<br />
-                              <p className='text-sm'>Email: {selectedEmployee?.email}</p>
-                              <p className='text-sm'>Contact: {selectedEmployee?.contactNumber}</p>
-                              <p className='text-sm'>Address: <br />{selectedEmployee?.address}</p>
-                            </DialogContent>
-                          </Dialog>
-                        </Badge>
-                        {emp.role === 'OWNER' &&
-                          <>
-                            <Badge title="Update Role" variant={"outline"}>
-                              <Dialog>
-                                <DialogTrigger asChild>
-                                  <FaEdit
-                                    className="text-yellow-700 bg-white rounded-md hover:cursor-pointer w-10 h-4"
-                                    onClick={() => {
-                                      setSelectedEmployee(employee);
-                                    }}
-                                  />
-                                </DialogTrigger>
-                                <DialogContent className="bg-white">
-                                  <DialogHeader>
-                                    <DialogTitle>Update Role for {selectedEmployee?.employeeName || selectedEmployee?.employeeId}</DialogTitle>
-                                  </DialogHeader>
-                                  <Form {...empRoleForm}>
-                                    <form onSubmit={empRoleForm.handleSubmit(handleRoleUpdateSubmit)} className="space-y-2">
-                                      <FormField control={empRoleForm.control}
-                                        name="role"
-                                        render={({ field }) => (
-                                          <FormControl>
-                                            <Select
-                                              onValueChange={(value) => {
-                                                empRoleForm.setValue("role", value);
-                                              }}
-                                            >
-                                              <SelectTrigger aria-label="Role">
-                                                <SelectValue placeholder="Select a role" />
-                                              </SelectTrigger>
-                                              <SelectContent>
-                                                <SelectGroup
-                                                  className="bg-white">
-                                                  {roleOptions.map((role) => (
-                                                    <SelectItem key={role.value} value={role.value}>
-                                                      {role.label}
-                                                    </SelectItem>
-                                                  ))}
-                                                </SelectGroup>
-                                              </SelectContent>
-                                            </Select>
-                                          </FormControl>
-                                        )}
-                                      />
-                                    </form>
-                                  </Form>
-                                  <DialogFooter>
-                                    <Button onClick={empRoleForm.handleSubmit(handleRoleUpdateSubmit)} disabled={empRoleForm.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
-                                      {!empRoleForm.formState.isSubmitting && <span>Update</span>}
-                                      {empRoleForm.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
-                                    </Button>
-                                  </DialogFooter>
-                                </DialogContent>
-                              </Dialog>
-                            </Badge>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Badge title="Delete Employee" variant={"outline"}>
-                                  <FaTrash className="text-peach_primary bg-white rounded-md hover:cursor-pointer w-10 h-4" />
-                                </Badge>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent className="bg-white">
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>Are you sure you want to remove this employee?</AlertDialogTitle>
-                                  <AlertDialogDescription className="text-red-500">
-                                    Be certain about your action before moving forward
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <LuView
+                              className="text-blue-600 bg-white rounded-md hover:cursor-pointer w-10 h-4"
+                              onClick={() => {
+                                setSelectedEmployee(employee);
+                              }}
+                            />
+                          </DialogTrigger>
+                          <DialogContent className="bg-white">
+                            <DialogHeader>
+                              <DialogTitle>Bio of {selectedEmployee?.employeeName || selectedEmployee?.employeeId}</DialogTitle>
+                            </DialogHeader>
+                            {selectedEmployee?.avatar ? <Image src={selectedEmployee.avatar} alt="avatar" width={200} height={200} className="rounded-md" /> : <></>}<br />
+                            <p className='text-sm'>Email: {selectedEmployee?.email}</p>
+                            <p className='text-sm'>Contact: {selectedEmployee?.contactNumber}</p>
+                            <p className='text-sm'>Address: <br />{selectedEmployee?.address}</p>
+                          </DialogContent>
+                        </Dialog>
+                      </Badge>
+                      {emp.role === 'OWNER' &&
+                        <>
+                          <Badge title="Update Role" variant={"outline"}>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <FaEdit
+                                  className="text-yellow-700 bg-white rounded-md hover:cursor-pointer w-10 h-4"
+                                  onClick={() => {
+                                    setSelectedEmployee(employee);
+                                  }}
+                                />
+                              </DialogTrigger>
+                              <DialogContent className="bg-white">
+                                <DialogHeader>
+                                  <DialogTitle>Update Role for {selectedEmployee?.employeeName || selectedEmployee?.employeeId}</DialogTitle>
+                                </DialogHeader>
+                                <Form {...empRoleForm}>
+                                  <form onSubmit={empRoleForm.handleSubmit(handleRoleUpdateSubmit)} className="space-y-2">
+                                    <FormField control={empRoleForm.control}
+                                      name="role"
+                                      render={({ field }) => (
+                                        <FormControl>
+                                          <Select
+                                            onValueChange={(value) => {
+                                              empRoleForm.setValue("role", value);
+                                            }}
+                                          >
+                                            <SelectTrigger aria-label="Role">
+                                              <SelectValue placeholder="Select a role" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                              <SelectGroup
+                                                className="bg-white">
+                                                {roleOptions.map((role) => (
+                                                  <SelectItem key={role.value} value={role.value}>
+                                                    {role.label}
+                                                  </SelectItem>
+                                                ))}
+                                              </SelectGroup>
+                                            </SelectContent>
+                                          </Select>
+                                        </FormControl>
+                                      )}
+                                    />
+                                  </form>
+                                </Form>
+                                <DialogFooter>
+                                  <Button onClick={empRoleForm.handleSubmit(handleRoleUpdateSubmit)} disabled={empRoleForm.formState.isSubmitting} className="text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed w-full mt-4">
+                                    {!empRoleForm.formState.isSubmitting && <span>Update</span>}
+                                    {empRoleForm.formState.isSubmitting && <ImSpinner2 className="animate-spin" />}
+                                  </Button>
+                                </DialogFooter>
+                              </DialogContent>
+                            </Dialog>
+                          </Badge>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Badge title="Delete Employee" variant={"outline"}>
+                                <FaTrash className="text-peach_primary bg-white rounded-md hover:cursor-pointer w-10 h-4" />
+                              </Badge>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="bg-white">
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Are you sure you want to remove this employee?</AlertDialogTitle>
+                                <AlertDialogDescription className="text-red-500">
+                                  Be certain about your action before moving forward
 
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel className="text-white bg-peach_primary hover:bg-peach_secondary hover:cursor-pointer hover:border-dashed">Cancel</AlertDialogCancel>
-                                  <AlertDialogAction
-                                    className="text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
-                                    disabled={loading}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      startTransition(() => {
-                                        deleteEmp(employee.employeeId);
-                                      });
-                                    }}
-                                  >
-                                    Proceed {loading && <FaSpinner className="animate-spin" />}
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </>
-                        }
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel className="text-white bg-peach_primary hover:bg-peach_secondary hover:cursor-pointer hover:border-dashed">Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  className="text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
+                                  disabled={loading}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    startTransition(() => {
+                                      deleteEmp(employee.employeeId);
+                                    });
+                                  }}
+                                >
+                                  Proceed {loading && <FaSpinner className="animate-spin" />}
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </>
+                      }
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
             :
-            <div className="container overflow-x-auto ">
-              <h2 className='text-xl font-bold col-span-2'>
-                Employees
-              </h2>
-              <Separator className="my-6" />
+            <>
               <h3 className="text-md font-bold my-4">No employees</h3>
               <Separator className="my-6" />
               <p className='text-sm'>Get started by inviting employees using the invites tab.</p>
-            </div>
+            </>
           }
         </>
         :
         <div className="w-full flex mt-14 justify-center mb-20"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
       }
-    </>
+    </div>
   );
 };
 

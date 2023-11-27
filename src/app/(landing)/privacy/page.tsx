@@ -3,11 +3,11 @@ import Link from "next/link";
 
 export default function PrivacyPolicy() {
   return (
-    <main className="px-10 pb-10 pt-10 mb-10 w-[90%] mx-auto border border-[#ddd]">
+    <main className="px-10 pb-10 pt-10 mb-10 w-[90%] mx-auto">
       {/* header */}
       <div className="">
-        <h1 className="py-16 text-2xl w-full text-center">
-          Ovasite Data Privacy Policy
+        <h1 className="py-16 text-2xl w-full text-center font-extrabold">
+          Ovasite Data and Privacy Policy
         </h1>
         <div className="w-[80%] h-[1px] bg-[#ddd] mx-auto "></div>
         <p className="italic mt-12 mb-3">
@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
       <div className="border border-[#ddd] p-5">
         <h1 className="font-bold my-2">Overview</h1>
         <p>
-          This data privacy policy applies to the Ovasite hosted instance
+          This data and privacy policy applies to the Ovasite hosted instance
           available through www.ovasite.com. For the humanitarian instance
           supported by UNOCHA. For other instances powered by our open-source
           code, please contact the host. Note that Ovasite does not collect or

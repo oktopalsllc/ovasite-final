@@ -9,7 +9,7 @@ import CreateProjectBtn from '../CreateProjectBtn';
 import { FaSearch, FaBell } from 'react-icons/fa';
 import { CiMenuBurger } from 'react-icons/ci';
 
-async function ProjectCards({ orgId }: { orgId: string }) {
+function ProjectCards({ orgId }: { orgId: string }) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {

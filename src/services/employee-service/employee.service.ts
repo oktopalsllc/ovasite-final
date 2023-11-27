@@ -73,6 +73,8 @@ export async function getCurrentOrg(orgId: string) {
     select: {
       id: true,
       name: true,
+      logo: true,
+      address: true,
     }
   });
   return org;
@@ -192,4 +194,34 @@ export async function deleteInvite(inviteId: string){
     return true;
   }
   return false;
+}
+
+export async function getOrgStats(orgId: string){
+  const stats = await prisma.organization.findUnique({
+    where: {
+      id: orgId
+    },
+    select: {
+      employees: true,
+      invite: true,
+      projects: true,
+      forms: true,
+      submissions: true,
+      reports: true
+    }
+  });
+  const employees = stats?.employees.length;
+  const invites = stats?.invite.length;
+  const projects = stats?.projects.length;
+  const forms = stats?.forms.length;
+  const submissions = stats?.submissions.length;
+  const reports = stats?.reports.length;
+  return {
+    employees,
+    invites,
+    projects,
+    forms,
+    submissions,
+    reports
+  };
 }

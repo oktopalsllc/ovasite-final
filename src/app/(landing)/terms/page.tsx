@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export default function Terms() {
   return (
-    <main className="px-10 pb-10 pt-10 mb-10 w-[90%] mx-auto border border-[#ddd]">
+    <main className="px-10 pb-10 pt-10 mb-10 w-[90%] mx-auto">
       <div>
-        <h1 className="py-16 text-2xl w-full text-center">Terms of Use and Service</h1>
+        <h1 className="py-16 text-2xl w-full text-center font-extrabold">Terms of Use and Service</h1>
         <div className="w-[80%] h-[1px] bg-[#ddd] mx-auto "></div>
 
         <p className="italic mt-12 mb-3">Updated November 15, 2023</p>

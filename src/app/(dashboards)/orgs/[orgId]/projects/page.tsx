@@ -29,7 +29,7 @@ export default function Projects({ params }: { params: { orgId: string } }) {
           </div>
           <CiMenuBurger className='text-xl text-gray-800' />
           <FaBell className='text-xl text-gray-800' /> */}
-          <span className='text-xl font-extrabold leading-5'>Projects</span>
+          {/* <span className='text-xl font-extrabold leading-5'>Projects</span> */}
           {/* ========================================== */}
           {/* <CreateProjectBtn orgId={orgId} />
         </div> */}

@@ -75,7 +75,7 @@ function Header() {
   },[]);
 
   return (
-    <div className='px-4 py-5 mx-auto sm:max-w-full md:max-w-full lg:max-w-full md:px-24 lg:px-10 bg-white'>
+    <div className='px-4 py-5 fixed w-full mx-auto sm:max-w-full md:max-w-full lg:max-w-full md:px-24 lg:px-10 bg-white'>
       <div className='relative flex items-center justify-between'>
         {loaded ?
           <div className='flex items-center'>

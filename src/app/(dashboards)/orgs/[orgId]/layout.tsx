@@ -11,7 +11,7 @@ export default function OrgsLayout({
   return (
     <section className=''>
       <Header />
-      <div className='px-5 lg:px-12 bg-gray-100 min-h-[100vh] w-full overflow-x-hidden'>
+      <div className='px-5 pt-20 lg:px-12 bg-gray-100 min-h-[100vh] w-full overflow-x-hidden'>
         {children}      
       </div>
       <ScrollToTop />

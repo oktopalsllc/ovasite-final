@@ -1,46 +1,41 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/form/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/form/ui/card";
 import { Skeleton } from "@/components/form/ui/skeleton";
 import { ReactNode, Suspense } from "react";
-import { LuView } from "react-icons/lu";
+import { FaPaperPlane } from 'react-icons/fa';
 import { FaWpforms } from "react-icons/fa";
-import { HiCursorClick } from "react-icons/hi";
-import { TbArrowBounce } from "react-icons/tb";
+import { MdWork } from 'react-icons/md';
+import { FiClipboard } from 'react-icons/fi';
+import { FaUserFriends } from 'react-icons/fa';
 import { Separator } from "@/components/form/ui/separator";
-import { useParams } from "next/navigation";
-import { projectService } from "@/services/project-service/project.service";
 import { ImSpinner2 } from "react-icons/im";
+import { getOrgStats } from "@/services/employee-service/employee.service";
+import { FiFileText } from 'react-icons/fi';
 
-
-export default function Insights({ projectId }: { projectId: string }) {
+export default function Insights({ orgId }: { orgId: string }) {
 
     return (
         <div className="container">
             <h2 className='text-xl font-bold col-span-2'>
-                Insights
+                Organization Insights
             </h2>
             <Separator className="my-3" />
             <Suspense fallback={<StatsCards loading={true} />}>
-                <CardStatsWrapper projectId={projectId} />
+                <CardStatsWrapper orgId={orgId} />
             </Suspense>
-            <Separator className="my-6" />
-
+            <Separator className="my-3" />
         </div>
     );
 }
 
-function CardStatsWrapper({ projectId }: { projectId: string }) {
-    const params = useParams();
-    const { orgId, } = params;
-    const orgValue = orgId.toString() || "";
-    const [stats, setStats] = useState<projectStats>();
+function CardStatsWrapper({ orgId }: { orgId: string }) {
+    const [stats, setStats] = useState<orgStats>();
     const [loaded, setLoaded] = useState(false);
-    const tokenString = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
-    const token = tokenString?.toString() || "";
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const stats = await projectService.getProjectStats(orgValue, projectId, token);
+                const stats = await getOrgStats(orgId);
                 if (stats) {
                     setStats(stats);
                     setLoaded(true)
@@ -51,7 +46,8 @@ function CardStatsWrapper({ projectId }: { projectId: string }) {
             }
         }
         fetchData();
-    }, [orgValue, projectId, token]);
+    }, [orgId]);
+
     return (
         <>
             {loaded ?
@@ -62,17 +58,17 @@ function CardStatsWrapper({ projectId }: { projectId: string }) {
         </>
     );
 }
-interface projectStats {
-    visits: number,
-    subCount: number,
-    submissionRate: number,
-    bounceRate: number,
-    reports: number,
-    forms: number
+interface orgStats {
+    employees?: number,
+    invites?: number,
+    projects?: number,
+    forms?: number,
+    submissions?: number,
+    reports?: number
 }
 
 interface StatsCardProps {
-    data?: Awaited<projectStats>;
+    data?: Awaited<orgStats>;
     loading: boolean;
 }
 
@@ -82,54 +78,55 @@ function StatsCards(props: StatsCardProps) {
     return (
         <div className="w-full pt-8 gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             <StatsCard
-                title="Total Forms"
-                icon={<FaWpforms className="text-blue-600" />}
-                helperText="Total forms published in this project"
-                value={data?.forms.toLocaleString() || ""}
+                title="Total Employees"
+                icon={<FaUserFriends className="text-blue-600" />}
+                helperText="Total employees within the organization including the owner."
+                value={data?.employees?.toLocaleString() || "0"}
                 loading={loading}
                 className="bg-white shadow-md shadow-blue-600"
             />
+
             <StatsCard
-                title="Total Visits"
-                icon={<LuView className="text-[#001333]" />}
-                helperText="Total form visits of all forms"
-                value={data?.visits.toLocaleString() || ""}
+                title="Total Invites"
+                icon={<FaPaperPlane className="text-green-600" />}
+                helperText="Total pending invites sent."
+                value={data?.invites?.toLocaleString() || "0"}
+                loading={loading}
+                className="bg-white shadow-md shadow-green-600"
+            />
+
+            <StatsCard
+                title="Total Projects"
+                icon={<MdWork className="text-zinc-600" />}
+                helperText="Total projects created within the organization."
+                value={data?.projects?.toLocaleString() || "0"}
+                loading={loading}
+                className="bg-white shadow-md shadow-zinc-600"
+            />
+
+            <StatsCard
+                title="Total Forms"
+                icon={<FaWpforms className="text-blue-600" />}
+                helperText="Total forms created within the organization, including published and drafts."
+                value={data?.forms?.toLocaleString() || "0"}
                 loading={loading}
                 className="bg-white shadow-md shadow-[#001333]"
             />
 
             <StatsCard
                 title="Total Submissions"
-                icon={<FaWpforms className="text-yellow-600" />}
-                helperText="Total submissions of all forms"
-                value={data?.subCount.toLocaleString() || ""}
+                icon={<FiFileText className="text-yellow-600" />}
+                helperText="Total submissions of all forms that were published."
+                value={data?.submissions?.toLocaleString() || ""}
                 loading={loading}
                 className="bg-white shadow-md shadow-yellow-600"
             />
 
             <StatsCard
-                title="Successful Submissions"
-                icon={<HiCursorClick className="text-green-600" />}
-                helperText="Visits that result in form submission"
-                value={data?.submissionRate.toLocaleString() + "%" || ""}
-                loading={loading}
-                className="bg-white shadow-md shadow-green-600"
-            />
-
-            <StatsCard
-                title="Declined Submissions"
-                icon={<TbArrowBounce className="text-red-600" />}
-                helperText="Form visits that leaves without feedback"
-                value={data?.subCount === 0 || data?.subCount === undefined ? "0%" : data?.bounceRate.toLocaleString() + "%" || ""}
-                loading={loading}
-                className="bg-white shadow-md shadow-red-600"
-            />
-
-            <StatsCard
                 title="Total Reports"
-                icon={<FaWpforms className="text-[#3f3cbb]" />}
-                helperText="Reports created about the project"
-                value={data?.reports.toLocaleString() || ""}
+                icon={<FiClipboard className="text-[#3f3cbb]" />}
+                helperText="Total reports created within the organization"
+                value={data?.reports?.toLocaleString() || ""}
                 loading={loading}
                 className="bg-white shadow-md shadow-[#3f3cbb]"
             />
