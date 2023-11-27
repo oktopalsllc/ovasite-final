@@ -141,7 +141,7 @@ export async function getUserOrgs(): Promise<UserOrgsResponse> {
 }
 
 export async function updateEmployeeProfiledata(
-  data: IEmployeeUpdateProfile,
+  data: IEmployeeSelfUpdate,
   orgId: string,
   empId: string
 ): Promise<EmployeeUpdateProfileResponse> {

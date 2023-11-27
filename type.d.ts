@@ -339,6 +339,16 @@ interface IEmployee {
   updatedAt?: string;
 }
 
+interface IEmployeeSelfUpdate {
+  fullName: string;
+  email?: string;
+  contactNumber: string;
+  address: string;
+  avatar?: string;
+  role?: IEmployeeRole;
+  userId?: string;
+}
+
 interface IEmployeeUpdateProfile extends IEmployee {}
 
 interface IEmployeeUpdateProfileResponse {

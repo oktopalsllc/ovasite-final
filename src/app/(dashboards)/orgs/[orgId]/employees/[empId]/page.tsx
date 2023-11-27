@@ -14,7 +14,7 @@ import BackBtn from "@/components/shared/BackBtn";
 
 const schema = yup.object({
   fullName: yup.string().required("Full Name name is required"),
-  email: yup.string().required("Email is required"),
+  email: yup.string(),
   contactNumber: yup.string().required("Contact number is required"),
   address: yup.string().required("Address is required"),
 });
@@ -36,7 +36,7 @@ function EmployeeProfle({
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IEmployeeUpdateProfile>({
+  } = useForm<IEmployeeSelfUpdate>({
     resolver: yupResolver(schema),
   });
 
@@ -92,23 +92,6 @@ function EmployeeProfle({
             />
             <div className="text-red-600 text-xs mt-2">
               {errors.fullName && <span>{errors.fullName?.message}</span>}
-            </div>
-          </div>
-          <div className="my-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              {...register("email")}
-            />
-            <div className="text-red-600 text-xs mt-2">
-              {errors.email && <span>{errors.email?.message}</span>}
             </div>
           </div>
           <div className="my-4">
