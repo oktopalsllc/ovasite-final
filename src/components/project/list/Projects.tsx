@@ -34,7 +34,7 @@ function ProjectCards({ orgId }: { orgId: string }) {
         <>
           <div className='flex items-center justify-between'>
             {/* ========================================== */}
-            <div className='flex items-center w-4/6 md:w-4/6 lg:w-4/6'>
+            {/*<div className='flex items-center w-4/6 md:w-4/6 lg:w-4/6'>
               <input
                 type='search'
                 className='w-full px-4 py-1 text-gray-80 rounded-lg focus:outline-none'
@@ -43,7 +43,7 @@ function ProjectCards({ orgId }: { orgId: string }) {
             </div>
             <CiMenuBurger className='text-xl text-gray-800' />
             <FaBell className='text-xl text-gray-800' />
-            {/* ========================================== */}
+             ========================================== */}
             <CreateProjectBtn orgId={orgId} />
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 py-4 md:py-8'>
