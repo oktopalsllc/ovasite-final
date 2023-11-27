@@ -1,9 +1,9 @@
 'use client';
 import Image from 'next/image';
-import Hero from '@/components/home/hero';
-import Content from '@/components/home/content';
-import Uses from '@/components/home/uses';
-import Steps from '@/components/home/steps';
+import Hero from '@/components/home/Hero';
+import Content from '@/components/home/Content';
+import Uses from '@/components/home/Uses';
+import Steps from '@/components/home/Steps';
 
 export default function Home() {
   const mainStyles = {

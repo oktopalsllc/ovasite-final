@@ -67,7 +67,7 @@ function UpdateBtn({formObj}: {formObj: FormData}) {
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
-          className="w-full mt-2 text-sm border-primary/20 bg-[#001333] text-white hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
+          className="w-full text-sm border-primary/20 bg-[#001333] text-white hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
         >
           Update Info
         </Button>

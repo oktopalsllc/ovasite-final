@@ -20,10 +20,10 @@ function FormLinkShare({ shareUrl }: { shareUrl: string }) {
   const shareLink = `${window.location.origin}/submit/${shareUrl}`;
   
   return (
-    <div className="flex flex-grow gap-4 items-center">
-      <Input value={shareLink} readOnly />
+    <div className="flex w-full lg:flex-row flex-col flex-grow gap-4 items-center">
+      <Input className="bg-white" value={shareLink} readOnly />
       <Button
-        className="w-[250px] text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
+        className="lg:w-[250px] w-full text-white bg-[#001333] hover:bg-[#7f8185] hover:cursor-pointer hover:border-dashed"
         onClick={() => {
           navigator.clipboard.writeText(shareLink);
           toast({

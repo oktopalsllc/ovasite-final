@@ -7,11 +7,6 @@ import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
 import { Separator } from "@/components/form/ui/separator";
-import { Badge } from "@/components/form/ui/badge";
-import { formatDistance } from "date-fns";
-import Link from "next/link";
-import { BiRightArrowAlt } from "react-icons/bi";
-import { FaEdit } from "react-icons/fa";
 import { useParams } from "next/navigation";
 import { projectService } from "@/services/project-service/project.service";
 import { ImSpinner2 } from "react-icons/im";
@@ -21,6 +16,10 @@ export default function Insights({ projectId }: { projectId: string }) {
 
     return (
         <div className="container">
+            <h2 className='text-xl font-bold col-span-2'>
+                Insights
+            </h2>
+            <Separator className="my-3" />
             <Suspense fallback={<StatsCards loading={true} />}>
                 <CardStatsWrapper projectId={projectId} />
             </Suspense>
@@ -40,14 +39,14 @@ function CardStatsWrapper({ projectId }: { projectId: string }) {
     const token = tokenString?.toString() || "";
     useEffect(() => {
         const fetchData = async () => {
-            try{
+            try {
                 const stats = await projectService.getProjectStats(orgValue, projectId, token);
                 if (stats) {
                     setStats(stats);
                     setLoaded(true)
                 }
             }
-            catch(err){
+            catch (err) {
                 console.error(err);
             }
         }
@@ -58,7 +57,7 @@ function CardStatsWrapper({ projectId }: { projectId: string }) {
             {loaded ?
                 <StatsCards loading={false} data={stats} />
                 :
-                <div className="flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
+                <div className="w-full flex mt-14 justify-center"><ImSpinner2 className="animate-spin h-12 w-12" /></div>
             }
         </>
     );
@@ -71,6 +70,7 @@ interface projectStats {
     reports: number,
     forms: number
 }
+
 interface StatsCardProps {
     data?: Awaited<projectStats>;
     loading: boolean;
@@ -84,10 +84,10 @@ function StatsCards(props: StatsCardProps) {
             <StatsCard
                 title="Total Forms"
                 icon={<FaWpforms className="text-blue-600" />}
-                helperText="Total forms created"
-                value={data?.visits.toLocaleString() || ""}
+                helperText="Total forms published in this project"
+                value={data?.forms.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-blue-600"
+                className="bg-white shadow-md shadow-blue-600"
             />
             <StatsCard
                 title="Total Visits"
@@ -95,7 +95,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Total form visits of all forms"
                 value={data?.visits.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-[#001333]"
+                className="bg-white shadow-md shadow-[#001333]"
             />
 
             <StatsCard
@@ -104,7 +104,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Total submissions of all forms"
                 value={data?.subCount.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-yellow-600"
+                className="bg-white shadow-md shadow-yellow-600"
             />
 
             <StatsCard
@@ -113,16 +113,16 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Visits that result in form submission"
                 value={data?.submissionRate.toLocaleString() + "%" || ""}
                 loading={loading}
-                className="shadow-md shadow-green-600"
+                className="bg-white shadow-md shadow-green-600"
             />
 
             <StatsCard
                 title="Declined Submissions"
                 icon={<TbArrowBounce className="text-red-600" />}
                 helperText="Form visits that leaves without feedback"
-                value={data?.bounceRate.toLocaleString() + "%" || ""}
+                value={data?.subCount === 0 || data?.subCount === undefined ? "0%" : data?.bounceRate.toLocaleString() + "%" || ""}
                 loading={loading}
-                className="shadow-md shadow-red-600"
+                className="bg-white shadow-md shadow-red-600"
             />
 
             <StatsCard
@@ -131,7 +131,7 @@ function StatsCards(props: StatsCardProps) {
                 helperText="Reports created about the project"
                 value={data?.reports.toLocaleString() || ""}
                 loading={loading}
-                className="shadow-md shadow-[#3f3cbb]"
+                className="bg-white shadow-md shadow-[#3f3cbb]"
             />
         </div>
     );

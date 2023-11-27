@@ -36,20 +36,8 @@ export default function ProjectCard({ project }: { project: Project }) {
                     {!project.isCompleted && <Badge variant={"destructive"}>Status: {project.status}</Badge>}
                 </CardTitle>
                 <br />
-                <CardDescription className="flex items-center justify-between text-muted-foreground text-sm">
-                    {/* {formatDistance(project.createdAt, new Date(), {
-                        addSuffix: true,
-                    })} */}
-                    <span className="flex justify-between items-center gap-10 text-sm">
-                        <span className="text-sm">
-                            Started:&nbsp;
-                            <span>{convertDate(project.startDate)}</span>
-                        </span>
-                        <span className="text-sm">
-                            Ends:&nbsp;
-                            <span>{convertDate(project.endDate)}</span>
-                        </span>
-                    </span>
+                <CardDescription className="text-muted-foreground text-sm">
+                    {convertDate(project.createdAt)} - {project.expectedDuration}
                 </CardDescription>
             </CardHeader>
             <CardContent className="h-[20px] truncate text-sm text-muted-foreground">

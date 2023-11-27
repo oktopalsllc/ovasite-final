@@ -101,7 +101,7 @@ function Designer() {
   });
 
   return (
-    <div className="flex w-full h-full">
+    <div className="flex w-full">
       <div
         className="p-4 w-full"
         onClick={() => {
@@ -125,7 +125,7 @@ function Designer() {
             </div>
           )}
           {elements.length > 0 && (
-            <div className="flex flex-col  w-full gap-2 p-4">
+            <div className="flex flex-col h-full overflow-y-auto w-full gap-2 p-4">
               {elements.map((element) => (
                 <DesignerElementWrapper key={element.id} element={element} />
               ))}

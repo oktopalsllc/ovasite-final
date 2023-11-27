@@ -59,7 +59,6 @@ export async function CreateForm(
       organization: { connect: { id: orgId } },
     },
   });
-  
 
   if (!form) {
     throw new Error("something went wrong");
@@ -79,14 +78,27 @@ export async function CreateForm(
 }
 
 export async function GetForms(projectId: string) {
-
   return await prisma.form.findMany({
     where: {
       projectId,
     },
+    include: {
+      project: true,
+    },
     orderBy: {
       createdAt: "desc",
     },
+  });
+}
+
+export async function GetFormProject(projectId: string){
+  return await prisma.project.findUnique({
+    where:{
+      id: projectId
+    },
+    select:{
+      isCompleted: true
+    }
   });
 }
 
@@ -95,6 +107,7 @@ export async function GetFormById(formId: string) {
     where: {
       id: formId,
     },
+    include: { employee: true },
   });
 }
 
@@ -120,11 +133,42 @@ export async function PublishForm(id: string) {
   });
 }
 
+export async function CloseForm(id: string) {
+  const closeForm = await prisma.form.update({
+    data: {
+      closed: true,
+    },
+    where: {
+      id,
+    },
+  });
+  if (!closeForm) return false;
+  await createAuditLog(
+    closeForm.creatorId,
+    ip.address() || null,
+    closeForm.organizationId,
+    "close",
+    "Form",
+    "",
+    JSON.stringify(closeForm),
+    closeForm.id.toString()
+  );
+  return true;
+}
+
 export async function GetFormContentByUrl(formId: string) {
-  return await prisma.form.update({
+  return await prisma.form.findUnique({
     select: {
       formData: true,
     },
+    where: {
+      id: formId,
+    },
+  });
+}
+
+export async function UpdateFormVisits(formId: string) {
+  return await prisma.form.update({
     data: {
       visits: {
         increment: 1,
@@ -137,51 +181,65 @@ export async function GetFormContentByUrl(formId: string) {
 }
 
 export async function SubmitForm(formId: string, content: string) {
-  const { formValues, location } = JSON.parse(content);
-  const { latitude, longitude } = location;
-  const geoData = await axios.get(
-    `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
-  );
-  const geoDataString = JSON.stringify(geoData.data);
-  const updatedForm = await prisma.form.update({
-    data: {
-      subCount: {
-        increment: 1,
+  try {
+    const { formValues, location } = JSON.parse(content);
+    const { latitude, longitude } = location;
+    const geoData = await axios.get(
+      `https://geocode.maps.co/reverse?lat=${latitude}&lon=${longitude}`
+    );
+    const geoDataString = JSON.stringify(geoData.data);
+    const form = await prisma.form.findUnique({
+      where: {
+        id: formId,
       },
-    },
-    where: {
-      id: formId,
-      published: true,
-    },
-  });
-  if (!updatedForm) return false;
-  const submission = await prisma.submission.create({
-    data: {
-      title: updatedForm.title,
-      description: updatedForm.description,
-      submissionData: JSON.stringify(formValues),
-      formData: updatedForm.formData,
-      geolocation: geoDataString,
-      form: { connect: { id: formId as string } },
-      employee: { connect: { id: updatedForm.creatorId } },
-      project: { connect: { id: updatedForm.projectId as string } },
-      organization: { connect: { id: updatedForm.organizationId as string } },
-    },
-  });
-  if(!submission){
+    });
+    if (!form) {
+      return false;
+    }
+    const submission = await prisma.submission.create({
+      data: {
+        title: form.title,
+        description: form.description,
+        submissionData: JSON.stringify(formValues),
+        formData: form.formData,
+        geolocation: geoDataString,
+        form: { connect: { id: formId as string } },
+        employee: { connect: { id: form.creatorId } },
+        project: { connect: { id: form.projectId as string } },
+        organization: { connect: { id: form.organizationId as string } },
+      },
+    });
+    if (!submission) {
+      return false;
+    }
+
+    const updatedForm = await prisma.form.update({
+      data: {
+        subCount: {
+          increment: 1,
+        },
+      },
+      where: {
+        id: formId,
+        published: true,
+      },
+    });
+    if (!updatedForm) return false;
+    await createAuditLog(
+      submission.creatorId,
+      ip.address() || null,
+      submission.organizationId,
+      "create",
+      "Submission",
+      "",
+      JSON.stringify(submission),
+      submission.id.toString()
+    );
+    return true;
+  } catch (error) {
+    console.error(error);
     return false;
   }
-  await createAuditLog(
-    submission.creatorId,
-    ip.address() || null,
-    submission.organizationId,
-    "create",
-    "Submission",
-    "",
-    JSON.stringify(submission),
-    submission.id.toString()
-  );
-  return true;
 }
 
 export async function GetFormWithSubmissions(id: string) {

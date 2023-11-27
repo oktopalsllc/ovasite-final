@@ -36,7 +36,7 @@ function CreateFormBtn() {
       const formId = await CreateForm(orgId.toString() || "",projectId.toString() || "", employeeId as string,values);
       toast({
         title: "Success",
-        description: "Form created successfully",
+        description: "Form created successfully.\n Loading form builder ",
       });
       router.push(`/orgs/${orgId.toString() || ""}/projects/${projectId.toString() || ""}/forms/builder/${formId}`);
     } catch (error) {

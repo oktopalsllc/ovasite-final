@@ -18,7 +18,7 @@ function VisitBtn({ shareUrl }: { shareUrl: string }) {
   
   return (
     <Button
-      className="w-[150px] text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
+      className="lg:w-[150px] w-full text-white bg-[#28a891] hover:bg-[#78dcca] hover:cursor-pointer hover:border-dashed"
       onClick={() => {
         window.open(shareLink, "_blank");
       }}

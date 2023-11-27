@@ -65,7 +65,7 @@ function FormBuilder({ form }: { form: Form }) {
     return (
       <>
         <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={1000} />
-        <div className="flex flex-col items-center justify-center h-full w-full">
+        <div className="pt-10 flex flex-col items-center justify-center h-full w-full overflow-x-hidden">
           <div className="max-w-md">
             <h1 className="text-center text-4xl font-bold text-primary border-b pb-2 mb-10">
               🎊🎊 Form Published 🎊🎊
@@ -131,7 +131,7 @@ function FormBuilder({ form }: { form: Form }) {
             )}
           </div>
         </nav>
-        <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-[100vh] bg-white">
+        <div className="flex w-full flex-grow items-center justify-center relative bg-gray-100">
           <Designer />
         </div>
       </main>

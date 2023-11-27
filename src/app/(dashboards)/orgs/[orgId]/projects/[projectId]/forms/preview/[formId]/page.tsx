@@ -1,6 +1,6 @@
 import { GetFormContentByUrl } from "@/actions/form";
 import { FormElementInstance } from "@/components/form/FormElements";
-import FormSubmitComponent from "@/components/form/FormSubmitComponent";
+import FormPreviewComponent from "@/components/form/FormPreviewComponent";
 import React from "react";
 
 async function SubmitPage({
@@ -18,7 +18,7 @@ async function SubmitPage({
 
   const formContent = JSON.parse(form.formData) as FormElementInstance[];
 
-  return <FormSubmitComponent formUrl={params.formId} content={formContent} />;
+  return <FormPreviewComponent formUrl={params.formId} content={formContent} />;
 }
 
 export default SubmitPage;

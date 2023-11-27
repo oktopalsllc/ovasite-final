@@ -7,13 +7,12 @@ import { HiCursorClick } from "react-icons/hi";
 import { toast } from "./ui/use-toast";
 import { ImSpinner2 } from "react-icons/im";
 import { SubmitForm } from "@/actions/form";
-import { submissionService } from "@/services/submission-service/submission.service.ts";
-import { useParams } from "next/navigation";
+import { GetFormById } from "@/actions/form";
 
 function FormSubmitComponent({ formUrl, content }: { content: FormElementInstance[]; formUrl: string }) {
   const formValues = useRef<{ [key: string]: string }>({});
   const formErrors = useRef<{ [key: string]: boolean }>({});
-  const [renderKey, setRenderKey] = useState(new Date().getTime()); 
+  const [renderKey, setRenderKey] = useState(new Date().getTime());
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
   async function getGeolocation(): Promise<string> {
@@ -44,17 +43,13 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
         console.error(error);
       });
   }, []);
-  
-  // const formInfo = {
-  //   formId: formUrl
-  // };
 
   const [submitted, setSubmitted] = useState(false);
   const [pending, startTransition] = useTransition();
 
   const validateForm: () => boolean = useCallback(() => {
     for (const field of content) {
-      const actualValue = formValues.current[field.extraAttributes?.label] || "";
+      const actualValue = formValues.current[field.id] || "";
       const valid = FormElements[field.type].validate(field, actualValue);
 
       if (!valid) {
@@ -72,7 +67,7 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
   const submitValue = useCallback((key: string, value: string) => {
     formValues.current[key] = value;
   }, []);
-
+  
   const submitForm = async () => {
     formErrors.current = {};
     const validForm = validateForm();
@@ -89,15 +84,13 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
     try {
       const jsonContent = JSON.stringify({
         formValues: formValues.current,
-        // formInfo: formInfo,
         location: location
-      });      
+      });
       const submit = await SubmitForm(formUrl, jsonContent);
-      if(submit)
-      {        
+      if (submit) {
         setSubmitted(true);
       }
-      else{
+      else {
         toast({
           title: "Error",
           description: "Something went wrong",
@@ -124,41 +117,46 @@ function FormSubmitComponent({ formUrl, content }: { content: FormElementInstanc
     );
   }
 
+
+
   return (
-    <div className="flex bg-white justify-center w-full h-full items-center p-8">
-      <div
-        key={renderKey}
-        className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-xl shadow-peach_primary rounded"
-      >
-        {content.map((element) => {
-          const FormElement = FormElements[element.type].formComponent;
-          return (
-            <FormElement
-              key={element.id}
-              elementInstance={element}
-              submitValue={submitValue}
-              isInvalid={formErrors.current[element.id]}
-              defaultValue={formValues.current[element.extraAttributes?.label]}
-            />
-          );
-        })}
-        <Button
-          className="mt-8 text-white bg-peach_primary hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed"
-          onClick={() => {
-            startTransition(submitForm);
-          }}
-          disabled={pending}
+    <>
+
+      <div className="flex bg-white justify-center w-full h-full items-center p-8">
+        <div
+          key={renderKey}
+          className="max-w-[620px] flex flex-col gap-4 flex-grow bg-background w-full p-8 overflow-y-auto border shadow-xl shadow-peach_primary rounded"
         >
-          {!pending && (
-            <>
-              <HiCursorClick className="mr-2" />
-              Submit
-            </>
-          )}
-          {pending && <ImSpinner2 className="animate-spin" />}
-        </Button>
+          {content.map((element) => {
+            const FormElement = FormElements[element.type].formComponent;
+            return (
+              <FormElement
+                key={element.id}
+                elementInstance={element}
+                submitValue={submitValue}
+                isInvalid={formErrors.current[element.id]}
+                defaultValue={formValues.current[element.extraAttributes?.label]}
+              />
+            );
+          })}
+          <Button
+            className="mt-8 text-white bg-peach_primary hover:bg-[#fe5000] hover:cursor-pointer hover:border-dashed"
+            onClick={() => {
+              startTransition(submitForm);
+            }}
+            disabled={pending}
+          >
+            {!pending && (
+              <>
+                <HiCursorClick className="mr-2" />
+                Submit
+              </>
+            )}
+            {pending && <ImSpinner2 className="animate-spin" />}
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

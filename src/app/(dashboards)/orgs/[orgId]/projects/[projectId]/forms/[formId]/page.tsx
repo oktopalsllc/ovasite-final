@@ -4,13 +4,12 @@ import {
   GetFormWithSubmissions
 } from "@/actions/form";
 import FormLinkShare from "@/components/form/FormLinkShare";
+import FormPreviewShare from "@/components/form/FormPreviewShare";
 import VisitBtn from "@/components/form/VisitBtn";
 import React, { ReactNode, Suspense } from "react";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
 } from "@/components/form/ui/card";
@@ -20,11 +19,15 @@ import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/form/ui/table";
-import { format, formatDistance } from "date-fns";
+import { formatDistance } from "date-fns";
 import { Badge } from "@/components/form/ui/badge";
 import { Separator } from "@/components/form/ui/separator";
 import DeleteBtn from "@/components/form/DeleteBtn";
 import Link from "next/link";
+import CloseFormBtn from "@/components/form/CloseFormBtn";
+import DownloadButton from "@/components/form/DownloadBtn";
+import BackBtn from "@/components/shared/BackBtn";
+import PreviewBtn from "@/components/form/PreviewBtn";
 
 async function FormDetailPage({
   params,
@@ -40,21 +43,36 @@ async function FormDetailPage({
   }
 
   return (
-    <div className="h-[100vh] overflow-y-auto px-4">
+    <div className=" px-2">
       <div className="py-10 border-b border-muted">
-        <h2 className="text-2xl font-bold col-span-2">Form</h2>
+        <div className="flex lg:flex-row md:flex-row gap-4 justify-between container">
+          <h1 className="text-2xl font-bold col-span-2">Form</h1>
+          <BackBtn />
+        </div>
         <Separator className="my-3" />
         <div className="flex lg:flex-row md:flex-row flex-col gap-4 justify-between container">
-          <h1 className="text-4xl font-bold truncate">{form.title}</h1>
-          <div className="flex lg:flex-row md:flex-row flex-col gap-2">
-            <VisitBtn shareUrl={form.id} />
-            <DeleteBtn form={form} />
-          </div>
+          <h2 className="text-xl font-bold truncate">{form.title}</h2>
+          <h2 className="text-lg font-bold truncate">Created by: {form.employee?.fullName || form.creatorId}</h2>
         </div>
       </div>
-      <div className="py-4 border-b border-muted">
-        <div className="container flex gap-2 items-center justify-between">
-          <FormLinkShare shareUrl={form.id} />
+      {!form.closed &&
+        <div className="px-2 py-4 border-b border-muted">
+          <div className="container flex lg:flex-row md:flex-row flex-col gap-2 items-center justify-between">
+            <FormLinkShare shareUrl={form.id} />
+              <VisitBtn shareUrl={form.id} />
+              <CloseFormBtn form={form} />
+              <DeleteBtn form={form} />
+          </div>
+          <Separator className="my-3" />
+        </div>
+      }      
+      <div className="px-2 py-4 border-b border-muted">
+        <div className="container flex lg:flex-row flex-col gap-2 items-center justify-between">
+          <FormPreviewShare form={form} />
+          <PreviewBtn form={form}/>
+          {form.closed &&
+            <DeleteBtn form={form} />
+          }
         </div>
       </div>
       <div className="container pt-4">
@@ -72,11 +90,9 @@ async function FormDetailPage({
 
 export default FormDetailPage;
 
-
 type Row = { [key: string]: string | Date } & {
   title: string;
   submissionId: string;
-  submittedBy: string;
   submittedAt: Date;
 };
 
@@ -92,23 +108,25 @@ async function SubmissionsTable({ id }: { id: string }) {
     rows.push({
       title: submission.title,
       submissionId: submission.id,
-      submittedBy: form.employee?.fullName || submission.creatorId,
       submittedAt: submission.createdAt,
     });
   });
 
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold my-4">Submissions</h1>
+    <div className="mb-10">
+      <div className="flex lg:flex-row md:flex-row gap-4 flex-col justify-between my-4 container">
+        <h1 className="text-2xl font-bold col-span-2">
+          Submissions
+        </h1>
+        {form.submissions.length > 0 && <DownloadButton id={id} />}
+      </div>
       <div className="rounded-md border">
-        <Table className="mb-10">
+        <Table className="bg-white">
           <TableHeader>
             <TableRow>
               <TableHead className="uppercase">
                 Title
-              </TableHead>
-              <TableHead className="uppercase">
-                Form By
               </TableHead>
               <TableHead className="uppercase">Submitted on</TableHead>
               <TableHead className="text-muted-foreground text-right uppercase">Action</TableHead>
@@ -118,7 +136,6 @@ async function SubmissionsTable({ id }: { id: string }) {
             {rows.map((row, index) => (
               <TableRow key={index}>
                 <TableCell><Link href={`orgs/${form.organizationId}/projects/${id}/submissions/${row.submissionId}`}>{row.title}</Link></TableCell>
-                <TableCell>{row.submittedBy}</TableCell>
                 <TableCell className="text-muted-foreground">
                   {formatDistance(row.submittedAt, new Date(), {
                     addSuffix: true,
@@ -157,7 +174,7 @@ function StatsCards(props: StatsCardProps) {
         helperText="Total form view"
         value={data?.visits.toLocaleString() || ""}
         loading={loading}
-        className="shadow-md shadow-blue-600"
+        className="bg-white shadow-md shadow-blue-600"
       />
 
       <StatsCard
@@ -166,7 +183,7 @@ function StatsCards(props: StatsCardProps) {
         helperText="Total responses from form"
         value={data?.submissions.toLocaleString() || ""}
         loading={loading}
-        className="shadow-md shadow-yellow-600"
+        className="bg-white shadow-md shadow-yellow-600"
       />
 
       <StatsCard
@@ -175,16 +192,16 @@ function StatsCards(props: StatsCardProps) {
         helperText="Total visist that submitted the form"
         value={data?.submissionRate.toLocaleString() + "%" || ""}
         loading={loading}
-        className="shadow-md shadow-green-600"
+        className="bg-white shadow-md shadow-green-600"
       />
 
       <StatsCard
         title="Declined Submissions"
         icon={<TbArrowBounce className="text-red-600" />}
         helperText="Visits that did not submit the form"
-        value={data?.bounceRate.toLocaleString() + "%" || ""}
+        value={data?.submissions === 0 || data?.submissions === undefined ? "0%" : data?.bounceRate.toLocaleString() + "%" || ""}
         loading={loading}
-        className="shadow-md shadow-red-600"
+        className="bg-white shadow-md shadow-red-600"
       />
     </div>
   );

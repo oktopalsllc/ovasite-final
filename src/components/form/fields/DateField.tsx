@@ -124,6 +124,7 @@ function FormComponent({
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
+          className="bg-white"
             mode="single"
             selected={date}
             onSelect={(date) => {
